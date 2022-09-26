@@ -92,7 +92,7 @@ input[type=submit] {
 	</div>
 	</br>
 	<div style="padding-bottom: 40px;">
-		<form name="actionForm" action="###" method="###" >
+		<form name="actionForm" action="###" method="###" th:each="dto : ${fundingList}">
 		
 			<div class="row" style="display: flex;">
 				<div class="col-25">
@@ -130,7 +130,7 @@ input[type=submit] {
 					<label for="m_id">신청자 아이디</label>
 				</div>	
 				<div class="col-75">
-					<input id="m_id" readonly></input>
+					<input id="m_id" th:value="${dto.m_id}" readonly></input>
 				</div>
 			</div>
 			
@@ -172,12 +172,36 @@ input[type=submit] {
 			
 			<div class="row">
 				<div class="col-25">
+					<label for="f_bnum">사업자 등록번호</label>
+				</div>
+				<div class="col-75">
+					<input id="f_bnum" th:value="${dto.f_bnum}" readonly></input>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-25">
+					<label>사업자 등록증</label>
+				</div>
+				<div class="col-75">
+					<th:block th:each="file : ${dto.files}">
+						<th:block th:if="${file.i_type == 0}">
+							<img th:src="'/upload/' + ${file.uuid} + '_' + ${file.filename}" alt="#">
+						</th:block>
+					</th:block>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-25">
 					<label>대표 사진</label>
 				</div>
 				<div class="col-75">
-					<input type="file" name="file" id="main_file" disabled>
-					<input type="file" name="file" id="main_file" disabled>
-					<input type="file" name="file" id="main_file" disabled>
+					<th:block th:each="file : ${dto.files}">
+						<th:block th:if="${file.i_type == 1}">
+							<img th:src="'/upload/main_' + ${file.uuid} + '_' + ${file.filename}" alt="#">
+						</th:block>
+					</th:block>
 				</div>
 			</div>
 			
@@ -186,9 +210,11 @@ input[type=submit] {
 					<label>내용 사진</label>
 				</div>
 				<div class="col-75">
-					<input type="file" name="file" id="main_file" disabled>
-					<input type="file" name="file" id="main_file" disabled>
-					<input type="file" name="file" id="main_file" disabled>
+					<th:block th:each="file : ${dto.files}">
+						<th:block th:if="${file.i_type == 2}">
+							<img th:src="'/upload/content_' + ${file.uuid} + '_' + ${file.filename}" alt="#">
+						</th:block>
+					</th:block>
 				</div>
 			</div>
 			
@@ -198,15 +224,6 @@ input[type=submit] {
 				</div>
 				<div class="col-75">
 					<textarea id="editor">[[${dto.f_content}]]</textarea>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_bnum">사업자 등록번호</label>
-				</div>
-				<div class="col-75">
-					<input id="f_bnum" th:value="${dto.f_bnum}" readonly></input>
 				</div>
 			</div>
 			
@@ -255,8 +272,6 @@ input[type=submit] {
 		document.actionForm.method = "post";
 		document.actionForm.submit(); //서브밋
 	}
-	
-	console.log(uploadDto.filepath)
 </script>
 
 </html>

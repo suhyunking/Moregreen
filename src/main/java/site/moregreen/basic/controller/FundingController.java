@@ -1,12 +1,12 @@
 package site.moregreen.basic.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-//테스트ㅁㄴㅇㄻㄴㅇㄻㄴㅇㄹ
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -19,19 +19,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.Setter;
+import lombok.extern.java.Log;
+import site.moregreen.basic.command.DeliveryDto;
 import site.moregreen.basic.command.FundingDto;
-import site.moregreen.basic.command.UploadDto;
+import site.moregreen.basic.command.PurchaseDto;
 import site.moregreen.basic.funding.FundingService;
+import site.moregreen.basic.kakaoPay.KakaoPayService;
+import site.moregreen.basic.like.LikeService;
+import site.moregreen.basic.purchase.PurchaseService;
 import site.moregreen.basic.util.Criteria;
 import site.moregreen.basic.util.PageVo;
 
+@Log
 @Controller
 @RequestMapping("/funding")
 public class FundingController {
 
+	@Setter(onMethod_ = @Autowired)
+    private KakaoPayService kakaopayService;
+	
 	@Autowired
 	@Qualifier("fundingService")
 	FundingService fundingService;
+	
+	@Autowired
+	@Qualifier("purchaseService")
+	PurchaseService purchaseService;
+
+	@Autowired
+	@Qualifier("likeService")
+	LikeService likeService;
+	
 	
 	@GetMapping("/fundingList")
 	public String fundingList(Model model, 
@@ -40,33 +59,45 @@ public class FundingController {
 		
 		List<FundingDto> fundingList = fundingService.retriveFundingList(cri);
 		
-		fundingList.forEach(f -> {
-			System.out.println(f.toString());
-			f.getFiles().forEach(i -> {
-				System.out.println(i.toString());
-			});
-		});
-		
 		int total = fundingService.retrieveTotal(cri);
 		PageVo pageVo = new PageVo(cri, total);
 
 		model.addAttribute("fundingList", fundingList);
 		model.addAttribute("pageVO", pageVo);
 		
-//		List<UploadDto> fileList = fundingService.retrieveFundingListImg();
-//		model.addAttribute("fileList", fileList);
-		
 		return "funding/fundingList";
 	}
 	
-
-	@GetMapping("fundingDetail")
-	public String fundingDetail(@RequestParam("f_num") int f_num,  Model mode) {
+	@GetMapping("/fundingDetail")
+	public String fundingDetail(@RequestParam("f_num") int f_num, Model model) {
+		List<FundingDto> fundingList = fundingService.retrieveFundingDetail(f_num);
+		model.addAttribute("fundingList", fundingList);
+		FundingDto fundingDto = fundingList.get(0);
+		int heart = 0;
 		
-		return "funding/fundingDetail";
+		if(fundingDto.getL_count() != null) {
+			heart = fundingDto.getL_count();
+		}
+		
+		model.addAttribute("heart", heart);
+		
+		return "/funding/fundingDetail"; 
 	}
-
+	
+	@PostMapping("/purchaseForm")
+	public String purchaseForm(@RequestParam("f_num") int f_num,
+								@Valid PurchaseDto purchaseDto, 
+								Model model, Error error) {
 		
+		DeliveryDto deliveryDto = fundingService.retrieveDelivery(purchaseDto.getM_num());
+		model.addAttribute("deliveryDto", deliveryDto);
+		
+		List<FundingDto> fundingList = fundingService.retrieveFundingDetail(f_num);
+		model.addAttribute("fundingList", fundingList);
+		
+		return "funding/fundingPurchase";
+	}
+	
 	@GetMapping("fundingReg")
 	public String fundingReg() {
 		return "funding/fundingReg";
@@ -132,17 +163,32 @@ public class FundingController {
 	}
 
 	@GetMapping("fundingPurchaseResult")
-	public String fundingPurchaseResult() {
+	public String fundingPurchaseResult(@RequestParam("pg_token") String pg_token, 
+										Model model) {
+		
+		Map<String, Object> hashMap = kakaopayService.kakaoPayInfo(pg_token);
+		int result = purchaseService.addPurchase(hashMap);
+		System.out.println("=============================" + result);
+		
+		model.addAttribute("info", hashMap.get("kakaoPayApprovalVO"));
+		
 		return "funding/fundingPurchaseResult";
 	}
 	
-	
-	
-	
-	@GetMapping("fundingDetail2")
-	public String fundingDetail2() {
-		
-		return "funding/fundingDetail2";
+	@GetMapping("fundingPurchaseCancel")
+	public String fundingPurchaseCancel() {
+		return "funding/fundingPurchaseCancel";
 	}
-
+	
+	@GetMapping("fundingPurchaseFail")
+	public String fundingPurchaseFail() {
+		return "funding/fundingPurchaseFail";
+	}
+	
+	@GetMapping("orderList")
+	public String orderList(Model model, 
+							Criteria cri, 
+							HttpSession session ) {
+		return "funding/orderList";
+	}
 }

@@ -5,9 +5,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/moregreen.ico">
   <title>
-    회원 로그인
+    아이디찾기
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -21,8 +21,22 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
   <script src="/js/jquery-3.6.0.js"></script>
-<script src="/js/jquery-3.6.0.min.js"></script>
-
+  <script src="/js/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+	   $("#btn").on("click",function(){
+		   
+	        
+	        if($("#emailmsg").val().length == 0){
+	            alert("이메일을 다시 입력해주세요.");
+	        } else{
+	            $("#findId").submit();
+	        }
+	   });
+	   
+     
+});
+</script>
 </head>
 
 <body class="bg-gray-200">
@@ -37,6 +51,11 @@
     <div class="page-header align-items-start min-vh-100" style="background-color: honeydew;">
       <span class="mask opacity-6"></span>
       <div class="container my-auto">
+      <div style="text-align: center;">
+      	<a  th:href="@{/index}">
+			<img src="/img/logo/logo1.png" alt="Logo">      	
+      	</a>
+      </div>
         <div class="row">
           <div class="col-lg-4 col-md-8 col-12 mx-auto">
             <div class="card z-index-0 fadeIn3 fadeInBottom">
@@ -47,11 +66,11 @@
                 </div>
               </div>
               <div class="card-body">
-                <form class="text-start">
+                <form class="text-start" th:action="@{/member/findId}" method="post" id="findId">
                   
                   <div class="input-group input-group-outline mb-3">
                     
-                    <input type="email" name="m_email" placeholder="이메일" class="form-control">
+                    <input type="email" name="m_email" placeholder="이메일" class="form-control" id="emailmsg">
                   </div>
                   
                    
@@ -59,7 +78,7 @@
                    
                    
                   <div class="text-center">
-                    <button type="button"  class="btn bg-gradient-primary w-100 my-4 mb-2">아이디찾기</button>
+                    <button type="submit" id="findId"  class="btn bg-gradient-primary w-100 my-4 mb-2">아이디찾기</button>
                   </div>
                   <p class="mt-4 text-sm text-center">
                     계정이 없으신가요?

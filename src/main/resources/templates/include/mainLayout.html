@@ -4,17 +4,36 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
-<title>ClassiGrids - Classified Ads and Listing Website
-	Template.</title>
+<title>MOREGREEN</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="shortcut icon" type="image/x-icon"
 	href="/img/favicon.svg" />
 <!-- Place favicon.ico in the root directory -->
 
+
+<style>
+
+.text-bg-success {
+  color: #fff !important;
+  background-color: RGBA(76, 175, 80, var(--bs-bg-opacity, 1)) !important;
+}
+
+
+.text-bg-warning {
+  color: #000 !important;
+  background-color: RGBA(251, 140, 0, var(--bs-bg-opacity, 1)) !important;
+}
+
+.text-bg-danger {
+  color: #fff !important;
+  background-color: RGBA(244, 67, 53, var(--bs-bg-opacity, 1)) !important;
+}
+
+
+</style>
 <!-- Web Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
 	rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
 	rel="stylesheet">
@@ -25,16 +44,22 @@
 <link rel="icon" type="image/png" href="/img/moregreen.png">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
 
+
+
 <!-- ========================= CSS here ========================= -->
-<link rel="stylesheet" href="../css/bootstrap.min.css" />
-<link rel="stylesheet" href="../css/LineIcons.2.0.css" />
-<link rel="stylesheet" href="../css/animate.css" />
-<link rel="stylesheet" href="../css/tiny-slider.css" />
-<link rel="stylesheet" href="../css/glightbox.min.css" />
-<link rel="stylesheet" href="../css/main.css" />
-
-	</head>
-
+<link rel="stylesheet" href="/css/bootstrap.min1.css" />
+<link rel="stylesheet" href="/css/LineIcons.2.0.css" />
+<link rel="stylesheet" href="/css/animate.css" />
+<link rel="stylesheet" href="/css/tiny-slider.css" />
+<link rel="stylesheet" href="/css/glightbox.min.css" />
+<link rel="stylesheet" href="/css/main.css" />
+<link rel="stylesheet" href="/css/bootstrap.min1.css" />
+<link rel="stylesheet" href="/css/animate1.css" />
+<link rel="stylesheet" href="/css/tiny-slider1.css" />
+<link rel="stylesheet" href="/css/glightbox.min1.css" />
+<link rel="stylesheet" href="/css/main1.css" /> 
+</head>
+	
 	<body>
 		<!--[if lte IE 9]>
       <p class="browserupgrade">
@@ -43,7 +68,6 @@
         your experience and security.
       </p>
     <![endif]-->
-
 		<!-- Preloader -->
 		<div class="preloader">
 			<div class="preloader-inner">
@@ -61,7 +85,7 @@
 					<div class="col-lg-12">
 						<div class="nav-inner">
 							<nav class="navbar navbar-expand-lg">
-								<a class="navbar-brand" th:href="@{/}"> <img
+								<a class="navbar-brand" th:href="@{/index}"> <img
 									src="/img/logo/logo1.png" alt="Logo">
 								</a>
 								<button class="navbar-toggler mobile-menu-btn" type="button"
@@ -76,18 +100,14 @@
 									id="navbarSupportedContent">
 									<ul id="nav" class="navbar-nav ms-auto">
 									<li class="nav-item">
-                                        <a class=" active dd-menu collapsed" th:href="@{/}" aria-label="Toggle navigation">홈</a>
+                                        <a th:href="@{/index}" aria-label="Toggle navigation">홈</a>
                                     </li>
-                                    
                                     	<li class="nav-item">
                                         <a  th:href="@{/funding/fundingList}" aria-label="Toggle navigation">펀딩</a>
                                     </li>
                                     <li class="nav-item">
                                         <a  th:href="@{/main/event}" aria-label="Toggle navigation">이벤트</a>
                                     </li>
-										
-										
-
 										<li class="nav-item"><a class=" dd-menu collapsed"
 											href="javascript:void(0)" data-bs-toggle="collapse"
 											data-bs-target="#submenu-1-3"
@@ -97,65 +117,8 @@
 												<li class="nav-item"><a th:href="@{/main/notice}">공지사항</a></li>
 												<li class="nav-item"><a th:href="@{/main/faq}">FAQ</a></li>
 												<li class="nav-item"><a th:href="@{/main/aboutUs}">소개</a></li>
-											</ul></li>
-										<!--  <li class="nav-item">
-                                        <a class=" dd-menu collapsed" href="javascript:void(0)"
-                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Notice</a>
-                                        <ul class="sub-menu mega-menu collapse" id="submenu-1-4"> -->
-										<!--     <li class="single-block">
-                                                <ul>
-                                                    <li class="mega-menu-title">Essential Pages</li>
-                                                    <li class="nav-item"><a href="about-us.html">About Us</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Ads Details</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Ads Post</a></li>
-                                                    <li class="nav-item"><a href="pricing.html">Pricing Table</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Sign Up</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Sign In</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Contact Us</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">FAQ</a></li>
-                                                    <li class="nav-item"><a href="404.html">Error Page</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Mail Success</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Comming Soon</a>
-                                                    </li>
-                                                </ul>
-                                            </li> -->
-										<!-- <li class="single-block">
-                                                <ul>
-                                                    <li class="mega-menu-title">Dashboard</li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Account Overview</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">My Profile</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">My Ads</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Favorite Ads</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Ad post</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Bookmarked Ad</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Messages</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Close account</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Invoice</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul> 
-                                    </li>-->
-										<!--    <li class="nav-item">
-                                        <a class=" dd-menu collapsed" href="javascript:void(0)"
-                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-5"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Blog</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-5">
-                                            <li class="nav-item"><a href="javascript:void(0)">Blog Grid Sidebar</a>
-                                            </li>
-                                            <li class="nav-item"><a href="javascript:void(0)">Blog Single</a></li>
-                                            <li class="nav-item"><a href="javascript:void(0)">Blog Single
-                                                    Sibebar</a></li>
-                                        </ul>
-                                    </li> -->
+											</ul>
+										</li>
 									</ul>
 								</div>
 								<!-- navbar collapse -->
@@ -163,41 +126,27 @@
 									<ul>
 										<li><a th:if="${session.member==null}" th:href="@{/member/memberLogin}" >
 										<i class="lni lni-enter"></i> 로그인</a></li>
-										<li><a th:if="${session.member!=null}" th:href="@{/member/logout}" >
-										<i class="lni lni-enter"></i> 로그아웃</a></li>
-										
 										<li><a th:if="${session.member==null}" th:href="@{/member/memberReg}">
 										<i class="lni lni-user"></i> 회원가입</a></li>
 									</ul>
 								</div>
-								
 								<div class="collapse navbar-collapse sub-menu-bar"
-									id="navbarSupportedContent">
+									id="navbarSupportedContent" th:if="${session.member!=null}">
 									<ul id="nav" class="navbar-nav ms-auto">
-
 										<li class="button header-button">
 											<div class="dropdown">
-												<button class="btn btn-secondary dropdown-toggle"
-													type="button" data-bs-toggle="dropdown"
-													aria-expanded="false" th:if="${session.member==null}" >...</button>
 													<button class="btn btn-secondary dropdown-toggle"
 													type="button" data-bs-toggle="dropdown"
 													aria-expanded="false" th:if="${session.member!=null}" >[[${session.member.m_id}]]</button>
 												<ul class="dropdown-menu">
-													<li><a class="dropdown-item" th:href="@{/main/myPage}">내 정보</a></li>
+													<li><a class="dropdown-item" th:href="@{/mypage/purchaseList}">내 정보</a></li>																					
 													<li><a class="dropdown-item" th:href="@{/funding/fundingReg}">펀딩개설하기</a></li>
-													<li><a th:if="${session.member !=null}" class="dropdown-item" th:href="@{/member/logout}">로그아웃</a></li>
-													
+													<li><a class="dropdown-item" th:href="@{/member/logout}">로그아웃</a></li>
 												</ul>
-												</div>
-							
+											</div>
 										</li>
 									</ul>
 								</div>
-
-
-
-
 							</nav>
 							<!-- navbar -->
 						</div>
@@ -208,9 +157,7 @@
 			<!-- container -->
 		</header>
 		<!-- End Header Area -->
-
 		<th:block th:replace="${section}"></th:block>
-
 		<!-- Start Footer Area -->
 		<footer class="footer">
 			<!-- Start Footer Top -->
@@ -224,23 +171,17 @@
 							<h3>Quick Links</h3>
 								<ul>
 									<li><a href="javascript:void(0)">소개</a></li>
-									<li><a th:href="@{/member/memberLogin}">로그인</a></li>
-									<li><a th:href="@{/member/memberReg}">회원가입</a></li>
+									<li><a th:if="${session.member==null}" th:href="@{/member/memberLogin}">로그인</a></li>
+									<li><a th:if="${session.member==null}" th:href="@{/member/memberReg}">회원가입</a></li>
 									<li><a href="javascript:void(0)">공지사항</a></li>
 								</ul>
-									
-								
 							</div>
 							<!-- End Single Widget -->
 						</div>
 						<div class="col-lg-3 col-md-6 col-12">
-							<!-- Single Widget -->
-					
-							<!-- End Single Widget -->
 						</div>
 						<div class="col-lg-3 col-md-6 col-12">
 							<!-- Single Widget -->
-							
 							<div class="single-footer f-contact">
 								<h3>Contact</h3>
 								<ul>
@@ -274,7 +215,6 @@
 										Designed and Developed by <a href="https://github.com/ciscons/moregreen1"
 											rel="nofollow" target="_blank">MoreGreen</a>
 									</p>
-									
 								</div>
 							</div>
 						</div>
@@ -284,50 +224,30 @@
 			<!-- End Footer Middle -->
 		</footer>
 		<!--/ End Footer Area -->
-
 		<!-- ========================= scroll-top ========================= -->
 		<a href="#" class="scroll-top btn-hover"> <i
 			class="lni lni-chevron-up"></i>
 		</a>
-
 		<!-- ========================= JS here ========================= -->
-		<script src="../js/bootstrap.min.js"></script>
-		<script src="../js/wow.min.js"></script>
-		<script src="../js/tiny-slider.js"></script>
-		<script src="../js/glightbox.min.js"></script>
-		<script src="../js/main.js"></script>
-		<script type="text/javascript">
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/wow.min.js"></script>
+	<script src="/js/tiny-slider.js"></script>
+	<script src="/js/glightbox.min.js"></script>
+	<script src="/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script th:inline="javascript">
+	
+		$(document).ready(function(){
+			var menu = JSON.parse('[[${menu}]]'); //문자열
+			$(".navbar-nav li a").each(function(index, value){
+				
+				if($(value).attr('href') == menu) {
+					$(value).attr('class', 'nav-link active bg-gradient-primary');
+				}
+			});
+		});
 		
-        //========= Category Slider 
-        tns({
-            container: '.category-slider',
-            items: 3,
-            slideBy: 'page',
-            autoplay: false,
-            mouseDrag: true,
-            gutter: 0,
-            nav: false,
-            controls: true,
-            controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                540: {
-                    items: 2,
-                },
-                768: {
-                    items: 4,
-                },
-                992: {
-                    items: 5,
-                },
-                1170: {
-                    items: 6,
-                }
-            }
-        });
-    </script>
+	</script>
 	</body>
 </th:block>
 </html>

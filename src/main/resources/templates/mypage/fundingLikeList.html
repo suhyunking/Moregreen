@@ -1,10 +1,154 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<!-- 찜목록 -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
 
-</body>
+<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }" >
+
+	<body>
+		<section id="wrap">
+			<!-- top -->
+			<div class="breadcrumbs">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="breadcrumbs-content">
+								<h1 class="page-title">찜목록</h1>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-12">
+							<ul class="breadcrumb-nav">
+								<li><a href="/">홈</a></li>
+								<li>찜목록</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<section class="dashboard section">
+				<div class="container">
+					<div class="row">
+						<!-- 						<th:block
+							th:replace="~{./mypage/test :: setContent( ~{:: #wrap}  ) }"></th:block> -->
+						<div class="col-lg-3 col-md-12 col-12">
+							<div class="dashboard-sidebar">
+								<div class="user-image">
+									<!-- <img src="/images/dashboard/user-image.jpg" alt="#"> -->
+									<h3>
+										회원아이디 <span><a href="javascript:void(0)">이름?이메일?</a></span>
+									</h3>
+								</div>
+								<div class="dashboard-menu">
+									<ul>
+										<li><a  href="purchaseList"><i
+												class="lni lni-dashboard"></i> 펀딩 구매 내역</a></li>
+										<li><a href="myProjectList"><i
+												class="lni lni-pencil-alt"></i> 내가 만든 프로젝트</a></li>
+										<li><a class="active" href="fundingLikeList"><i
+												class="lni lni-heart"></i> 찜목록</a></li>
+										<li><a href="messages.html"><i
+												class="lni lni-envelope"></i> PW변경</a></li>
+										<li><a href="delete-account.html"><i
+												class="lni lni-trash"></i> 회원 탈퇴</a></li>
+									</ul>
+									<div class="button">
+										<a class="btn" href="javascript:void(0)">Logout</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-9 col-md-12 col-12">
+							<div class="main-content">
+								<div class="dashboard-block mt-0">
+									<h3 class="block-title">찜목록</h3>
+									<div class="my-items">
+										<div class="item-list-title">
+											<div class="row align-items-center">
+												<div class="col-lg-5 col-md-5 col-12">
+													<p style="text-align:center">펀딩명</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p style="text-align:center">상호명</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p style="text-align:center">펀딩 마감일</p>
+												</div>
+												<div class="col-lg-3 col-md-3 col-12 align-right">
+													<p style="text-align:center">삭제</p> 
+												</div>
+											</div>
+										</div>
+										<div class="single-item-list" >
+										<th:block th:each="dto : ${list}">
+											<div class="row align-items-center">
+												<div class="col-lg-5 col-md-5 col-12">
+													<div class="item-image">
+														<th:block  th:each="file : ${dto.files}">
+															<img th:src="'/upload/main_' + ${file.uuid} + '_' + ${file.filename}" alt="">
+														</th:block>
+														<div class="content">
+															<h3 class="title">
+																<a th:href="@{/funding/fundingDetail(f_num=${dto.f_num})}">[[${dto.f_title}]]</a>
+															</h3>
+															<span class="price">[[${dto.f_rate}]]%</span>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p style="text-align:center">[[${dto.f_bname}]]</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p style="text-align:center">[[${dto.f_enddate}]]</p>
+												</div>
+												<div class="col-lg-3 col-md-3 col-12 align-right">
+													<ul class="action-btn" style="text-align:center">
+														<form name="deleteFundingLikeButton" action="deleteFundinglikeButton" method="post">
+															<input type="hidden" name="m_num" th:value="${session.member.m_num}">
+															<input type="hidden" name="f_num" th:value="${dto.f_num}">
+															<li><a id="delete" type="submit"><i class="lni lni-trash"></i></a></li>
+														</form>
+													</ul>
+												</div>
+											</div>
+											<br>
+										</th:block>
+										</div>
+										<th:block th:replace="~{/include/page :: fundingLikeList('fundingLikeList', ${pageVO}) }"></th:block>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<div class="newsletter section">
+				<div class="container">
+					<div class="inner-content">
+						<div class="row align-items-center">
+							<div class="col-lg-6 col-md-6 col-12">
+								<div class="title">
+									<i class="lni lni-alarm"></i>
+									<h2>Newsletter</h2>
+									<p>We don't send spam so don't worry.</p>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+								<div class="form">
+									<form action="#" method="get" target="_blank"
+										class="newsletter-form">
+										<input name="EMAIL" placeholder="Your email address" type="email">
+										<div class="button">
+											<button class="btn">
+												Subscribe<span class="dir-part"></span>
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
+</th:block>
 </html>

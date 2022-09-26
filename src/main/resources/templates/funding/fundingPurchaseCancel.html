@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
+   <th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+      <section id="wrap">
+         <section class="items-grid section custom-padding">
+            <div class="container">
+               <div class="col-12">
+                  <div class="section-title">
+                     <h2 class="wow fadeInUp" data-wow-delay=".4s">결제 취소</h2>
+                  </div>
+               </div>
+               <section class="item-details section">
+                  <div class="container">
+                     <div class="top-area">
+                        <div class="row">
+                           <div class="text-sm pb-30">
+                              <div class="wow fadeInUp" data-wow-delay=".7s">
+                                 <div class="row">
+                                    <div class="col-12">
+                                       <div class="card">
+                                          <div class="card-header pb-0">
+                                             <h5 class="mb-5" style="text-align:center;">결제가 취소되었습니다.</h5>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="wow fadeInUp" data-wow-delay=".7s">
+                           <div class="col-12" align="center">
+                              <a type="submit" class="btn btn-success" th:href="@{/}">확인</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+         </section>
+      </section>
+   </th:block>
+</html>

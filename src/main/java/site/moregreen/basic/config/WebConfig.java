@@ -27,7 +27,30 @@ public class WebConfig implements WebMvcConfigurer {
 	
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/upload/profile/**").addResourceLocations("file:///upload/");
+        registry
+        		.addResourceHandler("/upload/**")
+        		.addResourceLocations("file:///D:/upload/");
+        
+        //404 에러
+        registry
+                .addResourceHandler( "/img/**")
+                .addResourceLocations("classpath:/static/img/");
+
+        registry
+		        .addResourceHandler( "/fonts/**")
+		        .addResourceLocations("classpath:/static/fonts/");
+
+        registry
+        		.addResourceHandler( "/scss/**")
+        		.addResourceLocations("classpath:/static/scss/");
+
+        registry
+                .addResourceHandler("/css/**")
+                .addResourceLocations("classpath:/static/css/");
+        
+        registry
+        		.addResourceHandler("/js/**")
+        		.addResourceLocations("classpath:/static/js/");
     }
 	
 }

@@ -1,107 +1,281 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-<th:block
-	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
-
-	<section id="wrap">
-
-	<section class="items-grid section custom-padding">
-	
-	
-				<div class="container">
-					<div class="row">
-						<div class="col-12">
-							<div class="section-title">
-								<h2 class="wow fadeInUp" data-wow-delay=".4s">펀딩 상세보기</h2>
-						
-							</div>
-						</div>
-					</div>
-					</div>
-	
-
-		<section class="item-details section">
-		<div class="container">
-			<div class="wow fadeInUp" data-wow-delay=".4s">
-				<div class="top-area">
-					<div class="row">
-						<div class="col-lg-6 col-md-12 col-12">
-							<div class="product-img">
-								<main id="gallery">
-									<div class="main-img">
-										<img src="/img/items-grid/img1.jpg" id="current" alt="#">
-									</div>
-									<!-- 	<div class="img">
-										<img src="/img/items-grid/img1.jpg" class="img"
-											alt="#">
-
-									</div> -->
-								</main>
-							</div>
-						</div>
-						<div class="col-lg-6 col-md-12 col-12">
-							<div class="product-info">
-								<h2 class="title">친환경 프로젝트 1</h2>
-
-								<h5 class="price">목표금액 000,000원</h5>
-								<h5 class="price">모금된금액 000,000원</h5>
-								<h6 class="">리워드 명</h6>
-								<div class="list-info">
-									<h4>Informations</h4>
-									<ul>
-										<li><span>Condition:</span> New</li>
-										<li><span>Brand:</span> Apple</li>
-										<li><span>Model:</span> Mackbook Pro</li>
-
-									</ul>
-
-									<div class="button">
-										<a href="javascript:void(0)" class="like"><i
-											class="lni lni-heart"></i> 찜하기</a>
-										<a class="btn" th:href="@{/funding/fundingPurchase}">
-										
-										펀딩하기</a>
+<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+		<section id="wrap">
+			<th:block th:each="dto : ${fundingList}">
+			<section class="items-grid section">
+				<section class="item-details section">
+				<form id="purchaseForm" name="purchaseForm" action="purchaseForm" method="post">
+					<input type="hidden" name="p_amount" value="1" id="p_amount">
+					<input type="hidden" name="p_total" th:value="${dto.f_price}" id="p_total">
+					<input type="hidden" name="f_num" th:value="${dto.f_num}" id="f_num">
+					<input th:if="${session.member} != null and ${session.member} != ''" type="hidden" name="m_num" th:value="${session.member.m_num}" id="m_num">
+				</form>
+				<div class="wow fadeInUp" data-wow-delay=".6s">
+					<div class="container">
+						<div class="top-area">
+							<div class="row">
+								<div class="col-lg-6 col-md-12 col-12">
+									<div class="product-images">
+										<main id="gallery">
+											<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+												<div class="carousel-indicators">
+													<button type="button"
+														data-bs-target="#carouselExampleCaptions"
+														data-bs-slide-to="0" class="active" aria-current="true"
+														aria-label="Slide 1"></button>
+													<button type="button"
+														data-bs-target="#carouselExampleCaptions"
+														data-bs-slide-to="1" aria-label="Slide 2"></button>
+													<button type="button"
+														data-bs-target="#carouselExampleCaptions"
+														data-bs-slide-to="2" aria-label="Slide 3"></button>
+												</div>
+												<div class="carousel-inner">
+													<th:block th:each="file, i : ${dto.files}">
+														<th:block th:if="${file.i_type == 1}">
+															<div class="carousel-item" th:classappend="${i.first} ? 'active' : ''" >
+																<img th:src="'/upload/main_' + ${file.uuid} + '_' + ${file.filename}" alt="#">
+															</div>
+														</th:block>
+													</th:block>
+												</div>
+												<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+													<span class="carousel-control-prev-icon" aria-hidden="true"></span> 
+													<span class="visually-hidden">Previous</span>
+												</button>
+												<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+													<span class="carousel-control-next-icon" aria-hidden="true"></span> 
+													<span class="visually-hidden">Next</span>
+												</button>
+											</div>
+										</main>
 									</div>
 								</div>
-
-
+								<div class="col-lg-6 col-md-12 col-12">
+									<div class="product-info">
+										<h2 class="title">[[${dto.f_title}]]</h2>
+										<p class="location">
+											<i class="lni lni-map-marker"></i>
+											<a>[[${dto.f_bname}]]</a>
+										</p>
+										<div class="list-info">
+											<ul>
+												<li><span>펀딩률</span><span style="text-align:right">[[${dto.f_rate}]]</span>%</li>
+												<li><span>D-DAY</span><span style="text-align:right">[[${dto.f_enddate}]]</span></li> <!-- Dto에서 처리 -->
+												<li><span>목표금액</span><span style="text-align:right">[[${dto.f_target}]]</span>원</li>
+												<li><span>모금된 금액</span><span style="text-align:right">[[${dto.f_totalmoney}]]</span>원</li>
+												<li><span>리워드 금액</span><span id="price" th:text="${dto.f_price}" style="text-align:right"></span>원</li>
+												<li><span>수량</span>
+													<span style="text-align:right">
+														<button class="btn" type="button" onclick='count1("minus")' value='-' >-</button>
+														<a data-value="" id="amount">1</a>
+														<button class="btn" type="button" onclick='count1("plus")' value='+' >+</button>
+													</span> 
+												</li>
+												<li>
+													<h5 class="price" >가격 : <span id="total" th:text="${dto.f_price}" style="text-align:right"></span>원</h5>
+												</li>
+											</ul>
+										</div>
+									<form id="addFundingLike" name="addFundingLike" action="addFundingLike" method="post">
+										<div class="button">
+											<div class="contact-info">
+												<ul>
+													<li >
+														<!-- <a class="mail"> 
+															<i class="lni lni-heart" onclick='addFundingLike(f_num,m_num)' id="likeImg"></i>
+															
+															<span>[[${dto.l_count}]]</span>
+														</a> -->
+															<button class="btn heart" type="button">
+																<i class="lni lni-heart" id="heart"></i>
+																<span th:if="${dto.l_count != null and dto.l_count != ''}">[[${dto.l_count}]]</span>
+																<span th:unless="${dto.l_count != null and dto.l_count != ''}">0</span>
+															</button>
+														<a th:if="${dto.f_status == 3}" class="btn" onClick="handleForm()" >펀딩하기</a>
+														<a th:unless="${dto.f_status == 3}" class="btn disabled" onClick="handleForm()">펀딩하기</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</form>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="item-details-blocks">
-					<div class="row">
-						<div class="col-lg-8 col-md-7 col-12">
-
-							<div class="single-block description">
-								<h3>소제목</h3>
-								<p>내용</p>
-								<ul>
-									<li>내용</li>
-									<li>내용</li>
-									<li>내용</li>
-									<li>내용</li>
-								</ul>
-								<p>내용</p>
+				<div class="wow fadeInUp" data-wow-delay=".7s">
+					<div class="container" align="center">
+						<div class="top-area" align="center">
+							<div class="row">
+								<div class="col-lg-6 col-md-12 col-12">
+									<div class="product-info">
+										<main id="gallery">
+											<div class="main-img" th:each="file : ${dto.files}">
+											<th:block th:if="${file.i_type == 2}">
+												<img th:src="'/upload/content_' + ${file.uuid} + '_' + ${file.filename}" alt="#" >
+											</div>
+										</main>
+									</div>
+								</div>
 							</div>
-
-
-
+							<div class="row" align="center">
+								<div class = "item-details-blocks" align="center">
+									<div class="single-block description" style="width: 1200px;" align="center">
+										[[${dto.f_content}]]
+									</div>
+								</div>			
+							</div>
 						</div>
-
 					</div>
-
 				</div>
-				</div>
-				
-
-			</div>
-
+				</section>
+				<a href="#" class="scroll-top btn-hover"> 
+					<i class="lni lni-chevron-up"></i>
+				</a>
+			</section>
+		</th:block>
 		</section>
-	
-	</section>
-
-
-	</section>
 </th:block>
+
+<script th:inline="javascript">
+
+	//검색버튼
+	function handleForm() {
+		//alert("alert");
+		//폼을 서브밋
+		event.preventDefault(); //a의 이동이벤트를 막는다.	
+		var session = [[${session.member}]];
+		//console.log("세션"+ session);
+		if(session == null){
+			alert("로그인 후 이용해주세요");
+			
+		} else{
+			document.purchaseForm.submit();
+		}
+		
+	}
+
+  const current = document.getElementById("current");
+  const opacity = 0.6;
+  const imgs = document.querySelectorAll(".img");
+  imgs.forEach(img => {
+      img.addEventListener("click", (e) => {
+          //reset opacity
+          imgs.forEach(img => {
+              img.style.opacity = 1;
+          });
+          current.src = e.target.src;
+          //adding class 
+          //current.classList.add("fade-in");
+          //opacity
+          e.target.style.opacity = opacity;
+      });
+  });
+  
+  // 수량 증가, 감소
+  function count1(type)  {
+	  // 결과를 표시할 element 
+	  const amountElement = document.getElementById('amount');
+	  const priceElement = document.getElementById('price');
+	  const totalElement = document.getElementById('total');
+	  
+	  // 현재 화면에 표시된 값
+	  let amount = amountElement.innerText;
+	  let price = priceElement.innerText;
+	  let total = totalElement.innerText;
+	  
+	  // 더하기/빼기
+	  if(amount >= 1) {
+		  if(type == 'plus') {
+			  amount = parseInt(amount) + 1;
+			  total = parseInt(price) * parseInt(amount);
+		  }else if(amount >= 2 && type == 'minus')  {
+			  amount = parseInt(amount) - 1;
+			  total = parseInt(price) * parseInt(amount);
+    	  }else if(amount == 1) {
+    		  alert("더이상 줄일 수 없습니다. ");
+    	  }
+	  }
+	  
+	  amountElement.innerText = amount;
+	  totalElement.innerText = total;
+	  amountElement.setAttribute('data-value', amount);
+	  document.getElementById('p_amount').value = amount;
+	  document.getElementById('p_total').value = total;
+	}
+
+  // 찜하기
+  $(document).ready(function () {
+
+      var heartval = [[${heart}]];
+      var heartByClass = $(".heart");
+      var fNumById = $("#f_num");
+      var mNumById = $("#m_num");
+      
+      var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val()};
+      
+      $.ajax({
+          url :'/like/checkFundingLike',
+          type :'POST',
+          data : sendData,
+          success : function(data){
+        	  if(data) {
+        	  	$('#heart').prop("class","lni lni-heart-filled");
+        	  }
+          }
+       });
+      
+      $(".heart").on("click", function () {
+    	  var session = [[${session.member}]];
+    	  event.preventDefault();
+    	  
+    	  if(session == null){
+  			alert("로그인 후 이용해주세요");
+  			
+  		  } else {
+  			 var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val()};
+  		      
+  		      $.ajax({
+  		          url :'/like/checkFundingLike',
+  		          type :'POST',
+  		          data : sendData,
+  		          success : function(data){
+  		        	  if(data) {
+  		        		  heartval = heartval - 1;
+  		        		  $(".heart").prop('name', heartval);
+  		        		  $(".heart").find('span').html(heartval);
+  		        		  $('#heart').prop("class","lni lni-heart");
+  		    			  var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val()};
+  		                  
+  		                  $.ajax({
+  		                      url :'/like/deleteFundingLike',
+  		                      type :'POST',
+  		                      data : sendData
+  		                  });
+  		              }
+  		              else{
+  		            	  heartval = heartval + 1;
+  		        		  $(".heart").prop('name', heartval);
+  		        		  $('#heart').prop("class","lni lni-heart-filled");
+  		    	    	  $(".heart").find('span').html(heartval);
+  		        		  
+  		    	    	  var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val(), 'heart' : heartByClass.prop('name')};
+  		                  
+  		                  $.ajax({
+  		                      url :'/like/fundingLike',
+  		                      type :'POST',
+  		                      data : sendData
+  		                  });
+  		              }
+  		          }
+  		      });
+  		  }
+  	   })
+	})
+
+</script>
+
 </html>

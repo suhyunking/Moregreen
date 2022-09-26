@@ -1,6 +1,9 @@
 package site.moregreen.basic.member;
 
+
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -10,9 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import lombok.extern.java.Log;
 import site.moregreen.basic.command.MemberDto;
+import site.moregreen.basic.util.Criteria;
 
 @Service("memberService")
+@Log
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
@@ -49,5 +55,92 @@ public class MemberServiceImpl implements MemberService {
 		public void logout(HttpSession session) {
 			
 		}
+		
+		@Override
+		public int findIdCheck(MemberDto memberDto) throws Exception {
+
+			return memberMapper.findIdCheck(memberDto);
+		}
+
+		@Override
+		public MemberDto findId(MemberDto memberDto) throws Exception {
+
+			return memberMapper.findId(memberDto);
+		}
+
+		@Override
+		public int updatePw(MemberDto memberDto) {
+			
+			 memberMapper.updatePw(memberDto);
+			 return 0;
+		}
+
+		@Override
+		public int exitMember(MemberDto memberDto, HttpSession session) {
+			
+			memberMapper.exitMember(memberDto);
+			return 0;
+		}
+
+		@Override
+		public int pwCheck(MemberDto memberDto) throws Exception {
+			
+			return memberMapper.pwCheck(memberDto);
+		}
+
+		@Override
+		public int checkEmail(MemberDto memberDto) {
+			
+			return memberMapper.existsByEmail(memberDto);
+		}
+
+		/** 임시 비밀번호 생성 **/
+	    @Override
+	    public String getTmpPassword() {
+	        char[] charSet = new char[]{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+	                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+	                'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+	        String str = "";
+
+	        /* 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 조합 */
+	        int idx = 0;
+	        for(int i = 0; i < 10; i++){
+	            idx = (int) (charSet.length * Math.random());
+	            str += charSet[idx];
+	        }
+
+	        log.info("임시 비밀번호 생성");
+
+	        return str;
+	    }
+	    
+	    @Override
+	    public int updatePassword(MemberDto memberDto) {
+
+	        memberMapper.findPassword(memberDto);
+	        
+	        return 0 ;
+	  
+	    }		
+		//관리자 회원 목록
+		@Override
+		public List<MemberDto> retrieveMemberList(Criteria cri) {
+			
+			return memberMapper.selectMemberList(cri);
+		}
+
+		@Override
+		public int retrieveTotal(Criteria cri) {
+			return memberMapper.selectTotal(cri);
+		}
+
+		@Override
+		public int retrievePw(String m_id, String m_email) {
+			return memberMapper.findPw(m_id, m_email);
+		}
+
+	
+	
 
 }

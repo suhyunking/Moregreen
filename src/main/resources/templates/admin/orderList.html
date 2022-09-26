@@ -20,32 +20,20 @@
 		<div class="d-sm-flex justify-content-between">
 			<div class="d-flex">
 				<div class="dropdown d-inline">
-					<a href="javascript:;"
-						class="btn btn-outline-dark dropdown-toggle "
-						data-bs-toggle="dropdown" id="navbarDropdownMenuLink2"> 결제 상태 </a>
-					<ul class="dropdown-menu dropdown-menu-lg-start px-2 py-3"
-						aria-labelledby="navbarDropdownMenuLink2"
-						data-popper-placement="left-start">
-						<li><a class="dropdown-item border-radius-md"
-							href="javascript:;">결제 완료</a></li>
-						<li><a class="dropdown-item border-radius-md"
-							href="javascript:;">결제 취소</a></li>
-						<li>
-							<hr class="horizontal dark my-2">
-						</li>
-						<li><a class="dropdown-item border-radius-md text-danger"
-							href="javascript:;">필터 초기화</a></li>
-					</ul>
+					<!-- <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" name="searchStatus" onchange="submit()">
+					  <option th:value="null"  th:selected="${pageVO.cri.searchStatus == '' }">전체</option>
+					  <option th:value="1" th:selected="${pageVO.cri.searchStatus == '1' }">결제 완료</option>
+					  <option th:value="2" th:selected="${pageVO.cri.searchStatus == '2' }">결제 취소</option>
+					</select> -->
 				</div>
 			</div>
 			<div class="ms-md-auto pe-md-3">
 				<div class="input-group input-group-outline">
-					<label class="form-label">주문 검색</label> 
-					<input type="text" class="form-control">
+					<!-- <input type="text" name="searchName" th:value="${pageVO.cri.searchName}" class="form-control" placeholder="펀딩 명칭 검색">  -->
 				</div>	
 			</div>
 			<div>
-				<button class="btn btn-icon btn-outline-dark ms-2 export">검색</button>
+				<a href="#" class="btn btn-icon btn-outline-dark ms-2 export" onclick="handleForm()">검색</a>
 			</div>
 		</div>
 		<div class="row">
@@ -72,54 +60,56 @@
 							<tbody>
 								<tr>
 									<td>
-										<span class="my-2 text-xs">1</span>
+										<span class="my-2 text-xs">${dto.p_num}</span>
 									</td>
 									<td class="font-weight-normal">
-										<span class="my-2 text-xs">동물복지 유정란</span>
+										<span class="my-2 text-xs">${dto.f_title}</span>
+									</td>
+									
+									<td th:if="${dto.f_status} == 3" class="text-sm"><span class="badge text-bg-success">진행중</span></td>
+									<td th:if="${dto.f_status} == 4" class="text-sm"><span class="badge text-bg-success">성공</span></td>
+									<td th:if="${dto.f_status} == 5" class="text-sm"><span class="badge text-bg-danger">실패</span></td>
+									
+									<td class="text-xs font-weight-normal">
+										<span class="my-2 text-xs">${dto.m_id}</span>
 									</td>
 									<td class="text-xs font-weight-normal">
-										<span class="my-2 text-xs">80%</span>
+										<span class="my-2 text-xs">${dto.p_total}원</span>
+									</td>
+									
+									<td th:if="${dto.p_payment} == 1" class="text-sm"><span class="badge text-bg-success">결제 완료</span></td>
+									<td th:if="${dto.p_payment} == 2" class="text-sm"><span class="badge text-bg-danger">결제 취소</span></td>
+									
+									<td class="text-xs font-weight-normal">
+										<span class="my-2 text-xs">${dto.p_date}</span>
 									</td>
 									<td class="text-xs font-weight-normal">
-										<span class="my-2 text-xs">test123@gmail.com</span>
-									</td>
-									<td class="text-xs font-weight-normal">
-										<span class="my-2 text-xs">14,020원</span>
-									</td>
-									<td class="text-xs font-weight-normal">
-										<span class="my-2 text-xs">결제 완료</span>
-									</td>
-									<td class="text-xs font-weight-normal">
-										<span class="my-2 text-xs">2022-09-14</span>
-									</td>
-									<td class="text-xs font-weight-normal">
-										<span class="my-2 text-xs">카카오페이</span>
+										<span th:if="${dto.p_method} == 1" class="my-2 text-xs">카카오페이</span>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 					<div class="dataTable-bottom">
-							<nav aria-label="Page navigation example">
-								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-									</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">4</a></li>
-									<li class="page-item"><a class="page-link" href="#">5</a></li>
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-									</a></li>
-								</ul>
-							</nav>
-						</div>
+						<th:block th:replace="~{/include/page :: test('fundingOrderList', ${pageVO}) }"></th:block>
+					</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		
 </th:block>
+
+<script type="text/javascript">
+	//검색버튼
+	function handleForm() {
+		//폼을 서브밋
+		event.preventDefault(); //a의 이동이벤트를 막는다.
+		document.fundingForm.submit();
+	}
+	
+	function submit() {
+		document.fundingForm.submit();
+	}
+</script>
 </html>

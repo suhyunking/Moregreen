@@ -1,11 +1,12 @@
 package site.moregreen.basic.util;
 
-import lombok.Data;
-import org.springframework.data.domain.Page;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.springframework.data.domain.Page;
+
+import lombok.Data;
 
 //Java 제네릭 클래스 (클래스에 고정된 형태로 값을 사용하는게 아니라, member를 넣고 싶을 땐 <Member> 이런식으로 저장 값이 달라도 기능만 똑같이 사용할 수 있다.
 @Data

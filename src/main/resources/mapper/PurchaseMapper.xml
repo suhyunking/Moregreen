@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="site.moregreen.basic.purchase.PurchaseMapper">
+   
+   <insert id="createDelivery" parameterType="DeliveryDto">
+  	    <selectKey resultType="int" keyProperty="d_num" order="AFTER">
+ 			select max(d_num) as d_num
+			from delivery
+ 		</selectKey>
+	 	insert into delivery(
+	 						d_name,
+	 						d_phone,
+	 						d_zipcode,
+	 						d_addr,
+	 						d_detailaddr
+	 						)
+	 				values(
+	 					   #{d_name},
+	 					   #{d_phone},
+	 					   #{d_zipcode},
+	 					   #{d_addr},
+	 					   #{d_detailaddr}
+	 					   )
+	 </insert>
+   
+	<insert id="createPurchase" parameterType="PurchaseDto">
+	 	insert into purchase(
+	 						p_payment,
+	 						p_amount,
+	 						p_total,
+	 						p_method,
+	 						p_tid,
+	 						p_date,
+	 						delivery_d_num,
+	 						funding_f_num,
+	 						member_m_num
+	 						)
+	 				values(
+	 					   1,
+	 					   #{p_amount},
+	 					   #{p_total},
+	 					   1,
+	 					   #{p_tid},
+	 					   #{p_date},
+	 					   #{d_num},
+	 					   #{f_num},
+	 					   #{m_num}
+	 					   )
+	 </insert>
+	 
+	 <select id="updateFunding" resultType="int" parameterType="FundingDto">
+
+		update funding
+		set f_rate = #{f_rate},
+			f_totalmoney = #{f_totalmoney}
+		where f_num = #{f_num}
+
+	</select>
+
+</mapper>

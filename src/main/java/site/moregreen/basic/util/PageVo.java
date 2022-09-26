@@ -53,7 +53,6 @@ public class PageVo {
 		if(this.end > this.realEnd) {
 			this.end = this.realEnd;
 		}
-		
 		//이전페이지 여부
 		//시작페이지 1, 11, 21, 31, 41... 이라서 11이상 부터는 true
 		this.prev = this.start > 1;

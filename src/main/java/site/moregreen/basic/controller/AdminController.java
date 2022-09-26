@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import site.moregreen.basic.command.FundingDto;
 import site.moregreen.basic.command.MemberDto;
-import site.moregreen.basic.command.UploadDto;
 import site.moregreen.basic.funding.FundingService;
 import site.moregreen.basic.member.MemberService;
 import site.moregreen.basic.util.Criteria;
@@ -27,14 +26,14 @@ import site.moregreen.basic.util.PageVo;
 @RequestMapping("/admin")
 public class AdminController {
 		
+	@Value("${project.upload.path}")
+	private String uploadPath;
+	 
 	@Autowired
 	@Qualifier("fundingService")
 	FundingService fundingService;	
 
-	@Value("${project.upload.path}")
-	private String uploadPath;
-
-	@Autowired
+	@Autowired()
 	@Qualifier("memberService")
 	MemberService memberService;
 	
@@ -42,19 +41,15 @@ public class AdminController {
 	public String adminportal() {
 		return "admin/adminportal";
 	}
-	
 
-	//로그인
-
-
-	@GetMapping("/login")
+	@GetMapping
 	public String signIn() {
 		
 		return "admin/adminSignin";
 	}
 	
 	@PostMapping("/loginForm")
-	public String loginForm(MemberDto memberDto, HttpServletRequest req, RedirectAttributes rttr ) throws Exception {
+	public String loginForm(MemberDto memberDto, HttpServletRequest req, RedirectAttributes rttr, Model model ) throws Exception {
 		HttpSession session =req.getSession();
 		 MemberDto member=  memberService.loginMember(memberDto);
 		
@@ -69,10 +64,10 @@ public class AdminController {
 			session.setAttribute("member", null);
 			rttr.addFlashAttribute("msg", false);
 			//System.out.println("로그인 안됨");
-			
+			model.addAttribute("fail", 1);
 		}
 		
-		return"redirect:/admin/login";
+		return"redirect:/admin";
 	}
 
 	@GetMapping("/fundingList")
@@ -87,12 +82,12 @@ public class AdminController {
 
 		return "admin/fundingList";
 	}
-
+	
 	@GetMapping("/fundingApplyList")
 	public String fundingApplyList(Model model, Criteria cri, HttpSession session) {
 
 		List<FundingDto> list = fundingService.retrieveFundingApplyList(cri);
-		int total = fundingService.retrieveTotal(cri);
+		int total = fundingService.retrieveApplyListTotal(cri);
 		PageVo pageVO = new PageVo(cri, total);
 
 		model.addAttribute("list", list);
@@ -106,12 +101,8 @@ public class AdminController {
 	public String fundingConfirm(@RequestParam("f_num") int f_num,
 								 Model model) {
 
-		FundingDto dto = fundingService.retrieveFundingDetail(f_num);
-		model.addAttribute("dto", dto);
-
-		List<UploadDto> list = fundingService.retrieveFundingDetailImg(f_num);
-		model.addAttribute("list", list);
-
+		List<FundingDto> fundingList = fundingService.retrieveFundingDetail(f_num);
+		model.addAttribute("fundingList", fundingList);
 
 		return "admin/fundingConfirm";
 	}
@@ -121,8 +112,8 @@ public class AdminController {
 	public String fundingModify(@RequestParam("f_num") int f_num,
 								Model model) {
 		
-		FundingDto dto = fundingService.retrieveFundingDetail(f_num);
-		model.addAttribute("dto", dto);
+		List<FundingDto> fundingList = fundingService.retrieveFundingDetail(f_num);
+		model.addAttribute("fundingList", fundingList);
 		
 		return "admin/fundingModify";
 	}
@@ -130,9 +121,9 @@ public class AdminController {
 	@PostMapping("/modifyFunding")
 	public String modifyFunding(FundingDto dto, RedirectAttributes RA) {
 		
-		boolean result = fundingService.modifyFunding(dto);
+		int result = fundingService.modifyFunding(dto);
 		//메시지처리(리다이렉트 시 1회성 메시지를 보내는 방법)
-		if(result) {
+		if(result == 1) {
 			RA.addFlashAttribute("msg", "수정 되었습니다");
 		} else {
 			RA.addFlashAttribute("msg", "수정에 실패했습니다");
@@ -146,8 +137,16 @@ public class AdminController {
 		return "admin/orderList";
 	}
 	
-	@GetMapping("userList")
-	public String userList() {
+	@GetMapping("/userList")
+	public String userList(Model model, Criteria cri, HttpSession session) {
+		
+		  System.out.println("================" + cri.getM_id());
+		  List<MemberDto> list= memberService.retrieveMemberList(cri); 
+		  int total=memberService.retrieveTotal(cri); 
+		  PageVo pageVO= new PageVo(cri,total); 
+		  model.addAttribute("list", list); 
+		  model.addAttribute("pageVO", pageVO);
+		 
 		return "admin/userList";
 	}
 	

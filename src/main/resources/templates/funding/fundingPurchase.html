@@ -1,62 +1,162 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-<th:block
-	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+   <section id="wrap">
+      <section class="items-grid section custom-padding">
+         <div class="container">
+            <div class="col-12">
+               <div class="section-title">
+                  <h2 class="wow fadeInUp" data-wow-delay=".4s">결제하기</h2>
+                  <p class="wow fadeInUp" data-wow-delay=".6s">배송지를 입력해주시기바랍니다.</p>
+               </div>
+            </div>
+            <section class="item-details section"></section>
+               <div class="container" >
+                  <div class="top-area">
+                     <div class="row" th:each="fundingDto : ${fundingList}">
+                     <form class="row g-3" action="/kakaoPay" method="post">
+                     	<input type="hidden" name="f_num" th:value="${fundingDto.f_num}">
+                     	<input type="hidden" name="f_reward" th:value="${fundingDto.f_reward}">
+                     	<input type="hidden" name="f_totalmoney" th:value="${fundingDto.f_totalmoney}">
+                     	<input type="hidden" name="p_amount" th:value="${purchaseDto.p_amount}">
+                     	<input type="hidden" name="p_total" th:value="${purchaseDto.p_total}">
+                     	<input type="hidden" name="m_id" th:value="${session.member.m_id}">
+                     	<input type="hidden" name="m_num" th:value="${session.member.m_num}">
+                        <div class="text-sm pb-30">
+                           <div class="wow fadeInUp" data-wow-delay=".7s">
+                              <div class="row">
+                                 <div class="col-12">
+                                    <div class="card">
+                                       <div class="card-header pb-0">
+                                          <h5 class="mb-5" style="text-align:center;">펀딩 내역</h5>
+                                       </div>
+                                       <div class="card-body px-0 pb-0"><!-- test -->
+                                          <div class="table-responsive">
+                                             <table class="table align-middle" id="funding-list" th:each="fundingDto : ${fundingList}">
+                                                <thead class="thead-light">
+                                                   <tr>
+                                                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">펀딩명</th>
+                                                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">리워드 명</th>
+                                                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">리워드 금액</th>
+                                                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">수량</th>
+                                                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">합계</th>
+                                                   </tr>
+                                                </thead>
+                                                <tr>
+                                                   <td class="text-sm" style="text-align:center;">[[${fundingDto.f_title}]]</td>
+                                                   <td class="text-sm" style="text-align:center;">[[${fundingDto.f_reward}]]</td>
+                                                   <td class="text-sm" style="text-align:center;">[[${fundingDto.f_price}]]</td>
+                                                   <td class="text-sm" style="text-align:center;">[[${purchaseDto.p_amount}]]</td>
+                                                   <td class="text-sm" style="text-align:center;">[[${purchaseDto.p_total}]]</td>
+                                                </tr>
+                                             </table>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="wow fadeInUp" data-wow-delay=".9s">
+	                        <div class="col-md-6">
+	                           <label for="inputName" class="form-label">받으시는 분</label> 
+	                           <input type="text" class="form-control" id="inputName" name="d_name" th:value="${deliveryDto} != null and ${deliveryDto} != '' ? ${deliveryDto.d_name}">
+	                        </div>
+	                        <div class="col-md-6">
+	                           <label for="inputPhoneNum4" class="form-label">연락처</label> 
+	                           <input type="text" class="form-control" id="inputPhoneNum" name="d_phone" th:value="${deliveryDto} != null and ${deliveryDto} != '' ? ${deliveryDto.d_phone}">
+	                        </div>
+	                        <div class="col-md-4">
+	                           <label for="inputAddress" class="form-label">우편번호</label> 
+	                           <input type="button" id="inputAddress" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+	                           <input type="text" class="form-control" id="sample4_postcode" name="d_zipcode" th:value="${deliveryDto} != null and ${deliveryDto} != '' ? ${deliveryDto.d_zipcode}" >
+	                        </div>
+	                        <div class="col-12">
+	                           <label for="inputAddress" class="form-label">도로명주소</label> 
+	                           <input type="text" class="form-control" id="sample4_roadAddress" name="d_addr" th:value="${deliveryDto} != null and ${deliveryDto} != '' ? ${deliveryDto.d_addr}" placeholder="기본주소" >
+	                        </div>
+	                        <span id="guide" style="color:#999;display:none"></span>
+	                        <div class="col-12">
+	                           <label for="inputAddress2" class="form-label">상세주소</label> 
+	                           <input type="text" class="form-control" id="sample4_detailAddress" name="d_detailaddr" th:value="${deliveryDto} != null and ${deliveryDto} != '' ? ${deliveryDto.d_detailaddr}" placeholder="상세주소">
+	                        </div>
+	                        <!-- <div class="col-12">
+	                           <label for="inputAddress2" class="form-label">참고항목</label> 
+	                           <input type="text" class="form-control" id="sample4_extraAddress" name="d_extraaddr" th:value="${dto != null ? d_detailaddr : '' }" placeholder="상세주소">
+	                        </div> -->
+                 		</div>
+                        <br>
+                        <div class="col-12">
+                           <h5 class="mb-3">결제방법</h5>
+                           <div class="form-check">
+                              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                              <label class="form-check-label" for="flexRadioDefault2">
+                                 <img src="/img/payment_icon_yellow_small.png" width="50px" height="23px" alt="">
+                              </label>
+                           </div>
+                        </div>
+                        <div class="col-12" align="center">
+                           <button class="btn btn-success">결제하기</button>
+                        </div>
+                       	</form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </section>
+         </section>
+   </th:block>
+   
+   <script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-	<section id="wrap">
-		<section class="items-grid section custom-padding">
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
 
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
 
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div class="section-title">
-							<h2 class="wow fadeInUp" data-wow-delay=".4s">결제하기</h2>
-							<p class="wow fadeInUp" data-wow-delay=".6s">배송지를 입력해주시기
-								바랍니다.</p>
-						</div>
-					</div>
-					<div class="container">
-					<h3 class="wow fadeInUp" data-wow-delay=".7s">펀딩명</h3>
-					
-					<h5 class="wow fadeInUp" data-wow-delay=".7s">리워드 명</h5>
-				</div>
-</div>
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;
+                
+               /*  // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                } */
 
-				<div class="wow fadeInUp" data-wow-delay=".9s">
-					<form class="row g-3">
-						<div class="col-md-6">
-							<label for="inputName" class="form-label">이름</label> <input
-								type="text" class="form-control" id="inputName">
-						</div>
-						<div class="col-md-6">
-							<label for="inputPhoneNum4" class="form-label">연락처</label> <input
-								type="text" class="form-control" id="inputPhoneNum">
-						</div>
-						<div class="col-12">
-							<label for="inputAddress" class="form-label">주소</label> <input
-								type="text" class="form-control" id="inputAddress">
-						</div>
-						<div class="col-12">
-							<label for="inputAddress2" class="form-label">상세주소</label> <input
-								type="text" class="form-control" id="inputAddress2"
-								placeholder="Apartment, studio, or floor">
-						</div>
-
-						<div class="col-12" align="center">
-							<a type="submit" class="btn btn-primary"
-								th:href="@{/funding/fundingPurchaseResult}">결제하기 </a>
-						</div>
-					</form>
-
-
-
-				</div>
-			</div>
-
-
-
-		</section>
-	</section>
-</th:block>
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+    }
+</script>
 </html>

@@ -1,245 +1,121 @@
+<!-- 펀딩 구매 내역 -->
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
 <th:block
 	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
-
-	<section id="wrap">
-
-		<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png"/>
- 		<link rel="icon" type="image/png" href="/img/moregreen.png"/>
-		<link rel="stylesheet" type="text/css"
-			href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-		<link href="/css/nucleo-icons.css" rel="stylesheet" />
-		<link href="/css/nucleo-svg.css" rel="stylesheet" />
-		<link href="/css/main.css" rel="stylesheet" />
-		<link
-			href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-			rel="stylesheet" />
-		<link id="pagestyle" href="/css/material-dashboard.css?v=3.0.4"
-			rel="stylesheet" /> -->
-<!-- 		<script src="https://kit.fontawesome.com/42d5adcbca.js"
-			crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script th:inline="javascript">
-			$(document)
-					.ready(
-							function() {
-								var menu = JSON.parse('[[${menu}]]'); //문자열
-								$(".navbar-nav li a")
-										.each(
-												function(index, value) {
-
-													if ($(value).attr('href') == menu) {
-														$(value)
-																.attr('class',
-																		'nav-link text-white active bg-gradient-primary');
-													}
-												});
-							});
-		</script>
-		<script src="/js/core/popper.min.js"></script>
-		<script src="/js/core/bootstrap.min.js"></script>
-		<script src="/js/plugins/perfect-scrollbar.min.js"></script>
-		<script src="/js/plugins/smooth-scrollbar.min.js"></script>
-		<script>
-			var win = navigator.platform.indexOf('Win') > -1;
-			if (win && document.querySelector('#sidenav-scrollbar')) {
-				var options = {
-					damping : '0.5'
-				}
-				Scrollbar.init(document.querySelector('#sidenav-scrollbar'),
-						options);
-			}
-		</script>
-		<script async defer src="https://buttons.github.io/buttons.js"></script>
-		<script src="/js/material-dashboard.min.js?v=3.0.4"></script>
- -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<div class="container-fluid py-4">
-			<div class="d-sm-flex justify-content-between">
-				<div class="d-flex">
-					<div class="dropdown d-inline">
-						<a href="javascript:;"
-							class="btn btn-outline-dark dropdown-toggle "
-							data-bs-toggle="dropdown" id="navbarDropdownMenuLink2"> 전체 </a>
-						<ul class="dropdown-menu dropdown-menu-lg-start px-2 py-3"
-							aria-labelledby="navbarDropdownMenuLink2"
-							data-popper-placement="left-start">
-							<li><a class="dropdown-item border-radius-md"
-								href="javascript:;">전체</a></li>
-							<li><a class="dropdown-item border-radius-md"
-								href="javascript:;">심사중</a></li>
-							<li><a class="dropdown-item border-radius-md"
-								href="javascript:;">반려</a></li>
-							<li><a class="dropdown-item border-radius-md"
-								href="javascript:;">진행중</a></li>
-							<li><a class="dropdown-item border-radius-md"
-								href="javascript:;">종료</a></li>
-						</ul>
-					</div>
-					<!-- <button class="btn btn-icon btn-outline-dark ms-2 export"
-					data-type="csv" type="button">
-					<i class="material-icons text-xs position-relative">archive</i>
-					Export CSV
-				</button> -->
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<div class="card">
-						<div class="card-header">
-							<h5 class="mb-0">내가 만든 프로젝트</h5>
-							<p class="text-sm mb-0">생성하신 프로젝트 내역이 표시됩니다.</p>
+	<body>
+		<section id="wrap">
+			<div class="breadcrumbs">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="breadcrumbs-content">
+								<h1 class="page-title">내가 만든 프로젝트</h1>
+							</div>
 						</div>
-						<div class="table-responsive">
-							<table class="table table-flush" id="datatable-search">
-								<thead class="thead-light">
-									<tr>
-										<th>번호</th>
-										<th>신청일</th>
-										<!-- <th>결제 상태</th> -->
-										<th>프로젝트명</th>
-										<th>펀딩률</th>
-										<th>개설 신청 여부</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td class="text-xs font-weight-normal ms-2 mb-0"><span
-											class="my-2 text-xs">1</span></td>
-										<td class="font-weight-normal"><span class="my-2 text-xs">2022-09-11</span></td>
-										<!-- 									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<button
-												class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-												<i class="material-icons text-sm" aria-hidden="true">clear</i>
-											</button>
-											<span>결제취소</span>
-										</div>
-									</td> -->
-										<td class="text-xs font-weight-normal">
-											<div class="d-flex align-items-center">
-												<span>[한달3000그릇]홍대역 줄서야 먹을수있는 맛집 시그니처 메뉴를 밀키트로</span>
-											</div>
-										</td>
-										<td class="text-xs font-weight-normal"><span
-											class="my-2 text-xs">0%</span></td>
-										<td class="text-xs font-weight-normal"><span
-											class="my-2 text-xs">심사중</span></td>
-									</tr>
-									<tr>
-										<td class="text-xs font-weight-normal ms-2 mb-0"><span
-											class="my-2 text-xs">2</span></td>
-										<td class="font-weight-normal"><span class="my-2 text-xs">2022-09-12</span></td>
-										<!-- 									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<button
-												class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-												<i class="material-icons text-sm" aria-hidden="true">done</i>
-											</button>
-											<span>결제완료</span>
-										</div>
-									</td> -->
-										<td class="text-xs font-weight-normal">
-											<div class="d-flex align-items-center">
-												<span>[누적1억,돌아온 캠지] 캠핑, 운전하는데 캠지필드가 없다고?</span>
-											</div>
-										</td>
-										<td class="font-weight-normal"><span class="my-2 text-xs">0%</span></td>
-										<td class="font-weight-normal"><span class="my-2 text-xs">반려</span></td>
-									</tr>
-									<tr>
-										<td class="text-xs font-weight-normal ms-2 mb-0"><span
-											class="my-2 text-xs">3</span></td>
-										<td class="font-weight-normal"><span class="my-2 text-xs">2022-09-13</span></td>
-										<!-- 									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<button
-												class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-												<i class="material-icons text-sm" aria-hidden="true">refresh</i>
-											</button>
-											<span>환불처리</span>
-										</div>
-									</td> -->
-										<td class="text-xs font-weight-normal">
-											<div class="d-flex align-items-center">
-												<span>4.9점앵콜|세라마이드 폭탄 아직도 안써보셨어요? 보습끝판왕 세라밤!</span>
-											</div>
-										</td>
-										<td class="text-xs font-weight-normal"><span
-											class="my-2 text-xs">90%</span></td>
-										<td class="text-xs font-weight-normal"><span
-											class="my-2 text-xs">진행중</span></td>
-									</tr>
-									<tr>
-										<td class="text-xs font-weight-normal ms-2 mb-0"><span
-											class="my-2 text-xs">4</span></td>
-										<td class="font-weight-normal"><span class="my-2 text-xs">2022-09-10</span></td>
-										<!-- 									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<button
-												class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-												<i class="material-icons text-sm" aria-hidden="true">refresh</i>
-											</button>
-											<span>환불처리</span>
-										</div>
-									</td> -->
-										<td class="text-xs font-weight-normal">
-											<div class="d-flex align-items-center">
-												<span>[와디즈 독점공개] T1 롤드컵 우승 기원 한정판 피규어&져지 사인 굿즈</span>
-											</div>
-										</td>
-										<td class="text-xs font-weight-normal"><span
-											class="my-2 text-xs">120%</span></td>
-										<td class="text-xs font-weight-normal"><span
-											class="my-2 text-xs">종료</span></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="dataTable-bottom">
-							<nav aria-label="Page navigation example">
-								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-									</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">4</a></li>
-									<li class="page-item"><a class="page-link" href="#">5</a></li>
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-									</a></li>
-								</ul>
-							</nav>
+						<div class="col-lg-6 col-md-6 col-12">
+							<ul class="breadcrumb-nav">
+								<li><a href="/">홈</a></li>
+								<li>내가 만든 프로젝트</li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+			<section class="dashboard section">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 col-md-12 col-12">
+							<div class="dashboard-sidebar">
+								<div class="user-image">
+									<h3>회원아이디 <span><a href="javascript:void(0)">이름?이메일?</a></span></h3>
+								</div>
+								<div class="dashboard-menu">
+									<ul>
+										<li><a href="purchaseList"><i class="lni lni-dashboard"></i> 펀딩 구매 내역</a></li>
+										<li><a class="active" href="myProjectList"><i class="lni lni-pencil-alt"></i> 내가 만든 프로젝트</a></li>
+										<li><a href="fundingLikeList"><i class="lni lni-heart"></i> 찜목록</a></li>
+										<li><a href="messages.html"><i class="lni lni-envelope"></i> PW변경</a></li>
+										<li><a href="delete-account.html"><i class="lni lni-trash"></i> 회원 탈퇴</a></li>
+									</ul>
+									<div class="button">
+										<a class="btn" href="javascript:void(0)">Logout</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-9 col-md-12 col-12">
+							<!-- <form name="fundingForm" action="myProjectList" method="get"> -->
+								<div class="main-content">
+									<div class="dashboard-block mt-0">
+										<!-- <div class="d-sm-flex justify-content-between">
+											<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
+												<select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" name="searchStatus" onchange="submit()">
+													<option th:value="null" th:selected="${pageVO.cri.searchStatus == '' }">전체</option>
+													<option th:value="3" th:selected="${pageVO.cri.searchStatus == '1' }">심사중</option>
+													<option th:value="3" th:selected="${pageVO.cri.searchStatus == '2' }">반려</option>
+													<option th:value="3" th:selected="${pageVO.cri.searchStatus == '3' }">진행중</option>
+													<option th:value="4" th:selected="${pageVO.cri.searchStatus == '4' }">성공</option>
+													<option th:value="5" th:selected="${pageVO.cri.searchStatus == '5' }">실패</option>
+												</select>
+											</div>
+										</div> -->
+										<h3 class="block-title">내가 만든 프로젝트</h3>
+										<div class="invoice-items default-list-style">
+											<div class="default-list-title">
+												<div class="row align-items-center">
+													<div class="col-lg-4 col-md-4 col-12"><p>프로젝트명</p></div>
+													<div class="col-lg-2 col-md-2 col-12"><p>상호명</p></div>
+													<div class="col-lg-2 col-md-2 col-12"><p>펀딩률</p></div>
+													<div class="col-lg-2 col-md-2 col-12"><p>신청일</p></div>
+													<div class="col-lg-2 col-md-2 col-12"><p>개설 신청 여부</p></div>
+												</div>
+											</div>
+											<div class="single-list">
+												<th:block th:each="dto : ${list}">
+													<div class="row align-items-center">
+														<div class="col-lg-4 col-md-4 col-12"><p th:href="@{/funding/fundingDetail(f_num=${dto.f_num})}">[[${dto.f_title}]]<span>[[${dto.f_price}]]원</span></p></div>
+														<div class="col-lg-2 col-md-2 col-12"><p>[[${dto.f_bname}]]</p></div>
+														<div class="col-lg-2 col-md-2 col-12"><p>[[${dto.f_rate}]]%</p></div>
+														<div class="col-lg-2 col-md-2 col-12"><p>[[${dto.f_regdate}]]</p></div>
+														<div class="col-lg-2 col-md-2 col-12">
+															<td th:if="${dto.f_status} == 1" class="text-sm"><span class="row align-items-center">심사중 </td>
+															<td th:if="${dto.f_status} == 2" class="text-sm"><span class="row align-items-center">반려 </td>
+															<td th:if="${dto.f_status} == 3" class="text-sm"><span class="row align-items-center">진행중 </td>
+															<td th:if="${dto.f_status} == 4" class="text-sm"><span class="row align-items-center">성공 </td>
+															<td th:if="${dto.f_status} == 5" class="text-sm"><span class="row align-items-center">실패 </td>
+														</div>
+													</div>
+												</th:block>
+											</div>
+											<th:block th:replace="~{/include/page :: myProjectList('myProjectList', ${pageVO}) }"></th:block>
+										</div>
+									</div>
+								</div>
+							<!-- </form> -->
+						</div>
+					</div>
+				</div>
+			</section>
+			</div>
+			</div>
+			</div>
+		</section>
+	</body>
+	</div>
+	</div>
 </th:block>
+
+<script type="text/javascript">
+	//검색버튼
+	function handleForm() {
+		//폼을 서브밋
+		event.preventDefault(); //a의 이동이벤트를 막는다.
+		document.fundingForm.submit();
+	}
+	function submit() {
+		document.fundingForm.submit();
+	}
+</script>
+
 </html>

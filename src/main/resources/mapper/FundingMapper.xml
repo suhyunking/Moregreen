@@ -22,43 +22,43 @@
 	from funding
 	where f_status in (3,4,5)
 	order by f_num desc;
-
   </select>
   
   <select id="selectFundingListImg" parameterType="site.moregreen.basic.util.Criteria" resultType="UploadDto">
-
 		select i_name as filename, i_path as filepath, i_uuid as uuid
 		from image
 		where funding_f_num = #{f_num}
-
   </select> -->
   <resultMap id="selectFundingListMap" type="FundingDto">
-  <result property="f_num" column="f_num"/>
-  <result property="f_title" column="f_title"/>
-  <result property="f_content" column="f_content"/>
-  <result property="f_days" column="f_days"/>
-  <result property="f_enddate" column="f_enddate"/>
-  <result property="f_target" column="f_target"/>
-  <result property="f_totalmoney" column="f_totalmoney"/>
-  <result property="f_rate" column="f_rate"/>
-  <result property="f_status" column="f_status"/>
-  <result property="f_reward" column="f_reward"/>
-  <result property="f_price" column="f_price"/>
-  <result property="f_bname" column="f_bname"/>
-  <result property="f_bnum" column="f_bnum"/>
-  <result property="m_num" column="m_num"/>
-  <result property="f_regdate" column="f_regdate"/>
+	  <result property="f_num" column="f_num"/>
+	  <result property="f_title" column="f_title"/>
+	  <result property="f_content" column="f_content"/>
+	  <result property="f_days" column="f_days"/>
+	  <result property="f_enddate" column="f_enddate"/>
+	  <result property="f_target" column="f_target"/>
+	  <result property="f_totalmoney" column="f_totalmoney"/>
+	  <result property="f_rate" column="f_rate"/>
+	  <result property="f_status" column="f_status"/>
+	  <result property="f_reward" column="f_reward"/>
+	  <result property="f_price" column="f_price"/>
+	  <result property="f_bname" column="f_bname"/>
+	  <result property="f_bnum" column="f_bnum"/>
+	  <result property="m_num" column="member_m_num"/>
+	  <result property="m_id" column="m_id"/>
+	  <result property="f_regdate" column="f_regdate"/>
+	  <result property="l_count" column="l_count"/>
   <collection property="files" ofType="UploadDto">
-    <id property="upload_no" column="i_num"/> <!-- column은 DB의 column 이름, property는 DTO의 명칭  -->
+    <id property="upload_no" column="inum"/> <!-- column은 DB의 column 이름, property는 DTO의 명칭  -->
+    <result property="i_num" column="i_num"/>
     <result property="filename" column="filename"/>
-    <result property="filepath" column="filepath"/>
     <result property="uuid" column="uuid"/>
     <result property="f_num" column="f_num"/>
+    <result property="i_type" column="i_type"/>
   </collection>
 </resultMap>
 
-  <select id="selectFundigList" parameterType="site.moregreen.basic.util.Criteria" resultMap="selectFundingListMap">
-	<!--  -->
+  <select id="selectFundingList" parameterType="site.moregreen.basic.util.Criteria" resultMap="selectFundingListMap">
+
 	select f.f_num as f_num,
 		   f.f_title as f_title,
 		   f.f_content as f_content,
@@ -72,16 +72,89 @@
 		   f.f_price as f_price,
 		   f.f_bname as f_bname,
 		   f.f_bnum as f_bnum,
+		   f.f_regdate as f_regdate,
+		   f.member_m_num as m_num,
+		   i.i_num as i_num,
 		   i.i_name as filename,
-		   i.i_path as filepath,
-		   i.i_uuid as uuid
-	  from funding f
-	       left outer join image i 
-	       on f.f_num = i.funding_f_num 
+		   i.i_uuid as uuid,
+		   i.i_type as i_type
+	  from funding f left outer join image i 
+	  				 on f.f_num = i.funding_f_num
 	  where f.f_status in (3,4,5)
-	  order by f.f_num desc;
+      and i.i_type = 1
+      <if test="searchName != '' and searchName != null"> 
+	  and f.f_title like concat('%', #{searchName} ,'%')
+	  </if>
+	  <if test="searchStatus != '' and searchStatus != null"> 
+	  and f.f_status = #{searchStatus}
+	  </if>
+      group by f.f_num
+	  order by 
+	  <if test="searchAlign == 'asc' ">
+ 			f.f_enddate asc,
+ 	  </if>
+ 	  f.f_status asc,
+ 	  f.f_num desc
+	  limit #{pageStart}, #{amount}
+    
+  </select>
+  
+  <select id="selectAdminFundingList" parameterType="site.moregreen.basic.util.Criteria" resultMap="selectFundingListMap">
+
+	select f.f_num as f_num,
+		   f.f_title as f_title,
+		   f.f_content as f_content,
+		   f.f_days as f_days,
+		   f.f_enddate as f_enddate,
+		   f.f_target as f_target,
+		   f.f_totalmoney as f_totalmoney,
+		   f.f_rate as f_rate,
+		   f.f_status as f_status,
+		   f.f_reward as f_reward,
+		   f.f_price as f_price,
+		   f.f_bname as f_bname,
+		   f.f_bnum as f_bnum,
+		   f.f_regdate as f_regdate,
+		   f.member_m_num as m_num
+	  from funding f
+	  where f.f_status in (3,4,5)
+      <if test="searchName != '' and searchName != null"> 
+	  and f.f_title like concat('%', #{searchName} ,'%')
+	  </if>
+	  <if test="searchStatus != '' and searchStatus != null"> 
+	  and f.f_status = #{searchStatus}
+	  </if>
+	  order by f.f_num desc
+	  limit #{pageStart}, #{amount}
 
   </select>
+
+  <select id="selectFundingDetail" parameterType="int" resultMap="selectFundingListMap">
+
+		select f.f_num as f_num,
+			   f.f_title as f_title,
+			   f.f_content as f_content,
+			   f.f_days as f_days,
+			   f.f_enddate as f_enddate,
+			   f.f_target as f_target,
+			   f.f_totalmoney as f_totalmoney,
+			   f.f_rate as f_rate,
+			   f.f_status as f_status,
+			   f.f_reward as f_reward,
+			   f.f_price as f_price,
+			   f.f_bname as f_bname,
+			   f.f_bnum as f_bnum,
+			   (select m.m_id from member m where m.m_num = f.member_m_num) as m_id,
+			   (select COUNT(l.l_num) from likefunding l where l.funding_f_num = f.f_num group by (funding_f_num)) as l_count,
+			   i.i_num as i_num,
+			   i.i_name as filename,
+			   i.i_uuid as uuid,
+			   i.i_type as i_type
+		from funding f left outer join image i 
+	  	on f.f_num = i.funding_f_num 
+	 	where f.f_num = #{f_num}
+
+	</select>
 
   <insert id="createFunding" parameterType="site.moregreen.basic.command.FundingDto">
   		<selectKey resultType="int" keyProperty="f_num" order="AFTER">
@@ -115,14 +188,12 @@
   <insert id="createFundingFile" parameterType="site.moregreen.basic.command.UploadDto">
  		insert into image(
  						 i_name,
-					     i_path,
 					     i_uuid,
 					     i_type,
 					     funding_f_num	
 					     )
 		 		 values(
 		 				#{filename},
-		 			   	#{filepath},
 		 			  	#{uuid},
 		 			  	#{filetype},
 		 			  	#{f_num}
@@ -131,11 +202,32 @@
 
 	<select id="selectFundingApplyList" parameterType="site.moregreen.basic.util.Criteria" resultType="FundingDto">
 
-		select *
-		from funding
-		where f_status in (1,2)
-		order by f_num desc
-		limit #{pageStart}, #{amount}
+		select f.f_num as f_num,
+			   f.f_title as f_title,
+			   f.f_days as f_days,
+			   f.f_status as f_status,
+			   f.f_bname as f_bname,
+			   (select m.m_id from member m where m.m_num = f.member_m_num) as m_id,
+			   f.f_regdate as f_regdate
+		from funding f
+	 	where f.f_status in (1,2)
+	 	<if test="searchName != '' and searchName != null"> 
+	    and f.f_title like concat('%', #{searchName} ,'%')
+	    </if>
+	    <if test="searchStatus != '' and searchStatus != null"> 
+	    and f.f_status = #{searchStatus} 
+	    </if>
+	    order by f.f_num desc
+	    limit #{pageStart}, #{amount}
+
+	</select>
+	
+	<select id="updateFunding" parameterType="site.moregreen.basic.command.FundingDto">
+
+		update funding
+		set f_title = #{f_title},
+			f_content = #{f_content}
+		where f_num = #{f_num}
 
 	</select>
 
@@ -143,24 +235,30 @@
 
 		select count(*) as total
 		from funding
-	</select>
-
-	<select id="selectFundingDetail" parameterType="int" resultType="FundingDto">
-
-		select *
-		from funding
-		where f_num = #{f_num}
-
+		where f_status in (3,4,5)
+		<if test="searchName != '' and searchName != null"> 
+	    and f_title like concat('%', #{searchName} ,'%')
+	    </if>
+	    <if test="searchStatus != '' and searchStatus != null"> 
+	    and f_status = #{searchStatus} 
+	    </if>
+	    
 	</select>
 	
-	<select id="selectFundingDetailImg" parameterType="int" resultType="UploadDto">
+	<select id="selectApplyListTotal" parameterType="site.moregreen.basic.util.Criteria" resultType="int">
 
-		select i_name as filename, i_path as filepath, i_uuid as uuid
-		from image
-		where funding_f_num = #{f_num}
-
+		select count(*) as total
+		from funding
+		where f_status in (1,2)
+		<if test="searchName != '' and searchName != null"> 
+	    and f_title like concat('%', #{searchName} ,'%')
+	    </if>
+	    <if test="searchStatus != '' and searchStatus != null"> 
+	    and f_status = #{searchStatus} 
+	    </if>
+	    
 	</select>
-  
+	
 	<update id="fundingAccept" parameterType="int">
 		update funding
 		set f_status = 3
@@ -173,17 +271,20 @@
 		where f_num = #{f_num}
 	</update>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  	<select id="selectDelivery" parameterType="int" resultType="DeliveryDto">
+  	
+  		select d_num as d_num,
+  			   d_name as d_name,
+  			   d_phone as d_phone,
+  			   d_zipcode as d_zipcode,
+  			   d_addr as d_addr,
+  			   d_detailaddr as d_detailaddr
+		from delivery
+		where d_num = (select MAX(delivery_d_num)
+						from purchase
+						where member_m_num = #{m_num})	
+  	
+  	</select>
+ 
   
   </mapper>

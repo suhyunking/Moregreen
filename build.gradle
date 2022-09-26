@@ -38,7 +38,7 @@ dependencies {
 	implementation 'net.coobird:thumbnailator:0.4.8'
 	
 	// mail service
-	// implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {

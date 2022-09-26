@@ -2,28 +2,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymleaf.org">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="/img/favicon.png">
-  <title>
-    회원 로그인
-  </title>
-  <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-  <!-- Nucleo Icons -->
-  <link href="/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <!-- CSS Files -->
-  <link id="pagestyle" href="/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
-  
-    <script src="/js/jquery-3.6.0.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
+<link rel="icon" type="image/png" href="/img/moregreen.ico">
+<title>회원 로그인</title>
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+<!-- Nucleo Icons -->
+<link href="/css/nucleo-icons.css" rel="stylesheet" />
+<link href="/css/nucleo-svg.css" rel="stylesheet" />
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/42d5adcbca.js"
+	crossorigin="anonymous"></script>
+<!-- Material Icons -->
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+	rel="stylesheet">
+<!-- CSS Files -->
+<link id="pagestyle" href="/css/material-dashboard.css?v=3.0.4"
+	rel="stylesheet" />
+
+<script src="/js/jquery-3.6.0.js"></script>
 <script src="/js/jquery-3.6.0.min.js"></script>
-  <script>
+<script>
    $(document).ready(function(){
 	   $("#btn").on("click",function(){
 		   
@@ -35,73 +39,93 @@
 	            $("#loginForm").submit();
 	        }
 	   });
-	   
-        
-   });
+	   $("#loginForm").keypress(function (e){
+	          if(e.keyCode===13){
+	             $("#loginForm").submit();
+	          }
+	       })
+});
 </script>
 </head>
 
 <body class="bg-gray-200">
-  <div class="container position-sticky z-index-sticky top-0">
-    <div class="row">
-      <div class="col-12">
-        
-      </div>
-    </div>
-  </div>
-  <main class="main-content  mt-0">
-    <div class="page-header align-items-start min-vh-100" style="background-color: honeydew;">
-      <span class="mask opacity-6"></span>
-      <div class="container my-auto">
-        <div class="row">
-          <div class="col-lg-4 col-md-8 col-12 mx-auto">
-            <div class="card z-index-0 fadeIn3 fadeInBottom">
-              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                <div class="bg-gradient-primary border-radius-lg py-3 pe-1">
-                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">로그인</h4>
-                
-                </div>
-              </div>
-              <div class="card-body">
-                <form th:action="@{/member/loginForm}" method="post" role="form" class="text-start" id="loginForm">
-                  <div class="input-group input-group-outline my-3">
-                   
-                    <input type="text" name=m_id placeholder="아이디" class="form-control" id="idmsg">
-                  </div>
-                  <div class="input-group input-group-outline mb-3">
-                    
-                    <input type="password" name="m_pw" placeholder="비밀번호" class="form-control" id="pwmsg">
-                  </div>
-                  
-                    <p class="mt-4 text-sm text-center">
-                    
-                    <a th:href="@{###}" class="text-primary text-gradient font-weight-bold">아이디 찾기</a>
+	<div class="container position-sticky z-index-sticky top-0">
+		<div class="row">
+			<div class="col-12"></div>
+		</div>
+	</div>
+	<main class="main-content  mt-0">
+		<div class="page-header align-items-start min-vh-100"
+			style="background-color: honeydew;">
+			<span class="mask opacity-6"></span>
+			<div class="container my-auto">
+				<div style="text-align: center;">
+					<a th:href="@{/index}"> <img src="/img/logo/logo1.png"
+						alt="Logo">
+					</a>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-md-8 col-12 mx-auto">
+						<div class="card z-index-0 fadeIn3 fadeInBottom">
+							<div
+								class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+								<div class="bg-gradient-primary border-radius-lg py-3 pe-1">
+									<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">로그인</h4>
+
+								</div>
+							</div>
+							<div class="card-body">
+								<form th:action="@{/member/loginForm}" method="post" role="form"
+									class="text-start" id="loginForm">
+									<div>
                   <p class="mt-4 text-sm text-center">
-                   
-                    <a th:href="@{###}" class="text-primary text-gradient font-weight-bold">비밀번호 찾기</a>
-                   
-                  <div class="text-center">
-                    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2" id="btn">로그인하기</button>
+                    
+                    <a th:if="${fail}==1" class="text-primary font-weight-bold">아이디 또는 비밀번호를 확인해주세요.</a>
                   </div>
-                  <p class="mt-4 text-sm text-center">
-                    계정이 없으신가요?
-                    <a th:href="@{/member/memberReg}" class="text-primary text-gradient font-weight-bold">가입하기</a>
-                  </p>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-    </div>
-  </main>
-  <!--   Core JS Files   -->
-  <script src="/js/core/popper.min.js"></script>
-  <script src="/js/core/bootstrap.min.js"></script>
-  <script src="/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="/js/plugins/smooth-scrollbar.min.js"></script>
-  <script>
+									<div class="input-group input-group-outline my-3">
+
+										<input type="text" name=m_id placeholder="아이디"
+											class="form-control" id="idmsg">
+									</div>
+									<div class="input-group input-group-outline mb-3">
+
+										<input type="password" name="m_pw" placeholder="비밀번호"
+											class="form-control" id="pwmsg">
+									</div>
+									
+									<p class="mt-4 text-sm text-center">
+
+										<a th:href="@{/member/memberFindId}"
+											class="text-primary text-gradient font-weight-bold">아이디
+											찾기</a>
+									<p class="mt-4 text-sm text-center">
+
+										<a th:href="@{/member/memberFindPw}"
+											class="text-primary text-gradient font-weight-bold">비밀번호
+											찾기</a>
+									<div class="text-center">
+										<button type="button"
+											class="btn bg-gradient-primary w-100 my-4 mb-2" id="btn">로그인하기</button>
+									</div>
+									<p class="mt-4 text-sm text-center">
+										계정이 없으신가요? <a th:href="@{/member/memberReg}"
+											class="text-primary text-gradient font-weight-bold">가입하기</a>
+									</p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</main>
+	<!--   Core JS Files   -->
+	<script src="/js/core/popper.min.js"></script>
+	<script src="/js/core/bootstrap.min.js"></script>
+	<script src="/js/plugins/perfect-scrollbar.min.js"></script>
+	<script src="/js/plugins/smooth-scrollbar.min.js"></script>
+	<script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -110,10 +134,10 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="/js/material-dashboard.min.js?v=3.0.4"></script>
+	<!-- Github buttons -->
+	<script async defer src="https://buttons.github.io/buttons.js"></script>
+	<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+	<script src="/js/material-dashboard.min.js?v=3.0.4"></script>
 </body>
 
 </html>

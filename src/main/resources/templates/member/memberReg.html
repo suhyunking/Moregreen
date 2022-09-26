@@ -1,50 +1,42 @@
-<!--
-=========================================================
-* Material Dashboard 2 - v3.0.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymleaf.org">
-
 <head>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
-<link rel="icon" type="image/png" href="/img/favicon.png">
-<title>회원가입</title>
-<!--     Fonts and icons     -->
-<link rel="stylesheet" type="text/css"
-	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-<!-- CSS Files -->
-<link id="pagestyle" href="/css/material-dashboard.css?v=3.0.4"
-	rel="stylesheet" />
-<style>
-	/* #overlappedID{:} */
-	.olmessagef{color: red; font-style: Italic;}
-	.olmessaget{color: blue; font-style: Italic;}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="/img/moregreen.ico">
+  <title>
+    회원가입
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+  <style>
+  	.olmessagef{color:red;}
+  	.olmessaget{color:blue;}
+  </style>
 <script src="/js/jquery-3.6.0.js"></script>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$(".overlappedID").click(function(){
-			// console.log($("#m_id").val());
-			$("#join").attr("type","button");
+		$("#overlappedID").click(function(){
 			const m_id= $("#m_id").val();
+			if(m_id==null|| m_id==""){
+				alert("아이디를 입력해주세요")
+			} else{
+			$("#join").attr("type","button");
 			$.ajax({
 				type:"get",
 				async: false,
-				url: "http://localhost:8383/member/idCheck",
+				url: "/member/idCheck",
 				data: {m_id:m_id},
 				success: function(data){
 					if(data==1){
@@ -58,7 +50,8 @@
 						$("#join").attr("type", "submit");
 					}
 				}
-			})
+			})}
+			
 		});
 		
 		 $(".pwConfirm").keyup(function(){
@@ -78,91 +71,97 @@
 	        }
 
 	        });
-		 
-		
 		
 	})
 	
 </script>
-
-
 </head>
 
-<body class="">
-	<main class="main-content  mt-0">
-		<section>
-			<div class="page-header min-vh-100">
-				<div class="container">
-					<div class="row">
-						<div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
-							<div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" style="background-image: url('/img/illustrations/forsignup.jpg'); background-size: cover;">
-              				</div>
-						</div>
-						<div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
-							<div class="card card-plain">
-								<div class="card-header">
-									<h4 class="font-weight-bolder">회원가입</h4>
-									<p class="mb-0">아이디, 이메일, 비밀번호를 입력해주세요</p>
-								</div>
-								<div class="card-body">
-									<form th:action="@{/member/MemberReg}" method="post" >
-										<div class="input-group input-group-outline mb-3">
+<body class="bg-gray-200">
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        
+      </div>
+    </div>
+  </div>
+  <main class="main-content  mt-0">
+    <div class="page-header align-items-start min-vh-100" style="background-color: honeydew;">
+      <span class="mask opacity-6"></span>
+      <div class="container my-auto">
+      <div style="text-align: center;">
+      	<a  th:href="@{/index}">
+			<img src="/img/logo/logo1.png" alt="Logo">      	
+      	</a>
+      </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-8 col-12 mx-auto">
+            <div class="card z-index-0 fadeIn3 fadeInBottom">
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-primary border-radius-lg py-3 pe-1">
+                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">회원가입</h4>
+                
+                </div>
+              </div>
+              <div class="card-body">
+                <form th:action="@{/member/MemberReg}" method="post" >
+                    <div class="input-group input-group-outline mb-3">
 
-											<input type="text" id=m_id name=m_id class="form-control"
-												placeholder="아이디" >
-											<span th:style="${'color: red;'}" th:text="${valid_m_id}"></span>	
-										</div>
-										<div class="">
-										<button type="button" class="btn btn-lg bg-gradient-primary overlappedID">중복확인</button>
-										<span id="olmessage"></span>
-										</div>
-										
-							
-										<div class="input-group input-group-outline mb-3">
-											<input type="password" id=m_pw name=m_pw placeholder="비밀번호" 
-												class="form-control" >
-											<span th:style="${'color: red;'}" th:text="${valid_m_pw}"></span>
-										</div>
-										<div class="input-group input-group-outline mb-3">
-											<input type="password" id=m_pw_confirm name=m_pw_confirm placeholder="비밀번호 확인"
-												class="form-control pwConfirm"> 
-											
-												<span id="confirmMsg"></span>
-										</div>
-										
-										<div class="input-group input-group-outline mb-3">
-											<input type="email" name=m_email 
-												placeholder="example@xxxx.com" class="form-control">
-											
-											<span th:style="${'color: red;'}" th:text="${valid_m_email}"></span>
-										</div>
+                        <input type="text" id=m_id name=m_id class="form-control"
+                            placeholder="아이디" >
+                        <span th:style="${'color: red;'}" th:text="${valid_m_id}"></span>	
+                    </div>
+                    <div class="">
+                    <button type="button" class="btn btn-lg bg-gradient-primary" id="overlappedID">중복확인</button>
+                    <span id="olmessage"></span>
+                    </div>
+                    
+        
+                    <div class="input-group input-group-outline mb-3">
+                        <input type="password" id=m_pw name=m_pw placeholder="비밀번호" 
+                            class="form-control" >
+                        <span th:style="${'color: red;'}" th:text="${valid_m_pw}"></span>
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                        <input type="password" id=m_pw_confirm name=m_pw_confirm placeholder="비밀번호 확인"
+                            class="form-control pwConfirm"> 
+                        
+                            <span id="confirmMsg"></span>
+                    </div>
+                    
+                    <div class="input-group input-group-outline mb-3">
+                        <input type="email" name=m_email 
+                            placeholder="example@xxxx.com" class="form-control">
+                        
+                        <span th:style="${'color: red;'}" th:text="${valid_m_email}"></span>
+                    </div>
 
 
 
-										<div class="text-center">
-											<button type="button"
-												class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0" id="join">가입하기</button>
-										</div>
-									</form>
-								</div>
-								<div class="card-footer text-center pt-0 px-lg-2 px-1">
-									<p class="mb-2 text-sm mx-auto">
-										이미 계정이 있으신가요? <a th:href="@{/member/memberLogin}" class="text-primary text-gradient font-weight-bold">로그인</a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
-	<!--   Core JS Files   -->
-	<script src="/js/core/popper.min.js"></script>
-	<script src="/js/core/bootstrap.min.js"></script>
-	<script src="/js/plugins/perfect-scrollbar.min.js"></script>
-	<script src="/js/plugins/smooth-scrollbar.min.js"></script>
-	<script>
+                    <div class="text-center">
+                        <button type="button"
+                            class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0" id="join">가입하기</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                <p class="mb-2 text-sm mx-auto">
+                    이미 계정이 있으신가요? <a th:href="@{/member/memberLogin}" class="text-primary text-gradient font-weight-bold">로그인</a>
+                </p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </main>
+  <!--   Core JS Files   -->
+  <script src="/js/core/popper.min.js"></script>
+  <script src="/js/core/bootstrap.min.js"></script>
+  <script src="/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -171,11 +170,10 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
-	<!-- Github buttons -->
-	<script async defer src="https://buttons.github.io/buttons.js"></script>
-	<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-	<script src="/js/material-dashboard.min.js?v=3.0.4"></script>
-	
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="/js/material-dashboard.min.js?v=3.0.4"></script>
 </body>
 
 </html>

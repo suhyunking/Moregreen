@@ -19,6 +19,71 @@
   <!-- 로그인 -->  
   <select id="login" parameterType="site.moregreen.basic.command.MemberDto" resultType="site.moregreen.basic.command.MemberDto">
         SELECT m_id, m_pw, m_num FROM member
-        WHERE m_id = #{m_id} AND m_pw = #{m_pw}
+        WHERE m_id = #{m_id} AND m_pw = #{m_pw} AND m_exit='N'
     </select>
+    
+    <!-- 아이디찾기 -->
+  <select id="findId" resultType="site.moregreen.basic.command.MemberDto">
+        SELECT m_id FROM member 
+        WHERE m_email= #{m_email}
+  </select>
+  
+  <select id="findIdCheck" parameterType="site.moregreen.basic.command.MemberDto" resultType="int">
+		SELECT COUNT(m_email) FROM member WHERE m_email = #{m_email}
+  </select>
+  
+  <!-- 비밀번호변경 -->
+  <update id="updatePw" parameterType="site.moregreen.basic.command.MemberDto" >
+  		UPDATE member SET m_pw = #{m_pw} 
+  		WHERE m_id = #{m_id}
+  </update>
+  
+  <select id="pwCheck" parameterType="site.moregreen.basic.command.MemberDto" resultType="int">
+		SELECT COUNT(*) from member 
+		WHERE m_id = #{m_id} 
+  </select>
+  
+  <!-- 비밀번호찾기 -->
+  <select id="existsByEmail" parameterType="site.moregreen.basic.command.MemberDto" resultType="int">
+  		SELECT COUNT(*) FROM member
+  		WHERE m_id = #{m_id} AND m_email = #{m_email}
+  </select>
+  
+ <update id="findPassword" parameterType="site.moregreen.basic.command.MemberDto">
+ 		UPDATE member SET m_pw = #{m_pw} WHERE m_id=#{m_id}
+ </update>
+  
+  <!-- 회원목록조회 -->
+  <select id="selectmember" parameterType="site.moregreen.basic.command.MemberDto" resultType="site.moregreen.basic.command.MemberDto">
+  		SELECT m_id, m_pw, m_email FROM member
+  </select>
+  
+  
+  <!-- 회원탈퇴 -->
+  <update id="exitMember" parameterType="site.moregreen.basic.command.MemberDto">
+  		UPDATE member SET m_exit ='Y'
+  		WHERE m_id= #{m_id} AND m_pw = #{m_pw}
+  </update>
+    
+    <!-- 관리자 회원목록 -->
+    <select id="selectMemberList" parameterType="site.moregreen.basic.util.Criteria" resultType="site.moregreen.basic.command.MemberDto">
+    select * 
+    from member
+    
+     <if test="searchId != '' and searchId != null"> 
+      where m_id like concat('%', #{searchId} ,'%')
+     </if>
+    ORDER BY m_num ASC
+    LIMIT #{pageStart}, #{amount}
+    </select>
+    
+    <select id="selectTotal" parameterType="site.moregreen.basic.util.Criteria" resultType="int">
+		select count(*) as total
+		from member
+	</select>
+	
+	<select id="findPw" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM member
+		WHERE m_id=#{m_id} AND m_email=#{m_email};
+	</select>
   </mapper>

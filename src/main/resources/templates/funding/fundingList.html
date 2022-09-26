@@ -1,109 +1,87 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
 <th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
- <style>
- 
- </style>
+
    <body>
       <section id="wrap">
-
-         <!-- Start Items Grid Area -->
          <section class="items-grid section custom-padding">
+         <form name="fundingForm" action="fundingList" method="get">
             <div class="container">
                <div class="row">
                   <div class="col-12">
                      <div class="section-title">
                         <h2 class="wow fadeInUp" data-wow-delay=".4s">펀딩하기</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">환경 배려가 생존을 위해 꼭
-                           필요한 시대입니다.</p>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">환경 배려가 생존을 위해 꼭 필요한 시대입니다.</p>
                      </div>
                   </div>
                </div>
-               <!-- serch / dropbox -->
                <div class="d-sm-flex justify-content-between">
                   <div class="ms-md-left pe-md-3">
                      <div class="input-group input-group-outline">
-                        <input type="text" class="form-control" placeholder="펀딩명을 입력하세요">
-                        <button class="btn btn-icon btn-outline-dark ms-2 export">검색</button>
+                        <input type="text" name="searchName" th:value="${pageVO.cri.searchName}" class="form-control" placeholder="펀딩명을 입력하세요">
+                        <a href="#" class="btn btn-icon btn-outline-dark ms-2 export" onclick="handleForm()">검색</a>
                      </div>
                   </div>
                   <div class="btn-group">
-                     <select class="form-select" id="inputGroupSelect01">
-
-                        <option value="1">전체</option>
-                        <option value="2">진행중</option>
-                        <option value="3">종료</option>
+                     <select class="form-select" name="searchStatus" onchange="submit()">
+                        <option th:value="null"  th:selected="${pageVO.cri.searchStatus == '' }">전체</option>
+                        <option th:value="3"  th:selected="${pageVO.cri.searchStatus == '3' }">진행중</option>
+                        <option th:value="4"  th:selected="${pageVO.cri.searchStatus == '4' }">성공</option>
+                        <option th:value="5"  th:selected="${pageVO.cri.searchStatus == '5' }">실패</option>
                      </select> 
-                     
-                     <select class="form-select" id="inputGroupSelect02">
-
-                        <option value="1">최신순</option>
-                        <option value="2">관심순</option>
-                        <option value="3">종료임박</option>
+                     <select class="form-select" name="searchAlign" onchange="submit()">
+                        <option th:value="desc" th:selected="${pageVO.cri.searchAlign == 'desc' }">최신순</option>
+                        <option>관심순</option>
+                        <option th:value="asc" th:selected="${pageVO.cri.searchAlign == 'asc' }">종료임박</option>
                      </select>
-                  
                   </div>
                </div>
-
                <div class="single-head">
                   <div class="row">
                      <div class="input-group">
-
                         <div class="col-lg-4 col-md-6 col-12 " th:each="dto : ${fundingList}">
-
                            <!-- Start Single Grid -->
                            <div class="single-grid wow fadeInUp" data-wow-delay=".2s">
                               <div class="image">
-                                 <a href="fundingDetail" class="thumbnail" th:each="file : ${dto.files}">
-                                 <img th:src="'/upload/' + ${file.filepath} + '/' + ${file.uuid} + '_' + ${file.filename}" alt="#"></a>
+                                 <a class="thumbnail" th:href="@{/funding/fundingDetail(f_num=${dto.f_num})}" th:each="file : ${dto.files}">
+                                 <img th:src="'/upload/main_' + ${file.uuid} + '_' + ${file.filename}" alt="#"></a>
                               </div>
                               <div class="content">
                                  <div class="top-content">
                                     <a >[[${dto.f_bname}]]</a>
                                     <h3 class="title">
-                                       <a href="fundingDetail">[[${dto.f_title}]]</a>
+                                       <a th:href="@{/funding/fundingDetail(f_num=${dto.f_num})}">[[${dto.f_title}]]</a>
                                     </h3>
-
-
                                     <ul class="info-list">
                                        <li>[[${dto.f_rate}]]%</li>
-                                       <li><a ><i
-                                             class="lni lni-timer"></i> [[${dto.f_enddate}]]까지</a></li>
+                                       <li><a ><i class="lni lni-timer"></i> [[${dto.f_enddate}]]까지</a></li>
                                     </ul>
                                  </div>
                                  <div class="bottom-content">
                                     <p class="price">
                                        누적금액 : <span>[[${dto.f_totalmoney}]]원</span>
                                     </p>
-
                                  </div>
                               </div>
-                           </div>
-                           <!-- End Single Grid -->
+<!--                            </div> -->
                   		</div>
                      </div>
-
                   </div>
                </div>
-
-
-               <div class="btn-toolbar justify-content-between" role="toolbar"
-                  aria-label="Toolbar with button groups" align="center">
-                  <div class="btn-group" role="group" aria-label="First group">
-                     <button type="button" class="btn btn-outline-secondary">1</button>
-                     <button type="button" class="btn btn-outline-secondary">2</button>
-                     <button type="button" class="btn btn-outline-secondary">3</button>
-                     <button type="button" class="btn btn-outline-secondary">4</button>
-                     <button type="button" class="btn btn-outline-secondary">5</button>
-                  </div>
-
-               </div>
-
-               <!-- /End Items Grid Area -->
+               <th:block th:replace="~{/include/page :: fundingList('fundingList', ${pageVO}) }"></th:block>
             </div>
+         </form>
          </section>
       </section>
    </body>
-
 </th:block>
+
+<script type="text/javascript">
+	//검색버튼
+	function handleForm() {
+		//폼을 서브밋
+		event.preventDefault(); //a의 이동이벤트를 막는다.
+		document.fundingForm.submit();
+	}
+</script>
 </html>

@@ -1,124 +1,105 @@
+<!-- 펀딩 구매 내역 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-<th:block
-	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
-
-	<section id="wrap">
-	
-	
-	<div class="container-fluid py-4">
-		<div class="row">
-			<div class="col-12">
-				<div class="card">
-					<div class="card-header">
-						<h5 class="mb-0">펀딩 내역</h5>
-						<p class="text-sm mb-0">참여하신 펀딩 내역이 표시됩니다.</p>
-					</div>
-					<div class="table-responsive">
-						<table class="table table-flush" id="datatable-search">
-							<thead class="thead-light">
-								<tr>
-									<th>번호</th>
-									<th>펀딩 참여일</th>
-									<th>결제 상태</th>
-									<th>펀딩명</th>
-									<th>상호명</th>
-									<th>펀딩 진행 여부</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="text-xs font-weight-normal ms-2 mb-0"><span
-										class="my-2 text-xs">1</span></td>
-									<td class="font-weight-normal"><span class="my-2 text-xs">2022-09-11</span></td>
-									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<button
-												class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-												<i class="material-icons text-sm" aria-hidden="true">clear</i>
-											</button>
-											<span>결제취소</span>
-										</div>
-									</td>
-									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<span>[한달3000그릇]홍대역 줄서야 먹을수있는 맛집 시그니처 메뉴를 밀키트로</span>
-										</div>
-									</td>
-									<td class="text-xs font-weight-normal"><span
-										class="my-2 text-xs">주식회사 데이원컴퍼니</span></td>
-									<td class="text-xs font-weight-normal"><span
-										class="my-2 text-xs">펀딩 진행중</span></td>
-								</tr>
-								<tr>
-									<td class="text-xs font-weight-normal ms-2 mb-0"><span
-										class="my-2 text-xs">2</span></td>
-									<td class="font-weight-normal"><span class="my-2 text-xs">2022-09-12</span></td>
-									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<button
-												class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-												<i class="material-icons text-sm" aria-hidden="true">done</i>
-											</button>
-											<span>결제완료</span>
-										</div>
-									</td>
-									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<span>[누적1억,돌아온 캠지] 캠핑, 운전하는데 캠지필드가 없다고?</span>
-										</div>
-									</td>
-									<td class="font-weight-normal"><span class="my-2 text-xs">씨피디그룹</span></td>
-									<td class="font-weight-normal"><span class="my-2 text-xs">펀딩
-											종료</span></td>
-								</tr>
-								<tr>
-									<td class="text-xs font-weight-normal ms-2 mb-0"><span
-										class="my-2 text-xs">3</span></td>
-									<td class="font-weight-normal"><span class="my-2 text-xs">2022-09-13</span></td>
-									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<button
-												class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-												<i class="material-icons text-sm" aria-hidden="true">refresh</i>
-											</button>
-											<span>환불처리</span>
-										</div>
-									</td>
-									<td class="text-xs font-weight-normal">
-										<div class="d-flex align-items-center">
-											<span>4.9점앵콜|세라마이드 폭탄 아직도 안써보셨어요? 보습끝판왕 세라밤!</span>
-										</div>
-									</td>
-									<td class="text-xs font-weight-normal"><span
-										class="my-2 text-xs">(주)스킨메드</span></td>
-									<td class="text-xs font-weight-normal"><span
-										class="my-2 text-xs">펀딩 실패</span></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="dataTable-bottom">
-						<nav aria-label="Page navigation example">
-							<ul class="pagination">
-								<li class="page-item"><a class="page-link" href="#"
-									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-								</a></li>
-								<li class="page-item"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">4</a></li>
-								<li class="page-item"><a class="page-link" href="#">5</a></li>
-								<li class="page-item"><a class="page-link" href="#"
-									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-								</a></li>
-							</ul>
-						</nav>
+<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+	<body>
+		<section id="wrap">
+			<section class="items-grid section custom-padding">
+				<div class="wow fadeInUp" data-wow-delay=".6s">
+					<div class="container">
+						<div class="row">
+	                  <div class="col-12">
+	                     <div class="section-title">
+	                        <h2 class="wow fadeInUp" data-wow-delay=".4s">마이페이지</h2>
+	                        <p class="wow fadeInUp" data-wow-delay=".6s">펀딩 구매 내역 조회</p>
+	                     </div>
+	                  </div>
+	               </div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-	</section>
+				<section class="dashboard section">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-md-12 col-12">
+								<div class="dashboard-sidebar">
+									<div class="user-image">
+										<img src="/images/dashboard/user-image.jpg" alt="#">
+										<h3>
+											회원아이디 <span><a href="javascript:void(0)">이름?이메일?</a></span>
+										</h3>
+									</div>
+									<div class="dashboard-menu">
+										<ul>
+											<li><a class="active" href="purchaseList"><i class="lni lni-dashboard"></i> 펀딩 구매 내역</a></li>
+											<li><a href="myProjectList"><i class="lni lni-pencil-alt"></i> 내가 만든 프로젝트</a></li>
+											<li><a th:href="fundingLikeList"><i class="lni lni-heart"></i> 찜목록</a></li>
+											<li><a href="messages.html"><i class="lni lni-envelope"></i> PW변경</a></li>
+											<li><a href="delete-account.html"><i class="lni lni-trash"></i> 회원 탈퇴</a></li>
+										</ul>
+										<div class="button">
+											<a class="btn" href="javascript:void(0)">Logout</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-9 col-md-12 col-12">
+								<div class="main-content">
+									<div class="dashboard-block mt-0">
+										<h3 class="block-title">펀딩 구매 내역</h3>
+										<div class="invoice-items default-list-style">
+											<div class="default-list-title">
+												<div class="row align-items-center">
+													<div class="col-lg-4 col-md-4 col-12">
+														<p style="text-align:center">펀딩명</p>
+													</div>
+													<div class="col-lg-2 col-md-2 col-12">
+														<p style="text-align:center">상호명</p>
+													</div>
+													<div class="col-lg-2 col-md-2 col-12">
+														<p style="text-align:center">펀딩 진행 여부</p>
+													</div>
+													<div class="col-lg-2 col-md-2 col-12">
+														<p style="text-align:center">펀딩참여일</p>
+													</div>
+													<div class="col-lg-2 col-md-2 col-12">
+														<p style="text-align:center">결제 상태</p>
+													</div>
+												</div>
+											</div>
+											<div class="single-list">
+												<th:block th:each="dto : ${list}">
+													<div class="row align-items-center">
+														<div class="col-lg-4 col-md-4 col-12">
+															<p><a th:href="@{/mypage/purchaseDetail(f_num=${dto.f_num})}">[[${dto.f_title}]] </a></p>
+														</div>
+														<div class="col-lg-2 col-md-2 col-12">
+															<p style="text-align:center">[[${dto.f_bname}]]</p>
+														</div>
+														<div class="col-lg-2 col-md-2 col-12" align="center">
+															<span th:if="${dto.f_status} == 3" class="text-sm"><span class="badge text-bg-warning">진행중</span></span>
+															<span th:if="${dto.f_status} == 4" class="text-sm"><span class="badge text-bg-success bg-gradient">성공</span></span>
+															<span th:if="${dto.f_status} == 5" class="text-sm"><span class="badge text-bg-danger">실패</span></span>		
+														</div>
+														<div class="col-lg-2 col-md-2 col-12" align="center">
+															<div >[[${dto.p_date}]]</div>
+														</div>
+														<div class="col-lg-2 col-md-2 col-12" align="center">
+															<span th:if="${dto.p_payment} == 1" class="text-sm"><span class="badge text-bg-success bg-gradient">결제완료</span></span>
+															<span th:if="${dto.p_payment} == 2" class="text-sm"><span class="badge text-bg-danger">결제취소</span></span>		
+														</div>
+													</div>
+												</th:block>
+											</div>
+											<th:block th:replace="~{/include/page :: purchaseList('purchaseList', ${pageVO}) }"></th:block>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</section>
+		</section>
+	</body>
 </th:block>
 </html>
