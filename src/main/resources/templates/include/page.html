@@ -108,7 +108,7 @@
 																			  )}">[[${num}]]</a></li>
 										</th:block>
 										<li th:if="${pageVO.next}">
-										<li class="page-item"><a class="page-link" th:href="@{userList(page=${pageVO.end + 1},
+										<li class="page-item"><a class="page-link" th:href="@{userList(page=${pageVO.page + 1},
 																			  amount=${pageVO.amount},
 																			  searchId=${pageVO.cri.searchId},
 																			  )}">&gt;</a></li>
@@ -130,6 +130,14 @@
 		<div class="col-12">
 			<div class="pagination center">
 				<ul class="pagination-list">
+					<li class="page-item">
+						<a class="page-link" th:href="@{userList(page=1, 		
+														  amount=${pageVO.amount},
+														  searchId=${pageVO.cri.searchId},
+														  )}" aria-label="Previous"> 
+							<i class="lni-angle-double-left"></i>
+						</a>
+					</li>
 					<th:block th:if="${pageVO.prev}">
 					<li><a class="page-link" th:href="@{fundingList(page=1, 		
 														  amount=${pageVO.amount},
@@ -186,6 +194,36 @@
 
 </th:block>
 
+<th:block th:fragment="fundingOrderList(pageName , pageVO)">
+	
+	<div class="row">
+		<div class="col-12">
+			<div class="pagination center">
+				<ul class="pagination-list">
+					<th:block th:if="${pageVO.prev}">
+					<li><a class="page-link" th:href="@{fundingOrderList(page=1, 		
+													  amount=${pageVO.amount},
+													  searchName=${pageVO.cri.searchName},
+													  )}"><i class="lni lni-chevron-left"></i></a></li>
+					</th:block>										  
+					<th:block th:each="num : ${pageVO.pageList}">	
+					<li th:classappend="${num} == ${pageVO.cri.page} ? 'active'" class="page-item "><a class="page-link" th:href="@{fundingOrderList(page=${num},
+																																  amount=${pageVO.amount},
+																																  searchName=${pageVO.cri.searchName},
+																																  )}">[[${num}]]</a></li>
+					</th:block>		
+					<th:block th:if="${pageVO.next}">												 
+					<li class="page-item"><a class="page-link" th:href="@{fundingOrderList(page=${pageVO.end + 1},
+																		  amount=${pageVO.amount},
+																		  searchName=${pageVO.cri.searchName},
+																		  )}"><i class="lni lni-chevron-right"></i></a></li>
+					</th:block>
+				</ul>
+			</div>
+		</div>
+	</div>
+</th:block>
+
 <th:block th:fragment="purchaseList(pageName , pageVO)">
 	
 	<div class="row">
@@ -195,7 +233,6 @@
 					<th:block th:if="${pageVO.prev}">
 					<li><a class="page-link" th:href="@{purchaseList(page=1, 		
 														  amount=${pageVO.amount},
-														  
 														  )}"><i class="lni lni-chevron-left"></i></a></li>
 					</th:block>										  
 					<th:block th:each="num : ${pageVO.pageList}">	
@@ -207,14 +244,12 @@
 					<th:block th:if="${pageVO.next}">												 
 					<li class="page-item"><a class="page-link" th:href="@{purchaseList(page=${pageVO.end + 1},
 																			  amount=${pageVO.amount},
-																			  
 																			  )}"><i class="lni lni-chevron-right"></i></a></li>
 					</th:block>
 				</ul>
 			</div>
 		</div>
 	</div>
-
 </th:block>
 
 <th:block th:fragment="myProjectList(pageName , pageVO)">

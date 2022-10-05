@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block
+	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+	<body>
+		<section id="wrap">
+			<div class="breadcrumbs">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="breadcrumbs-content">
+								<h1 class="page-title">FAQ</h1>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-12">
+							<ul class="breadcrumb-nav">
+								<li><a href="/">홈</a></li>
+								<li>FAQ</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<section class="faq section">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="accordion" id="accordionExample">
+								<div class="accordion-item">
+									<h2 class="accordion-header" id="headingOne">
+										<button class="accordion-button" type="button"
+											data-bs-toggle="collapse" data-bs-target="#collapseOne"
+											aria-expanded="true" aria-controls="collapseOne">
+											<span>펀딩 소개</span><i class="lni lni-plus"></i>
+										</button>
+									</h2>
+									<div id="collapseOne" class="accordion-collapse collapse show"
+										aria-labelledby="headingOne"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<p> 해결 프로젝트, 소셜 벤처의 상품, 창작 활동 등 우리 사회의 공익을 증진시키려는 목적을 가진 크라우드 펀딩 서비스입니다.</p>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-item">
+									<h2 class="accordion-header" id="headingTwo">
+										<button class="accordion-button collapsed" type="button"
+											data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+											aria-expanded="false" aria-controls="collapseTwo">
+											<span>프로젝트 펀딩 결제 수단 안내</span><i
+												class="lni lni-plus"></i>
+										</button>
+									</h2>
+									<div id="collapseTwo" class="accordion-collapse collapse"
+										aria-labelledby="headingTwo"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<p>펀딩 신청 시 결제 수단을 선택하여 등록할 수 있습니다.</p>
+											<p>카카오페이 결제로 펀딩에 참여할 수 있습니다.</p>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-item">
+									<h2 class="accordion-header" id="headingThree">
+										<button class="accordion-button collapsed" type="button"
+											data-bs-toggle="collapse" data-bs-target="#collapseThree"
+											aria-expanded="false" aria-controls="collapseThree">
+											<span>결제 취소 / 교환 / 환불 안내</span><i
+												class="lni lni-plus"></i>
+										</button>
+									</h2>
+									<div id="collapseThree" class="accordion-collapse collapse"
+										aria-labelledby="headingThree"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<p>펀딩 신청 후 펀딩 기간안에 메인페이지 > 내 정보 > 펀딩 구매 내역 > 해당 펀딩 상세보기에서 결제취소 버튼을 누르시면 취소할 수 있습니다.</p>
+											<p>결제가 되었으나 리워드가 발송되지 않은 경우, 이메일 문의 바랍니다.</p>
+											<p>단, 단순변심에 의한 교환 및 환불은 어렵습니다.</p>	
+										</div>
+									</div>
+								</div>
+								<div class="accordion-item">
+									<h2 class="accordion-header" id="headingFour">
+										<button class="accordion-button collapsed" type="button"
+											data-bs-toggle="collapse" data-bs-target="#collapseFour"
+											aria-expanded="false" aria-controls="collapseFour">
+											<span>펀딩 개설 신청 방법</span><i
+												class="lni lni-plus"></i>
+										</button>
+									</h2>
+									<div id="collapseFour" class="accordion-collapse collapse"
+										aria-labelledby="headingFour"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<p>펀딩 프로젝트 개설 신청 페이지를 통해 신청할 수 있습니다.</p>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-item">
+									<h2 class="accordion-header" id="headingFive">
+										<button class="accordion-button collapsed" type="button"
+											data-bs-toggle="collapse" data-bs-target="#collapseFive"
+											aria-expanded="false" aria-controls="collapseFive">
+											<span>펀딩 서비스 오류 해결 방법</span><i
+												class="lni lni-plus"></i>
+										</button>
+									</h2>
+									<div id="collapseFive" class="accordion-collapse collapse"
+										aria-labelledby="headingFive"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<p>펀딩 이용과 관련된 오류 또는 문의사항이 있다면, 이메일에 필수 정보를 기재한 후 문의 바랍니다.</p><br>
+											<p>필수 정보</p>
+											<p>-참여한 펀딩명</p>
+											<p>-구체적인 문의 내용</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+</th:block>
+</html>

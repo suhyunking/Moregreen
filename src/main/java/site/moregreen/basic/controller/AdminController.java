@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import site.moregreen.basic.command.FundingDto;
 import site.moregreen.basic.command.MemberDto;
+import site.moregreen.basic.command.PurchaseDto;
 import site.moregreen.basic.funding.FundingService;
 import site.moregreen.basic.member.MemberService;
+import site.moregreen.basic.purchase.PurchaseService;
 import site.moregreen.basic.util.Criteria;
 import site.moregreen.basic.util.PageVo;
 
@@ -32,6 +35,10 @@ public class AdminController {
 	@Autowired
 	@Qualifier("fundingService")
 	FundingService fundingService;	
+	
+	@Autowired
+	@Qualifier("purchaseService")
+	PurchaseService purchaseService;	
 
 	@Autowired()
 	@Qualifier("memberService")
@@ -53,17 +60,14 @@ public class AdminController {
 		HttpSession session =req.getSession();
 		 MemberDto member=  memberService.loginMember(memberDto);
 		
-		 
 		 if(member.getM_id().equals("admin")) {
 			 session.setAttribute("member", member);
 				session.setMaxInactiveInterval(1800);
-				//System.out.println("admin 로그인 됨");
-				//System.out.println(member);
+
 				return"redirect:/admin/adminportal";
 		} else {
 			session.setAttribute("member", null);
 			rttr.addFlashAttribute("msg", false);
-			//System.out.println("로그인 안됨");
 			model.addAttribute("fail", 1);
 		}
 		
@@ -132,15 +136,22 @@ public class AdminController {
 		return "redirect:/admin/fundingList";
 	}
 
-	@GetMapping("/orderList")
-	public String orderList() {
-		return "admin/orderList";
+	@GetMapping("/fundingOrderList")
+	public String fundingOrderList(Criteria cri, Model model) {
+		
+		List<PurchaseDto> list = purchaseService.retrievePurchaseList(cri);
+		int total = purchaseService.retrievePurchaseTotal(cri); 
+		PageVo pageVO= new PageVo(cri, total); 
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pageVO", pageVO);
+		
+		return "admin/fundingOrderList";
 	}
 	
 	@GetMapping("/userList")
 	public String userList(Model model, Criteria cri, HttpSession session) {
 		
-		  System.out.println("================" + cri.getM_id());
 		  List<MemberDto> list= memberService.retrieveMemberList(cri); 
 		  int total=memberService.retrieveTotal(cri); 
 		  PageVo pageVO= new PageVo(cri,total); 

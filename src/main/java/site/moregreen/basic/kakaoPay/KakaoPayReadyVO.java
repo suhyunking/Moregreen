@@ -1,6 +1,5 @@
 package site.moregreen.basic.kakaoPay;
 
-import java.beans.ConstructorProperties;
 import java.util.Date;
 
 import lombok.Data;

@@ -59,7 +59,7 @@
 
   <select id="selectFundingList" parameterType="site.moregreen.basic.util.Criteria" resultMap="selectFundingListMap">
 
-	select f.f_num as f_num,
+	  select f.f_num as f_num,
 		   f.f_title as f_title,
 		   f.f_content as f_content,
 		   f.f_days as f_days,
@@ -78,17 +78,23 @@
 		   i.i_name as filename,
 		   i.i_uuid as uuid,
 		   i.i_type as i_type
-	  from funding f left outer join image i 
-	  				 on f.f_num = i.funding_f_num
-	  where f.f_status in (3,4,5)
-      and i.i_type = 1
-      <if test="searchName != '' and searchName != null"> 
+	  from ( select *
+		     from image 
+		     where (funding_f_num, i_num) in ( select r.*
+											   from (select funding_f_num, min(i_num) as i_num
+										             from image
+										             where i_type = 1
+										             group by funding_f_num) as r) ) as i
+ 	  inner join funding f
+	  on f.f_num = i.funding_f_num
+	  where 1
+	  and f.f_status in (3,4,5)
+	  <if test="searchName != '' and searchName != null"> 
 	  and f.f_title like concat('%', #{searchName} ,'%')
 	  </if>
 	  <if test="searchStatus != '' and searchStatus != null"> 
 	  and f.f_status = #{searchStatus}
 	  </if>
-      group by f.f_num
 	  order by 
 	  <if test="searchAlign == 'asc' ">
  			f.f_enddate asc,
@@ -96,7 +102,7 @@
  	  f.f_status asc,
  	  f.f_num desc
 	  limit #{pageStart}, #{amount}
-    
+	    
   </select>
   
   <select id="selectAdminFundingList" parameterType="site.moregreen.basic.util.Criteria" resultMap="selectFundingListMap">
@@ -286,5 +292,63 @@
   	
   	</select>
  
+ 	<select id="selectFundingListForCheckStatus" resultType="FundingDto">
+ 	
+ 		select f_num,
+ 			   f_title,
+ 			   f_content,
+ 			   f_days,
+ 			   f_enddate,
+ 			   f_target,
+ 			   f_totalmoney,
+ 			   f_rate,
+ 			   f_status,
+ 			   f_reward,
+ 			   f_price,
+ 			   f_bname,
+ 			   f_bnum,
+ 			   f_regdate
+ 		from funding
+ 		where f_status = 3
+ 		and <![CDATA[ f_enddate < now() ]]>
+ 		
+ 	</select>
+ 	
+ 	<select id="selectFundingListForCancel" resultType="FundingDto">
+ 	
+ 		select f_num,
+ 			   f_title,
+ 			   f_content,
+ 			   f_days,
+ 			   f_enddate,
+ 			   f_target,
+ 			   f_totalmoney,
+ 			   f_rate,
+ 			   f_status,
+ 			   f_reward,
+ 			   f_price,
+ 			   f_bname,
+ 			   f_bnum,
+ 			   f_regdate
+ 		from funding
+ 		where f_status = 5
+ 		
+ 	</select>
+ 	
+ 	<update id="updateFundingStatusToFail" parameterType="FundingDto">
+ 	
+ 		update funding
+ 		set f_status = 5
+ 		where f_num = #{f_num}
+ 		
+ 	</update>
+ 	
+ 	<update id="updateFundingStatusToSuccess" parameterType="FundingDto">
+ 	
+ 		update funding
+ 		set f_status = 4
+ 		where f_num = #{f_num}
+ 		
+ 	</update>
   
   </mapper>

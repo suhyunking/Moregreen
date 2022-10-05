@@ -3,6 +3,7 @@ package site.moregreen.basic.funding;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import site.moregreen.basic.command.DeliveryDto;
 import site.moregreen.basic.command.FundingDto;
@@ -33,9 +34,11 @@ public interface FundingMapper {
 	public int selectTotal(Criteria cri); //전체 게시글수
 	public int selectApplyListTotal(Criteria cri); //전체 게시글수
 	
+	public List<FundingDto> selectFundingListForCheckStatus();			//펀딩 마감 처리를 위한 펀딩 목록 조회
+	public List<FundingDto> selectFundingListForCancel(); 				//환불 처리를 위한 펀딩 목록 조회
 	
-	
-	
+	public void updateFundingStatusToFail(FundingDto dto);
+	public void updateFundingStatusToSuccess(FundingDto dto);
 
 }
 

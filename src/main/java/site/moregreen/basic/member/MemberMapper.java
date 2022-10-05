@@ -52,5 +52,8 @@ public interface MemberMapper {
 	public int selectTotal(Criteria cri);
 
 	public int findPw(String m_id, String m_email);
+	
+	//이메일 중복확인
+	public int overlappedEmail(MemberDto memberDto);
 
 }

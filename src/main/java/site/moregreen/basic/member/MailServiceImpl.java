@@ -22,7 +22,7 @@ public class MailServiceImpl implements MailService {
     private static final String title = "Moregreen 임시 비밀번호 안내 이메일입니다.";
     private static final String message = "안녕하세요. Moregreen 임시 비밀번호 안내 메일입니다. "
             +"\n" + "회원님의 임시 비밀번호는 아래와 같습니다. 로그인 후 반드시 비밀번호를 변경해주세요."+"\n";
-    private static final String fromAddress = "moregreen0921@gmail.com";
+    private static final String fromAddress = "Moregreen";
 
     /** 이메일 생성 **/
     @Override

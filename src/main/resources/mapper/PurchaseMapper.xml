@@ -51,13 +51,103 @@
 	 					   )
 	 </insert>
 	 
-	 <select id="updateFunding" resultType="int" parameterType="FundingDto">
-
+	<update id="updateFunding" parameterType="FundingDto">
+	
 		update funding
 		set f_rate = #{f_rate},
 			f_totalmoney = #{f_totalmoney}
 		where f_num = #{f_num}
 
+	</update>
+	
+	<update id="updatePurchase" parameterType="int">
+
+		update purchase
+		set p_payment = 2
+		where p_num = #{p_num}
+
+	</update>
+	
+	<select id="selectPurchaseList" resultType="PurchaseDto" parameterType="site.moregreen.basic.util.Criteria">
+	
+		select p.p_num,
+			   p.p_total,
+			   p.p_payment,
+			   p.p_date,
+			   p.p_method,
+			   f.f_num,
+			   f.f_title,
+			   f.f_rate,
+			   f.f_status,
+			   m.m_id
+		from purchase p
+		inner join funding f
+		on p.funding_f_num = f.f_num
+		inner join member m 
+		on p.member_m_num = m.m_num
+		where 1
+		<if test="searchStatus != '' and searchStatus != null"> 
+	    and p.p_payment = #{searchStatus} 
+	    </if>
+	    <if test="searchName != '' and searchName != null"> 
+	    and f.f_title like concat('%', #{searchName} ,'%')
+	    </if>
+		order by p.p_num desc
+		limit #{pageStart}, #{amount}
+		
 	</select>
+	
+	<select id="selectPurchaseListForCancel" resultType="PurchaseDto">
+		
+		select p.p_num,
+			   p.p_total,
+			   p.p_payment,
+			   p.p_date,
+			   p.p_method,
+			   p.p_tid,
+			   f.f_title,
+			   f.f_rate,
+			   f.f_status,
+			   m.m_id
+		from purchase p
+		inner join funding f
+		on p.funding_f_num = f.f_num
+		inner join member m 
+		on p.member_m_num = m.m_num
+		where p.funding_f_num in 
+		<foreach collection="fundingList" item="list" open="(" close=")" separator=",">
+		#{list.f_num}
+		</foreach>
+		and p.p_payment = 1
+		
+	</select>
+	
+	<select id="selectPurchaseTotal" parameterType="site.moregreen.basic.util.Criteria" resultType="int">
+	
+		select count(*) as total
+		from purchase p
+		inner join funding f
+		on p.funding_f_num = f.f_num
+		where 1
+		<if test="searchStatus != '' and searchStatus != null"> 
+	    and p.p_payment = #{searchStatus} 
+	    </if>
+	    <if test="searchName != '' and searchName != null"> 
+	    and f.f_title like concat('%', #{searchName} ,'%')
+	    </if>
+	    
+		
+	</select>
+	
+	<update id="updatePurchasePayment" parameterType="PurchaseDto">
+	
+		update purchase
+		set p_payment = 2
+		where funding_f_num in (select f_num
+							   	from funding
+							   	where f_status = 5)
+		and p_num = #{p_num}
+	
+	</update>
 
 </mapper>

@@ -1,9 +1,10 @@
 package site.moregreen.basic.myPage;
 
 import java.util.List;
+
+import site.moregreen.basic.command.FundingDto;
 import site.moregreen.basic.command.PurchaseDto;
 import site.moregreen.basic.util.Criteria;
-import site.moregreen.basic.command.FundingDto;
   
   public interface MyPageService {
   
@@ -15,9 +16,9 @@ import site.moregreen.basic.command.FundingDto;
   
 	public List<PurchaseDto> retrieveMyPurchaseList(Criteria cri);
   
-	/*
-	 * public List<PurchaseDto> retrievePurchaseDetail(int f_num);
-	 */
+	
+	public PurchaseDto retrieveMyPurchaseDetail(PurchaseDto dto);
+	
   
 	//내 프로젝트 목록 조회
 	public List<FundingDto> retrieveMyProjectList(Criteria cri);

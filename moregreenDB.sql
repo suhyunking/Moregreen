@@ -1891,18 +1891,18 @@ CREATE TABLE IF NOT EXISTS `moregreen`.`image` (
 
  INSERT INTO image (i_name, i_uuid, i_type, funding_f_num) VALUES
 (
-'1번프로젝트1.jpg', #이미지 이름
+'11번프로젝트1.jpg', #이미지 이름
 1, #이미지 같은이름을 등록시 uuid추가
 1, #ex) 1: 대표이미지 2: 내용이미지 0: 사업자등록이미지 <사진종류>
-1 #펀딩테이블 PK를 외래키로 사용
+11 #펀딩테이블 PK를 외래키로 사용
 );
 
  INSERT INTO image (i_name, i_uuid, i_type, funding_f_num) VALUES
 (
-'1번프로젝트2.jpg', #이미지 이름
+'11번프로젝트2.jpg', #이미지 이름
 2, #이미지 같은이름을 등록시 uuid추가
 1, #ex) 1: 대표이미지 2: 내용이미지 0: 사업자등록이미지 <사진종류>
-1 #펀딩테이블 PK를 외래키로 사용
+11 #펀딩테이블 PK를 외래키로 사용
 );
 
  INSERT INTO image (i_name, i_uuid, i_type, funding_f_num) VALUES

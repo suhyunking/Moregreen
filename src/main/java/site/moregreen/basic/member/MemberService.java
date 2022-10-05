@@ -52,5 +52,8 @@ public interface MemberService {
 	public int retrieveTotal(Criteria cri);
 
 	public int retrievePw(String m_id, String m_email);
+	
+	//이메일 중복확인
+	public int overlappedEmail(MemberDto memberDto);
 
 }

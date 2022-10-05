@@ -153,4 +153,38 @@ public class KakaoPayService {
     	return orderId;
     }
 	
+    
+public boolean kakaoPayCancel(PurchaseDto purchaseDto) {
+    	
+        RestTemplate restTemplate = new RestTemplate();
+ 
+        // 서버로 요청할 Header
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "KakaoAK " + "571a3d93062b8d6f969af483bf541a25");
+        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+        
+        // 서버로 요청할 Body
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.add("cid", "TC0ONETIME");
+        params.add("tid", purchaseDto.getP_tid());
+        params.add("cancel_amount", purchaseDto.getP_total().toString());
+        params.add("cancel_tax_free_amount", "0");
+ 
+         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+ 
+        try {
+            KakaoPayCancelVO kakaoPayCancelVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/cancel"), body, KakaoPayCancelVO.class);
+            
+            return true;
+ 
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        
+        return false;
+        
+    }
 }

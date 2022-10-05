@@ -140,6 +140,12 @@ public class MemberServiceImpl implements MemberService {
 			return memberMapper.findPw(m_id, m_email);
 		}
 
+		@Override
+		public int overlappedEmail(MemberDto memberDto) {
+			
+			return memberMapper.overlappedEmail(memberDto);
+		}
+
 	
 	
 

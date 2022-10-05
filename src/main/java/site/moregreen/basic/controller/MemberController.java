@@ -53,10 +53,15 @@ public class MemberController {
 		return memberService.overlappedID(memberDto);
 	}
 	
+	@ResponseBody
+	@GetMapping("/emailCheck")
+	public int overlappedEmail(MemberDto memberDto)throws Exception{
+		return memberService.overlappedEmail(memberDto);
+	}
+	
 	@PostMapping("/MemberReg")
 	public String joinForm(@Valid MemberDto memberDto, Errors errors, Model model) {
 		if(errors.hasErrors()) {
-			
 			Map<String, String> validatorResult=memberService.validateHandling(errors);
 			for(String key: validatorResult.keySet()) {
 				model.addAttribute(key, validatorResult.get(key));
@@ -94,6 +99,8 @@ public class MemberController {
 		}
 		 return"redirect:/index";
 	 }
+	
+	
 	
 	@GetMapping("/memberFindId")
 	public String findID() {

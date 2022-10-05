@@ -50,8 +50,8 @@ public class FundingServiceImpl implements FundingService{
 	
 	
 	// 등록
-	@Transactional(rollbackFor = Exception.class)
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int addFunding(FundingDto dto, List<MultipartFile> files, List<MultipartFile> mainFiles, List<MultipartFile> contentFiles) {
 		fundingMapper.createFunding(dto);
 		
@@ -206,14 +206,8 @@ public class FundingServiceImpl implements FundingService{
 			return fundingMapper.selectAdminFundingList(cri);
 		}
 	
-	// 이미지 조회
-//	@Override
-//	public List<UploadDto> retrieveFundingListImg(Criteria cri) {
-//		return fundingMapper.selectFundingListImg(cri);
-//	}
-
-	@Transactional(rollbackFor = Exception.class)
 	@Override
+	@Transactional(rollbackFor = RuntimeException.class)
 	public int fundingAccept(int f_num) {
 		
 		fundingMapper.fundingAccept(f_num);
@@ -233,6 +227,29 @@ public class FundingServiceImpl implements FundingService{
 	@Override
 	public DeliveryDto retrieveDelivery(int m_num) {
 		return fundingMapper.selectDelivery(m_num);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public List<FundingDto> retrieveRetiredFundingListForCancel() {
+		
+		// f_status가 3 인 펀딩 목록 조회
+		List<FundingDto> list = fundingMapper.selectFundingListForCheckStatus();
+		
+		for(FundingDto dto : list) {
+
+			if(dto.getF_rate() < 100.0) {
+				fundingMapper.updateFundingStatusToFail(dto);
+				log.info(dto.getF_title() + " 펀딩 실패");
+			}else {
+				fundingMapper.updateFundingStatusToSuccess(dto);
+				log.info(dto.getF_title() + " 펀딩 성공");
+			}
+		}
+		
+		List<FundingDto> listForCancel = fundingMapper.selectFundingListForCancel();
+		
+		return listForCancel;
 	}
 
 

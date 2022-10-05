@@ -56,7 +56,7 @@ public class FundingController {
 	public String fundingList(Model model, 
 							  Criteria cri, 
 							  HttpSession session ){
-		
+		cri.setAmount(9);
 		List<FundingDto> fundingList = fundingService.retriveFundingList(cri);
 		
 		int total = fundingService.retrieveTotal(cri);
@@ -108,6 +108,7 @@ public class FundingController {
 						  	  @RequestParam("file") List<MultipartFile> files,
 						  	@RequestParam("mainFile") List<MultipartFile> mainFiles,
 						  	@RequestParam("contentFile") List<MultipartFile> contentFiles) {
+		
 		
 		if(errors.hasErrors()) {
 			List<FieldError> list = errors.getFieldErrors();
@@ -185,10 +186,15 @@ public class FundingController {
 		return "funding/fundingPurchaseFail";
 	}
 	
-	@GetMapping("orderList")
-	public String orderList(Model model, 
-							Criteria cri, 
-							HttpSession session ) {
-		return "funding/orderList";
+	@GetMapping("fundingRefund")
+	public String fundingRefund() {
+		return "funding/fundingRefund";
 	}
+	
+//	@GetMapping("fundingOrderList")
+//	public String fundingOrderList(Model model, 
+//							Criteria cri, 
+//							HttpSession session ) {
+//		return "funding/fundingOrderList";
+//	}
 }

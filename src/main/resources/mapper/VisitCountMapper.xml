@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="site.moregreen.basic.count.VisitCountMapper">
+	
+	<insert id="VisitCountMapper" parameterType="site.moregreen.basic.count.VisitCountDto">
+		INSERT into visitor(
+							visit_id,
+							visit_cnt,
+							visit_date
+							)
+					 values(
+					 		visitor.nextval,
+					 		#{visit_ip},
+					 		sysdateTime
+					 		)
+	</insert>
+	
+</mapper>

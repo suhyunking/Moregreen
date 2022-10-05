@@ -1,232 +1,158 @@
 <!-- 참여한 펀딩 상세 내역 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-<th:block
-	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
-
+<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
 	<body>
 		<section id="wrap">
 			<!-- top -->
-
-
-
-
-			<section class="items-grid section custom-padding">
+			<section class="items-grid section custom-padding" >
 				<div class="container">
-               <div class="col-12">
-                  <div class="section-title">
-                     <h2 class="wow fadeInUp" data-wow-delay=".4s">마이페이지</h2>
-	                 <p class="wow fadeInUp" data-wow-delay=".6s">펀딩 구매 상세 내역</p>
-                  </div>
-               </div>
-			</div>
-
-
-			<section class="dashboard section">
-				<div class="container">
-					<div class="row">
-						<!-- 						<th:block
-							th:replace="~{./mypage/test :: setContent( ~{:: #wrap}  ) }"></th:block> -->
-
-						<div class="col-lg-3 col-md-12 col-12">
-
-							<div class="dashboard-sidebar">
-								<div class="user-image">
-									<!-- <img src="/images/dashboard/user-image.jpg" alt="#"> -->
-									<h3>
-										회원아이디 <span><a href="javascript:void(0)">이름?이메일?</a></span>
-									</h3>
-								</div>
-								<div class="dashboard-menu">
-									<ul>
-										<li><a class="active" href="purchaseList"><i
-												class="lni lni-dashboard"></i> 펀딩 구매 내역</a></li>
-										<li><a href="myProjectList"><i
-												class="lni lni-pencil-alt"></i> 내가 만든 프로젝트</a></li>
-										<li><a href="fundingLikeList"><i
-												class="lni lni-heart"></i> 찜목록</a></li>
-										<li><a href="messages.html"><i
-												class="lni lni-envelope"></i> PW변경</a></li>
-										<li><a href="delete-account.html"><i
-												class="lni lni-trash"></i> 회원 탈퇴</a></li>
-
-									</ul>
+	               <div class="col-12">
+	                  <div class="section-title">
+	                     <h2 class="wow fadeInUp" data-wow-delay=".4s">마이페이지</h2>
+		                 <p class="wow fadeInUp" data-wow-delay=".6s">펀딩 구매 상세 내역</p>
+	                  </div>
+	               </div>
+				</div>
+				<section class="dashboard section" >
+					<div class="container" >
+						<div class="row" >
+							<div class="col-lg-3 col-md-12 col-12">
+								<div class="dashboard-sidebar">
+									<div class="user-image">
+										<h3>[[${session.member.m_id}]]</h3>
+									</div>
+									<div class="dashboard-menu">
+										<ul>
+											<li><a class="active" href="purchaseList"><i class="lni lni-dashboard"></i> 펀딩 구매 내역</a></li>
+											<li><a href="myProjectList"><i class="lni lni-pencil-alt"></i> 내가 만든 프로젝트</a></li>
+											<li><a href="fundingLikeList"><i class="lni lni-heart"></i> 찜목록</a></li>
+											<li><a href="changePw"><i class="lni lni-envelope"></i> PW변경</a></li>
+											<li><a href="deleteMember"><i class="lni lni-trash"></i> 회원 탈퇴</a></li>
+										</ul>
 									<div class="button">
-										<a class="btn" href="javascript:void(0)">Logout</a>
+										<a class="btn" href="javascript:void(0)" th:href="@{/member/logout}">Logout</a>
+									</div>
 									</div>
 								</div>
 							</div>
-
-						</div>
-
-
-
-
-						<div class="col-lg-9 col-md-8 col-12">
-							<div class="main-content">
-
-								<div class="dashboard-block mt-0 profile-settings-block">
-									<h3 class="block-title">펀딩 상세 내역</h3>
-									<div class="inner-block">
-										
+							<div class="col-lg-9 col-md-8 col-12">
+								<div class="main-content">
+									<div class="dashboard-block mt-0 profile-settings-block">
+										<h3 class="block-title">펀딩 상세 내역</h3>
+										<div class="inner-block">
 											<div class="row pb-30">
-											
-											 <div class="card">
-                                          <div class="card-header pb-0">
-                                             <h5 class="mb-5" style="text-align:center;">펀딩명</h5>
-                                          </div>
-                                        
-                                          <div class="card-body px-0 pb-0">
-                                          <div class="table-responsive">
-                                            <table class="table align-middle" >
-                                             <thead class="thead-light">
-                                            <tr>
-										      <th scope="col" align="left">펀딩 번호</th>
-										      <td scope="col" align="right">0000</td>
-										    </tr>
-										    <tr>
-										      <th scope="col" align="left">펀딩 일시</th>
-										      <td scope="col" align="right">0000</td>
-										    </tr>
-										    <tr>
-										      <th scope="col" align="left">펀딩 마감일</th>
-										      <td scope="col" align="right">0000</td>
-										    </tr>
-										    <tr>
-										      <th scope="col" align="left">결제 상태</th>
-										      <td scope="col" align="right">0000</td>
-										    </tr>
-                                            </table>
-                                          </div>
-                                          </div>
-                                          </div>
-                                          </div>
-											<div class="row pb-30">
-											
-											 <div class="card">
-                                          <div class="card-header pb-0">
-                                             <h5 class="mb-5" style="text-align:center;">리워드 결제 내역</h5>
-                                          </div>
-                                        
-                                          <div class="card-body px-0 pb-0">
-                                          <div class="table-responsive">
-                                            <table class="table align-middle" >
-                                             <thead class="thead-light">
-                                            <tr>
-										      <th scope="col" align="left">리워드명</th>
-										      <td scope="col" align="right"></td>
-										    </tr>
-										    <tr>
-										      <th scope="col" align="left">리워드 금액</th>
-										      <td scope="col" align="right">0000</td>
-										    </tr>
-										    <tr>
-										      <th scope="col" align="left">리워드 수량</th>
-										      <td scope="col" align="right">0000</td>
-										    </tr>
-										    <tr>
-										      <th scope="col" align="left">최종 결제 금액</th>
-										      <td scope="col" align="right">0000</td>
-										    </tr>
-										    <tr>
-										      <th scope="col" align="left">결제 정보</th>
-										      <td scope="col" align="right">0000</td>
-										    </tr>
-                                            </table>
-                                          </div>
-                                          </div>
-                                          </div>
-                                          </div>
-                                          	<div class="col-12">
+												<div class="card">
+		                                          	<div class="card-header pb-0">
+		                                             <h5 class="mb-5" style="text-align:center;">펀딩명</h5>
+		                                          	</div>
+		                                          	<div class="card-body px-0 pb-0">
+		                                          		<div class="table-responsive">
+				                                            <table class="table align-middle" >
+				                                             	<thead class="thead-light">
+				                                            	<tr>
+															      <th scope="col" align="left">펀딩 번호</th>
+													      		  <td scope="col" align="right">[[${dto.f_num}]]</td>
+												    			</tr>
+												    			<tr>
+															      <th scope="col" align="left">펀딩 일시</th>
+															      <td scope="col" align="right">[[${dto.p_date}]]</td>
+															    </tr>
+															    <tr>
+															      <th scope="col" align="left">펀딩 마감일</th>
+															      <td scope="col" align="right">[[${dto.f_enddate}]]</td>
+															    </tr>
+															    <tr>
+															      <th scope="col" align="left">결제 상태</th>
+															      <td th:if="${dto.p_payment} == 1" class="text-sm" align="right"><span class="badge text-bg-success bg-gradient" >결제완료</span></td>
+																  <td th:if="${dto.p_payment} == 2" class="text-sm" align="right"><span class="badge text-bg-danger">결제취소</span></td>	
+															    </tr>
+				                                            </table>
+				                                          </div>
+				                                      </div>
+				                                 </div>
+				                             </div>
+											 <div class="row pb-30">
+												<div class="card">
+				                                    <div class="card-header pb-0">
+				                                       <h5 class="mb-5" style="text-align:center;">리워드 결제 내역</h5>
+				                                    </div>
+		                                          	<div class="card-body px-0 pb-0">
+		                                          		<div class="table-responsive">
+		                                           			<table class="table align-middle" >
+		                                             			<thead class="thead-light">
+						                                            <tr>
+																      <th scope="col" align="left">리워드명</th>
+																      <td scope="col" align="right">[[${dto.f_reward}]]</td>
+																    </tr>
+																    <tr>
+																      <th scope="col" align="left">리워드 금액</th>
+																      <td scope="col" align="right">[[${dto.f_price}]]</td>
+																    </tr>
+																    <tr>
+																      <th scope="col" align="left">리워드 수량</th>
+																      <td scope="col" align="right">[[${dto.p_amount}]]</td>
+																    </tr>
+																    <tr>
+																      <th scope="col" align="left">최종 결제 금액</th>
+																      <td scope="col" align="right">[[${dto.p_total}]]</td>
+																    </tr>
+																    <tr>
+																      <th scope="col" align="left">결제 정보</th>
+																       <td th:if="${dto.p_method} == 1" class="text-sm" align="right"><span class="badge text-bg-warning" >카카오페이</span></td>
+																    </tr>
+																  </thead>
+						                                       </table>
+		                                         		 </div>
+		                                         	 </div>
+		                                          </div>
+		                                       </div>
+		                                       <div class="row pb-30">
+													<div class="card">
+				                                       <div class="card-header pb-0">
+				                                             <h5 class="mb-5" style="text-align:center;">배송지 정보</h5>
+				                                       </div>
+		                                          		<div class="card-body px-0 pb-0">
+					                                       <div class="table-responsive">
+					                                          <table class="table align-middle" >
+					                                             <thead class="thead-light">
+						                                            <tr>
+																      <th scope="col" align="left">[[${dto.d_name}]]</th>
+																    </tr>
+																    <tr>
+																      <th scope="col" align="left">[[${dto.d_phone}]]</th>
+																    </tr>
+																    <tr>
+																      <th scope="col" align="left">[[${dto.d_zipcode}]] [[${dto.d_addr}]]</th>
+																    </tr>
+																    <tr>
+																      <th scope="col" align="left">[[${dto.d_detailaddr}]]</th>
+																    </tr>
+															    </thead>
+					                                          </table>
+					                                       </div>
+					                                    </div>
+					                                  </div>
+					                             </div>
+					                             <div class="col-12">
 													<div class="form-group button mb-0" align="center">
-														<a type="submit" class="btn btn-success " th:href="@{/}">결제 취소</a>
-													</div>
-												</div>
-												<!-- <div class="col-lg-6 col-12">
-													<div class="form-group">
-														<label>First Name*</label> <input name="first-name"
-															type="text" placeholder="Steve">
-													</div>
-												</div>
-												<div class="col-lg-6 col-12">
-													<div class="form-group">
-														<label>Last Name*</label> <input name="last-name"
-															type="text" placeholder="Aldridge">
-													</div>
-												</div>
-												<div class="col-lg-6 col-12">
-													<div class="form-group">
-														<label>Username*</label> <input name="usernames"
-															type="text" placeholder="@username">
-													</div>
-												</div>
-												<div class="col-lg-6 col-12">
-													<div class="form-group">
-														<label>Email Address*</label> <input name="email"
-															type="email" placeholder="username@gmail.com">
-													</div>
-												</div>
-												<div class="col-12">
-													<div class="form-group upload-image">
-														<label>Profile Image*</label> <input name="profile-image"
-															type="file" placeholder="Upload Image">
-													</div>
-												</div>
-												<div class="col-12">
-													<div class="form-group message">
-														<label>About You*</label>
-														<textarea name="message"
-															placeholder="Enter about yourself"></textarea>
-													</div>
-												</div>
-											
-											</div> 
-											
-									</div>
-								</div>
-
-
-<!-- 								<div class="dashboard-block password-change-block">
-									<h3 class="block-title">Change Password</h3>
-									<div class="inner-block">
-										<form class="default-form-style" method="post" action="#">
-											<div class="row">
-												<div class="col-12">
-													<div class="form-group">
-														<label>Current Password*</label> <input
-															name="current-password" type="password"
-															placeholder="Enter old password">
-													</div>
-												</div>
-												<div class="col-12">
-													<div class="form-group">
-														<label>New Password*</label> <input name="new-password"
-															type="password" placeholder="Enter new password">
-													</div>
-												</div>
-												<div class="col-12">
-													<div class="form-group">
-														<label>Retype Password*</label> <input
-															name="retype-password" type="password"
-															placeholder="Retype password">
-													</div>
-												</div>
-												<div class="col-12">
-													<div class="form-group button mb-0">
-														<button type="submit" class="btn ">Update
-															Password</button>
+														<form action="/kakaoPayCancel" method="post">
+															<input type="hidden" name="p_tid" th:value="${dto.p_tid}">
+															<input type="hidden" name="p_total" th:value="${dto.p_total}">
+															<input type="hidden" name="p_num" th:value="${dto.p_num}">
+															<button th:if="${dto.p_payment} == 2" type="submit" disabled class="btn btn-success ">결제 취소</button>
+															<button th:unless="${dto.p_payment} == 2" type="submit" class="btn btn-success ">결제 취소</button>
+														</form>
 													</div>
 												</div>
 											</div>
-										</form>
+										</div>
 									</div>
-								</div> -->
+								</div>
 							</div>
-						</div>
-					</div>
-				</div>
+						</div>			
+				</section>
 			</section>
-		</section>
 		</section>
 	</body>
 </th:block>

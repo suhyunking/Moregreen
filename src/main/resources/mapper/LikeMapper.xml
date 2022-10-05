@@ -12,7 +12,7 @@
 </resultMap> -->
    
   <insert id="createFundingLike" parameterType="LikeDto">
-		insert into likeFunding (
+		insert into likefunding (
 							funding_f_num, 
 							member_m_num
 							)
@@ -24,16 +24,18 @@
 	
 	  <delete id="deleteFundingLike" parameterType="LikeDto">
 	  
-	  	delete from likeFunding
+	  	delete from likefunding
 	  	where member_m_num= #{m_num} and funding_f_num = #{f_num}
 	  	
 	  </delete>
 
 	<!--  중복방지  -->
 	<select id="retrieveFundingLike" parameterType="LikeDto" resultType="int">
+	
 		select count(*) as l_check
-		from likeFunding 
+		from likefunding 
 		where member_m_num= #{m_num} and funding_f_num = #{f_num}
+		
 	</select>
   
   </mapper>

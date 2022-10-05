@@ -28,6 +28,14 @@
 <script>
 	$(document).ready(function(){
 		$("#overlappedID").click(function(){
+			var id_rule =  /^[a-z0-9]{8,20}/;
+			
+			if(!id_rule.test($("#m_id").val())){
+				alert("아이디를 형식에 맞게 입력해주세요. 소문자+숫자 8자 이상");
+				$("m_id").focus();
+				return false;
+				}
+			
 			const m_id= $("#m_id").val();
 			if(m_id==null|| m_id==""){
 				alert("아이디를 입력해주세요")
@@ -55,6 +63,8 @@
 		});
 		
 		 $(".pwConfirm").keyup(function(){
+			
+			
 	        var password=document.getElementById('m_pw');
 	        var passwordConfirm=document.getElementById('m_pw_confirm');
 	        var confirmMsg=document.getElementById('confirmMsg');
@@ -69,9 +79,48 @@
 	            confirmMsg.innerHTML="비밀번호 불일치";
 	            $("#join").attr("type", "button");
 	        }
+	        
 
 	        });
+		  
 		
+		 $(".overlappedEmail").blur(function(){
+				const m_email= $("#m_email").val();
+				if(m_email==null|| m_email==""){
+					//alert("이메일을 입력해주세요")
+				} else{
+				$("#join").attr("type","button");
+				$.ajax({
+					type:"get",
+					async: false,
+					url: "/member/emailCheck",
+					data: {m_email:m_email},
+					success: function(data){
+						if(data==1){
+							$("#olmessage1").text("이미 사용중인 이메일입니다.");
+							$("#olmessage1").addClass("olmessagef");
+							$("#olmessage1").removeClass("olmessaget");
+						} else{
+							$("#olmessage1").text("사용 가능한 이메일입니다.");
+							$("#olmessage1").addClass("olmessaget");
+							$("#olmessage1").removeClass("olmessagef");
+							$("#join").attr("type", "submit");
+						}
+					}
+				})
+				}
+			});
+		 
+		 $("#m_pw").focusout(function(){
+	          var pwcheck = /^(?=.*[0-9])(?=.*[a-zA-Z!@#$%^&*]).{8,20}$/;
+	          var confirmMsg1=document.getElementById('confirmMsg1');
+	              if(!pwcheck.test($("#m_pw").val())){
+	            	  confirmMsg1.style.color="red";
+	                 confirmMsg1.innerHTML="영문, 숫자, (특수문자)로 8자이상으로 입력."
+	                 } else{
+	     	            confirmMsg1.innerHTML="";
+	    	         }
+	       })
 	})
 	
 </script>
@@ -120,21 +169,24 @@
                     <div class="input-group input-group-outline mb-3">
                         <input type="password" id=m_pw name=m_pw placeholder="비밀번호" 
                             class="form-control" >
+                            </div>
+                        <span id="confirmMsg1"></span>    
                         <span th:style="${'color: red;'}" th:text="${valid_m_pw}"></span>
-                    </div>
+                    
                     <div class="input-group input-group-outline mb-3">
                         <input type="password" id=m_pw_confirm name=m_pw_confirm placeholder="비밀번호 확인"
                             class="form-control pwConfirm"> 
-                        
+                        </div>
                             <span id="confirmMsg"></span>
-                    </div>
+                    
                     
                     <div class="input-group input-group-outline mb-3">
-                        <input type="email" name=m_email 
-                            placeholder="example@xxxx.com" class="form-control">
-                        
+                        <input type="email" name=m_email
+                            placeholder="example@xxxx.com" class="form-control overlappedEmail" id="m_email">
+                        </div>
                         <span th:style="${'color: red;'}" th:text="${valid_m_email}"></span>
-                    </div>
+                    	<span id="olmessage1"></span>
+                    
 
 
 

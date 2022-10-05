@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/moregreen.ico">
   <title>
     관리자 로그인
   </title>
@@ -27,12 +27,18 @@
    $(document).ready(function(){
 	   $("#btn").on("click",function(){
 		   
+		   var admin_rule = /'admin'/;
+		   if(!admin_rule.test($("#pwmsg").val())){
+				alert("비밀번호를 올바르게 입력해주세요.");
+				$("#pwmsg").focus();
+				return false;
+				}
 	        
 	        if($("#idmsg").val().length == 0 || $("#pwmsg").val().length == 0){
 	            alert("아이디와 비밀번호를 입력해주세요");
 	            return
 	        } else{
-	            $("#loginForm").submit();
+	        	$("#loginForm").submit();
 	        }
 	   });
 	   
@@ -74,11 +80,11 @@
                   <div>
                   <p class="mt-4 text-sm text-center">
                     
-                    <a th:if="${fail}==1" class="text-primary font-weight-bold">아이디 또는 비밀번호를 확인해주세요.</a>
+                    <a th:if="${fail}==1" class="text-primary font-weight-bold">관리자 계정이 아닙니다.</a>
                   </div>
                   
                   <div class="input-group input-group-outline my-3">
-                    <input type="text" name=m_id placeholder="아이디" class="form-control" id="idmsg">
+                    <input type="text" name="m_id" placeholder="아이디" class="form-control" id="idmsg">
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     

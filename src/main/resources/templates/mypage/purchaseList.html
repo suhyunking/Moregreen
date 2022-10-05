@@ -23,9 +23,8 @@
 							<div class="col-lg-3 col-md-12 col-12">
 								<div class="dashboard-sidebar">
 									<div class="user-image">
-										<img src="/images/dashboard/user-image.jpg" alt="#">
 										<h3>
-											회원아이디 <span><a href="javascript:void(0)">이름?이메일?</a></span>
+											[[${session.member.m_id}]]
 										</h3>
 									</div>
 									<div class="dashboard-menu">
@@ -33,11 +32,11 @@
 											<li><a class="active" href="purchaseList"><i class="lni lni-dashboard"></i> 펀딩 구매 내역</a></li>
 											<li><a href="myProjectList"><i class="lni lni-pencil-alt"></i> 내가 만든 프로젝트</a></li>
 											<li><a th:href="fundingLikeList"><i class="lni lni-heart"></i> 찜목록</a></li>
-											<li><a href="messages.html"><i class="lni lni-envelope"></i> PW변경</a></li>
-											<li><a href="delete-account.html"><i class="lni lni-trash"></i> 회원 탈퇴</a></li>
+											<li><a href="changePw"><i class="lni lni-envelope"></i> PW변경</a></li>
+											<li><a href="deleteMember"><i class="lni lni-trash"></i> 회원 탈퇴</a></li>
 										</ul>
 										<div class="button">
-											<a class="btn" href="javascript:void(0)">Logout</a>
+											<a class="btn" href="javascript:void(0)" th:href="@{/member/logout}">Logout</a>
 										</div>
 									</div>
 								</div>
@@ -45,7 +44,7 @@
 							<div class="col-lg-9 col-md-12 col-12">
 								<div class="main-content">
 									<div class="dashboard-block mt-0">
-										<h3 class="block-title">펀딩 구매 내역</h3>
+										<h3 class="block-title" align="center">펀딩 구매 내역</h3>
 										<div class="invoice-items default-list-style">
 											<div class="default-list-title">
 												<div class="row align-items-center">
@@ -70,7 +69,7 @@
 												<th:block th:each="dto : ${list}">
 													<div class="row align-items-center">
 														<div class="col-lg-4 col-md-4 col-12">
-															<p><a th:href="@{/mypage/purchaseDetail(f_num=${dto.f_num})}">[[${dto.f_title}]] </a></p>
+															<p><a th:href="@{/mypage/purchaseDetail(m_num=${session.member.m_num},p_num=${dto.p_num})}">[[${dto.f_title}]] </a></p>
 														</div>
 														<div class="col-lg-2 col-md-2 col-12">
 															<p style="text-align:center">[[${dto.f_bname}]]</p>
@@ -81,13 +80,16 @@
 															<span th:if="${dto.f_status} == 5" class="text-sm"><span class="badge text-bg-danger">실패</span></span>		
 														</div>
 														<div class="col-lg-2 col-md-2 col-12" align="center">
-															<div >[[${dto.p_date}]]</div>
+															<div>
+																<span th:text="${#dates.format(dto.p_date, 'yyyy-MM-dd HH:mm')}">[[${dto.p_date}]]</span>
+															</div>
 														</div>
 														<div class="col-lg-2 col-md-2 col-12" align="center">
 															<span th:if="${dto.p_payment} == 1" class="text-sm"><span class="badge text-bg-success bg-gradient">결제완료</span></span>
-															<span th:if="${dto.p_payment} == 2" class="text-sm"><span class="badge text-bg-danger">결제취소</span></span>		
+															<span th:if="${dto.p_payment} == 2" class="text-sm"><span class="badge text-bg-danger">환불완료</span></span>		
 														</div>
 													</div>
+													<br>
 												</th:block>
 											</div>
 											<th:block th:replace="~{/include/page :: purchaseList('purchaseList', ${pageVO}) }"></th:block>

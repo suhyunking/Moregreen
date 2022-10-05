@@ -22,6 +22,7 @@
 	  <result property="f_bnum" column="f_bnum"/>
 	  <result property="m_num" column="member_m_num"/>
 	  <result property="m_id" column="m_id"/>
+	  <result property="p_num" column="p_num"/>
 	  <result property="p_date" column="p_date"/>
 	  <result property="p_payment" column="p_payment"/>
 	  <result property="f_regdate" column="f_regdate"/>
@@ -36,6 +37,25 @@
 	  </collection>
 	</resultMap>
 	
+	<resultMap id="selectPurchaseListMap" type="PurchaseDto">
+	  <result property="f_num" column="f_num"/>
+	  <result property="f_title" column="f_title"/>
+	  <result property="f_price" column="f_price"/>
+	  <result property="f_enddate" column="f_enddate"/>
+	  <result property="f_reward" column="f_reward"/>
+	  <result property="p_num" column="p_num"/>
+	  <result property="p_date" column="p_date"/>
+	  <result property="p_payment" column="p_payment"/>
+	  <result property="p_method" column="p_method"/>
+	  <result property="p_amount" column="p_amount"/>
+	  <result property="p_total" column="p_total"/>
+	  <result property="p_tid" column="p_tid"/>
+	  <result property="d_name" column="d_name"/>
+	  <result property="d_phone" column="d_phone"/>
+	  <result property="d_zipcode" column="d_zipcode"/>
+	  <result property="d_addr" column="d_addr"/>
+	  <result property="d_detailaddr" column="d_detailaddr"/>
+	</resultMap>
 
 	<select id="selectFuningLikeList" parameterType="site.moregreen.basic.util.Criteria" resultMap="selectFundingListMap"> 
 		
@@ -47,14 +67,18 @@
 				i.i_num as i_num,
 			    i.i_name as filename,
 			    i.i_uuid as uuid
-		from likeFunding l 
-		left outer join funding f
+		from (select *
+			  from image
+			  where (funding_f_num, i_num) in (select r.*
+											   from (select funding_f_num, min(i_num) as i_num
+													 from image
+													 where i_type = 1
+													 group by funding_f_num) as r) )as i
+		inner join likefunding l 
+		on l.funding_f_num = i.funding_f_num 
+		inner join funding f 
 		on l.funding_f_num = f.f_num
-		left outer join image i
-		on f.f_num = i.funding_f_num
 		where l.member_m_num = #{m_num}
-		and i.i_type = 1
-		group by l.l_num
 		order by l.l_num desc		
 		
 	</select>
@@ -62,35 +86,59 @@
 	<select id="selectTotal" parameterType="site.moregreen.basic.util.Criteria" resultType="int">
 
 		select count(*) as total
-		from likeFunding
+		from likefunding
 		where member_m_num = #{m_num}
 	    
 	</select>
 		
 	<select id="selectMyPurchaseList" parameterType="site.moregreen.basic.util.Criteria" resultMap="selectFundingListMap">
 	
-		select f.f_title ,
-			   f.f_bname ,
-			   f.f_status ,
-			   p.p_date ,
-			   p.p_payment 
+		select f.f_num,
+			   f.f_title,
+			   f.f_bname,
+			   f.f_status,
+			   p.p_num,
+			   p.p_date,
+			   p.p_payment
 		from purchase p 
 		left outer join funding f
 		on p.funding_f_num = f.f_num
 		where p.member_m_num = #{m_num} 
-		<!-- order by p.p_num desc -->
+		order by p.p_num desc
 	
 	</select>
 	
 	
-	<!-- <select id="selectPurchaseDetail" parameterType="site.moregreen.basic.command.FundingDto" resultMap="selectFundingListMap">
+	<select id="selectMyPurchaseDetail" parameterType="site.moregreen.basic.command.PurchaseDto" resultType="PurchaseDto">
 
-		select 
-		from 
-		where  
+		select f.f_title,
+			   f.f_num,
+			   f.f_enddate,
+			   f.f_price,
+			   f.f_reward,
+			   p.p_num,
+			   p.p_amount,
+			   p.p_method,
+			   p.p_date,
+			   p.p_total,
+			   p.p_tid,
+			   p.p_payment,
+			   d.d_name,
+			   d.d_phone,
+			   d.d_zipcode,
+		   	   d.d_addr,
+		  	   d.d_detailaddr
+		from purchase p 
+		inner join funding f
+		on p.funding_f_num = f.f_num
+		inner join delivery d
+		on p.delivery_d_num = d.d_num
+		where p.member_m_num = #{m_num}
+		and p.p_num = #{p_num}
+		order by p.p_num desc
 		
 	</select>  
- -->	
+	
 
 	<select id="selectMyProjectList" parameterType="site.moregreen.basic.util.Criteria" resultMap="selectFundingListMap"> 
 		
@@ -106,5 +154,5 @@
 	  	order by f.f_num desc
 	
 	</select>	
-		
+	
 </mapper>

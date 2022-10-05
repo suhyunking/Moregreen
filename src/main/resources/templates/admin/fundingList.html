@@ -15,25 +15,45 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- Bootstrap -->
+<link href="/css/_nav1.css" rel="stylesheet">
+<link href="/css/_navbar1.css" rel="stylesheet">
+<link href="/css/bootstrap1.css" rel="stylesheet">
+<link href="/css/bootstrap1.css" rel="stylesheet">
+<link href="/css/bootstrap1.css.map" rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="/css/custom1.min.css" rel="stylesheet">
+<link href="/css/custom1.css" rel="stylesheet">
 <th:block th:replace="~{/include/layout :: setContent( ~{:: .container-fluid}  ) }">
-
-	<div class="container-fluid py-4">
+ 
+	<div class="container-fluid py-4"> 
+	<!-- top navigation -->
+		<div class="top_nav">
+			<div class="nav_menu">
+				<div class="nav toggle" >
+					<a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false" style="padding-right: 15px;" >
+						<i class="fa fa-envelope-o"></i>
+						<span class="badge bg-green">6</span>
+					</a>
+					<ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+						<li class="nav-item">
+							<a class="dropdown-item">
+								<span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+								<span>John Smith</span>
+								<span class="time">3 mins ago</span>
+								</span>
+								<span class="message">
+									Film festivals used to be do-or-die moments for movie makers. They were where...
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+        <!-- /top navigation -->
 		<form name="fundingForm" action="fundingList" method="get">
 			<div class="d-sm-flex justify-content-between">
-				<!-- <div class="d-flex">
-					<div class="dropdown d-inline">
-						<a href="javascript:;" class="btn btn-outline-dark dropdown-toggle " data-bs-toggle="dropdown" id="navbarDropdownMenuLink2"> 진행 상태 </a>
-						<ul class="dropdown-menu dropdown-menu-lg-start px-2 py-3" aria-labelledby="navbarDropdownMenuLink2" data-popper-placement="left-start">
-							<li><a class="dropdown-item border-radius-md" href="#" onclick="handleForm()">전체</a></li>
-							<li><a class="dropdown-item border-radius-md" href="#" onclick="handleForm()">진행중</a></li>
-							<li><a class="dropdown-item border-radius-md" href="#" onclick="handleForm()">성공</a></li>
-							<li><a class="dropdown-item border-radius-md" href="#" onclick="handleForm()">실패</a></li>
-							<li><hr class="horizontal dark my-2"></li>
-							<li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">필터 초기화</a></li>
-						</ul>
-					</div>
-				</div> -->
-				
 				<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
 					<select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" name="searchStatus" onchange="submit()">
 					  <option th:value="null"  th:selected="${pageVO.cri.searchStatus == '' }">전체</option>
@@ -42,7 +62,6 @@
 					  <option th:value="5" th:selected="${pageVO.cri.searchStatus == '5' }">실패</option>
 					</select>
 				</div>
-				
 				<div class="ms-md-auto pe-md-3">
 					<div class="input-group input-group-outline">
 						<input type="text" name="searchName" th:value="${pageVO.cri.searchName}" class="form-control" placeholder="펀딩 명칭 검색">
