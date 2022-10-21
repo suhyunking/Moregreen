@@ -1,11 +1,12 @@
 # :pushpin: Moregreen
 ![image](https://user-images.githubusercontent.com/49506753/195790974-486cd436-cf27-49ca-a159-d34d7591ece7.png)
 
->친환경 크라우드 펀딩 서비스 제작
+> 친환경 크라우드 펀딩 서비스 제작
 </br>
->http://52.78.137.86:8080/moregreen/</br>
-노션</br>
-https://imminent-wishbone-9d3.notion.site/2-804cd51c5e8e473bbb53fdb5b1e6cb4f</br></br>
+**사이트 주소**</br>
+> http://52.78.137.86:8080/moregreen/</br>
+**노션**</br>
+> https://imminent-wishbone-9d3.notion.site/2-804cd51c5e8e473bbb53fdb5b1e6cb4f</br></br>
 
 ## 1. 제작 기간 & 참여 인원
 - 2022년 8월 31일 ~ 10월 11일 (약 6주)
