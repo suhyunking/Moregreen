@@ -129,17 +129,17 @@
 							<span id="priceCheckMsg"></span>
 							<div class="input-group mb-3">
 								<label class="input-group-text" for="inputGroupFile02">대표 사진</label> 
-								<input multiple="multiple" type="file" class="form-control" id="mainFile" name="mainFile">
+								<input multiple="multiple" type="file" class="form-control" id="mainFile" name="mainFile" accept=".png, .jpg, .jpeg, .gif">
 							</div>
 							<span id="mainFileCheckMsg"></span>
 							<div class="input-group mb-3">
 								<label class="input-group-text" for="inputGroupFile03">내용 사진</label> 
-								<input multiple="multiple" type="file" class="form-control" id="contentFile" name="contentFile">
+								<input multiple="multiple" type="file" class="form-control" id="contentFile" name="contentFile" accept=".png, .jpg, .jpeg, .gif">
 							</div> 
 							<span id="contentFileCheckMsg"></span>
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon1">사업자 등록번호</span>
-								<input type="text" maxlength="10" class="form-control" id="bizno" placeholder="사업자 등록번호 작성" name="f_bnum" th:value="${dto != null ? dto.f_bnum : '' }">
+								<input type="text" maxlength="10" class="form-control" id="bizno" placeholder="사업자 등록번호 작성" name="f_bnum" th:value="${dto != null ? dto.f_bnum : '' }" accept=".png, .jpg, .jpeg">
 							</div>
 							<span id="bNumCheckMsg"></span>
 							<div class="input-group mb-3">
@@ -183,8 +183,6 @@
 	</body>
 </th:block>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/super-build/ckeditor.js"></script>
-  
-
 <script th:inline="javascript">
 
 $(document).on("keyup", "#bizno", function() { 

@@ -35,6 +35,12 @@ public class AlarmServiceImpl implements AlarmService{
 		alarmMapper.deleteAlarm(dto);
 	}
 
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public void removeAlarmByFNum(AlarmDto dto) {
+		alarmMapper.deleteAlarmByFNum(dto);
+	}
+
 
 
 }

@@ -39,6 +39,13 @@
   	where a_num = #{a_num}
   	
   </delete>
+  
+  <delete id="deleteAlarmByFNum" parameterType="AlarmDto">
+  
+  	delete from alarm
+  	where funding_f_num = #{funding_f_num}
+  	
+  </delete>
 	
 	
   </mapper>

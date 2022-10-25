@@ -38,4 +38,11 @@ public class AlarmController {
 		return 1;
 	}
 	
+	@RequestMapping(value="removeAlarmByFNum",method=RequestMethod.POST)
+	public @ResponseBody int removeAlarmByFNum(@RequestBody AlarmDto alarmDto) throws Exception{
+		alarmService.removeAlarmByFNum(alarmDto); 
+		
+		return 1;
+	}
+	
 }
