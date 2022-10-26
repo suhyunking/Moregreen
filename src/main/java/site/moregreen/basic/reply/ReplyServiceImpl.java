@@ -24,8 +24,8 @@ public class ReplyServiceImpl implements ReplyService{
 
 	@Override
 	@Transactional(rollbackFor = RuntimeException.class)
-	public void addReply(ReplyDto dto) {
-		replyMapper.insertReply(dto);
+	public int addReply(ReplyDto dto) {
+		return replyMapper.insertReply(dto);
 	}
 
 	@Override

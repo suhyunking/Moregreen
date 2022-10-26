@@ -22,14 +22,16 @@ public class ReplyController {
 	ReplyService replyService;
 	
 	@RequestMapping(value="replyForm",method=RequestMethod.POST)
-	public @ResponseBody int addReply(@ModelAttribute ReplyDto replyDto) {
+	@ResponseBody
+	public int addReply(@ModelAttribute ReplyDto replyDto) {
 		replyService.addReply(replyDto); 
-		
-		return 1;
+		int r_num = replyDto.getR_num();
+		return r_num;
 	}
 	
 	@RequestMapping(value="removeReply",method=RequestMethod.POST)
-	public @ResponseBody int removeReply(@ModelAttribute ReplyDto replyDto) {
+	@ResponseBody
+	public int removeReply(@ModelAttribute ReplyDto replyDto) {
 		replyService.removeReply(replyDto); 
 		
 		return 1;
