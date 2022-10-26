@@ -24,8 +24,8 @@ public interface FundingMapper {
 	public void createFunding(FundingDto dto); 							// 등록
 	public int createFundingFile(UploadDto dto);
 
-	public void fundingAccept(int f_num);
-	public void fundingReject(int f_num);
+	public void fundingAccept(FundingDto dto);							// 펀딩 승인
+	public void fundingReject(FundingDto dto);							// 펀딩 반려
 	
 	public DeliveryDto selectDelivery(int m_num);
 

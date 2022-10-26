@@ -46,6 +46,8 @@
 	  <result property="m_num" column="member_m_num"/>
 	  <result property="m_id" column="m_id"/>
 	  <result property="f_regdate" column="f_regdate"/>
+	  <result property="f_confirmdate" column="f_confirmdate"/>
+	  <result property="f_acceptor" column="f_acceptor"/>
 	  <result property="l_count" column="l_count"/>
   <collection property="files" ofType="UploadDto">
     <id property="upload_no" column="inum"/> <!-- column은 DB의 column 이름, property는 DTO의 명칭  -->
@@ -132,6 +134,8 @@
 		   f.f_bname as f_bname,
 		   f.f_bnum as f_bnum,
 		   f.f_regdate as f_regdate,
+		   f.f_confirmdate as f_confirmdate,
+		   f.f_acceptor as f_acceptor,
 		   f.member_m_num as m_num
 	  from funding f
 	  where f.f_status in (3,4,5)
@@ -278,15 +282,15 @@
 	    
 	</select>
 	
-	<update id="fundingAccept" parameterType="int">
+	<update id="fundingAccept" parameterType="FundingDto">
 		update funding
-		set f_status = 3
+		set f_status = 3, f_acceptor = #{f_acceptor}, f_confirmdate = #{f_confirmdate}
 		where f_num = #{f_num}
 	</update>
 	
-	<update id="fundingReject" parameterType="int">
+	<update id="fundingReject" parameterType="FundingDto">
 		update funding
-		set f_status = 2
+		set f_status = 2, f_acceptor = #{f_acceptor}, f_confirmdate = #{f_confirmdate}
 		where f_num = #{f_num}
 	</update>
   

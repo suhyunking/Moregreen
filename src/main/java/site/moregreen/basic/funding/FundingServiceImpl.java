@@ -211,18 +211,18 @@ public class FundingServiceImpl implements FundingService{
 	
 	@Override
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int fundingAccept(int f_num) {
+	public int fundingAccept(FundingDto dto) {
 		
-		fundingMapper.fundingAccept(f_num);
+		fundingMapper.fundingAccept(dto);
 		
 		return 0;
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int fundingReject(int f_num) {
+	public int fundingReject(FundingDto dto) {
 
-		fundingMapper.fundingReject(f_num);
+		fundingMapper.fundingReject(dto);
 		
 		return 0;
 	}
