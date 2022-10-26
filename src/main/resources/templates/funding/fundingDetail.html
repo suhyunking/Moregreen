@@ -185,10 +185,10 @@
                                        </div>
                                    </form>
                                    <hr>
-		                           	  <table cellpadding="0" cellspacing="0" class="board_basic_view" width="100%;">
+		                           	  <table cellpadding="0" cellspacing="0" class="board_basic_view" width="100%;" id="replyArea">
                                          <!-- 댓글영역 -->
                                           <th:block th:each="reply : ${replyList}">
-	                                      		<tbody class="reply_area" id="replyArea">
+	                                      		<tbody class="reply_area">
 	                                                <tr>
 	                                                    <th style="padding-right: 40px; align-items: center; width:30px;">[[${reply.r_writer}]]</th>
 	                                                    <td>
@@ -313,14 +313,14 @@ if(key === "userinfo"){
 		          success : function(data){
 		             if(data) {
 		                alert("댓글이 등록되었습니다.");
-		                $("#replyArea").prepend('<tr><th style="padding-right: 40px; align-items: center; width:30px;">' + r_writer + '</th>' +
+		                $("#replyArea").prepend('<tbody class="reply_area"><tr><th style="padding-right: 40px; align-items: center; width:30px;">' + r_writer + '</th>' +
 		                						'<td class="reply_content">' + 
 		                						'<div class="left"><p>' + r_content + '</p></div>' +
 		                						'<div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
 		                						'<span>' + dateTime + '</span>' +
 		                						'<input onclick="removeReply(' + data + ')" type="button" class="btn btn-outline-danger" value="삭제">' +
                                                 '<input type="hidden" id="r_num" value="' + data + '">' +
-                                                '</div><hr></td></tr>');
+                                                '</div><hr></td></tr><tbody>');
 		             }
 		          }
 		       });
@@ -345,7 +345,7 @@ if(key === "userinfo"){
 			          data : sendData,
 			          success : function(data){
 			             if(data) {
-			            	$('input[value=' + r_num + ']').closest("tbody").remove();
+			            	$('input[value=' + r_num + ']').closest("tr").remove();
 			                alert("댓글이 삭제되었습니다.");
 			             }
 			          }
