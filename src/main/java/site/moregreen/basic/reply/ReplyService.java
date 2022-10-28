@@ -8,6 +8,6 @@ public interface ReplyService {
 	
 	public List<ReplyDto> retrieveReplyList(int f_num);		//댓글 목록 조회
 		
-	public void addReply(ReplyDto dto);
+	public int addReply(ReplyDto dto);
 	public void removeReply(ReplyDto dto);
 }

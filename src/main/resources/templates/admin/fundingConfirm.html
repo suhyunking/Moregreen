@@ -218,8 +218,9 @@ input[type=submit] {
                                             </table>
                                             <div class="btn_area">
 		                                         <div class="row">
-			                                       <a class="btn btn-success" style="width: auto; margin: auto;" th:onclick="|funding_accept()|">승인</a>
-			                                       <a class="btn btn-danger" style="width: auto; margin: auto;" th:onclick="|funding_reject()|">반려</a>
+		                                         	<input type="hidden" name="f_acceptor" th:value="${session.member.m_id}">
+			                                       	<a class="btn btn-success" style="width: auto; margin: auto;" th:onclick="|funding_accept()|">승인</a>
+			                                       	<a class="btn btn-danger" style="width: auto; margin: auto;" th:onclick="|funding_reject()|">반려</a>
 			                                    </div>
                                             </div>
                                         </li>
@@ -372,7 +373,6 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 
    function funding_accept() {
       event.preventDefault(); //태그가 가진 기본이벤트 중지
-      console.log( document.actionForm );
       document.actionForm.action = "fundingAccept";
       document.actionForm.method = "post";
       document.actionForm.submit(); //서브밋 

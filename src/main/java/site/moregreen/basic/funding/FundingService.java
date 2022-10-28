@@ -34,8 +34,9 @@ public interface FundingService {
 	// 펀딩 상세조회
 	public List<FundingDto> retrieveFundingDetail(int f_num);
 
-	public int fundingAccept(int f_num);
-	public int fundingReject(int f_num);
+	// 펀딩 승인&반려
+	public int fundingAccept(FundingDto dto);
+	public int fundingReject(FundingDto dto);
 	
 	public List<FundingDto> retrieveRetiredFundingListForCancel();
 }

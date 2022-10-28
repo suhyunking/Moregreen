@@ -19,7 +19,10 @@
   </select>
   
   <insert id="insertReply" parameterType="ReplyDto">
-  	
+  		<selectKey resultType="int" keyProperty="r_num" order="AFTER">
+ 			select max(r_num) as r_num
+			from reply
+ 		</selectKey>
   	insert into reply (
   						r_writer,
   						r_content,

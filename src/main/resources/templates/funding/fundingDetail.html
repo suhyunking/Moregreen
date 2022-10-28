@@ -71,6 +71,9 @@
                            <a>모금된 금액</a>
                            <p class="money"><strong class="comma" style="font-size:30px; color:#5A9367" >[[${dto.f_totalmoney}]]</strong> 원 달성</p>
                            <a>펀딩률</a>
+                           <div class="progress">
+						     <div class="progress-bar bg-success" role="progressbar"  aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${dto.f_rate}" th:style="'width:'+ ${dto.f_rate}+'%;'"></div>
+						   </div>
                            <p style="font-size:30px; color:#5A9367"><strong >[[${dto.f_rate}]]</strong>%</p>
                            <a>마감일자</a>
                            <p><strong style="font-size:30px; color:#5A9367">[[${dto.f_enddate}]]</strong></p>
@@ -185,34 +188,32 @@
                                        </div>
                                    </form>
                                    <hr>
-		                           	  <table cellpadding="0" cellspacing="0" class="board_basic_view" width="100%;">
+		                           	  <table cellpadding="0" cellspacing="0" class="board_basic_view" width="100%;" id="replyArea">
                                          <!-- 댓글영역 -->
                                           <th:block th:each="reply : ${replyList}">
-                                            <tbody class="reply_area">
-                                                <tr>
-                                                    <th style="padding-right: 40px; align-items: center; width:30px;">[[${reply.r_writer}]]</th>
-                                                    <td class="reply_content">
-                                                        <div class="left">
-                                                            
-                                                            <p>[[${reply.r_content}]]</p>
-                                                        </div>
-                                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                        <span>[[${reply.r_moddate}]]</span>
-                                                        <th:block th:if="${session.member != null}">
-	                                                        <input id="removeReply" th:if="${reply.r_writer == session.member.m_id}" type="button" class="btn btn-outline-danger" value="삭제">
-	                                                        <input th:unless="${reply.r_writer == session.member.m_id}" type="button" class="btn btn-outline-danger" value="삭제" disabled>
-                                                        </th:block>
-                                                        
-                                                        <th:block th:unless="${session.member != null}">
-	                                                        <input type="button" class="btn btn-outline-danger" value="삭제" disabled>
-                                                        </th:block>
-                                                        <input type="hidden" id="r_num" th:value="${reply.r_num}">
-                                                       
-                                                        </div>
-                                                         <hr>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+	                                      		<tbody class="reply_area">
+	                                                <tr>
+	                                                    <th style="padding-right: 40px; align-items: center; width:30px;">[[${reply.r_writer}]]</th>
+	                                                    <td>
+	                                                        <div class="left">
+	                                                            <p>[[${reply.r_content}]]</p>
+	                                                        </div>
+	                                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+	                                                        <span>[[${reply.r_moddate}]]</span>
+	                                                        
+	                                                        <th:block th:if="${session.member != null and reply.r_writer.equals(session.member.m_id)}">
+		                                                        <input th:onclick="'javascript:removeReply(\'' + ${reply.r_num} + '\');'" type="button" class="btn btn-outline-danger" value="삭제">
+	                                                        </th:block>
+	                                                        <th:block th:unless="${session.member != null and reply.r_writer.equals(session.member.m_id)}">
+		                                                        <input type="button" class="btn btn-outline-danger" value="삭제" disabled>
+	                                                        </th:block>
+	                                                        
+	                                                        <input type="hidden" id="r_num" th:value="${reply.r_num}">
+	                                                        </div>
+	                                                         <hr>
+	                                                    </td>
+	                                                </tr>
+                                            	</tbody>
                                             </th:block>
                                             <!-- end댓글영역 -->
                                         </table>
@@ -232,10 +233,10 @@
       </section>
 </th:block>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/super-build/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 
 let key = "${param.key}";
-console.log(key);
 if(key === "userinfo"){
 	
 	$("#myreview-tab").removeClass("active");
@@ -278,31 +279,51 @@ if(key === "userinfo"){
 	        location.href = [[@{'/member/memberLogin'}]];
 		} else {
 			
+			var r_num = 0;
 			var member = null;
 			var r_writer = null;
 			if(session != null){
 				member = [[${session.member}]];
 				r_writer = member.m_id;
 			}
+
+			//날짜 + 시간 구하기
+			var today = new Date();
+			
+			var year = today.getFullYear();
+			var month = ('0' + (today.getMonth() + 1)).slice(-2);
+			var day = ('0' + today.getDate()).slice(-2);
+
+			var dateString = year + '-' + month  + '-' + day;
+			
+			var hours = ('0' + today.getHours()).slice(-2); 
+			var minutes = ('0' + today.getMinutes()).slice(-2);
+			var seconds = ('0' + today.getSeconds()).slice(-2); 
+
+			var timeString = hours + ':' + minutes  + ':' + seconds;
+			var dateTime = dateString + ' ' + timeString;
 			
 			var r_content = $("#r_content").val();
 			var funding_f_num = $("#f_num").val();
-			console.log(r_content)
-			console.log(funding_f_num)
 			
-			function test(){  
-                $("#community").load(window.location.href + " #community");
-          	}
 			var sendData = {'r_writer' : r_writer, 'r_content' : r_content, 'funding_f_num' : funding_f_num };
 		      
 		      $.ajax({
 		          url :[[@{'/reply/replyForm'}]],
 		          type :'POST',
 		          data : sendData,
+		          async: false,
 		          success : function(data){
 		             if(data) {
-		                alert("댓글이 등록되었습니다.")
-		                test();
+		                alert("댓글이 등록되었습니다.");
+		                $("#replyArea").prepend('<tbody class="reply_area"><tr><th style="padding-right: 40px; align-items: center; width:30px;">' + r_writer + '</th>' +
+		                						'<td class="reply_content">' + 
+		                						'<div class="left"><p>' + r_content + '</p></div>' +
+		                						'<div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
+		                						'<span>' + dateTime + '</span>' +
+		                						'<input onclick="removeReply(' + data + ')" type="button" class="btn btn-outline-danger" value="삭제">' +
+                                                '<input type="hidden" id="r_num" value="' + data + '">' +
+                                                '</div><hr></td></tr><tbody>');
 		             }
 		          }
 		       });
@@ -310,35 +331,32 @@ if(key === "userinfo"){
 		
 	});
 	
+	var r_num = 0;
 	//댓글 삭제 버튼
-	$("#removeReply").on("click", function(){
-		event.preventDefault();
-		var result = confirm("정말 삭제하시겠습니까?") 
-		
-		if(result == true){
-			var r_num = $("#r_num").val(); 
-			
-			var sendData = {'r_num' : r_num};
-		      
-		      $.ajax({
-		          url :[[@{'/reply/removeReply'}]],
-		          type :'POST',
-		          data : sendData,
-		          success : function(data){
-		             if(data) {
-		                alert("댓글이 삭제되었습니다.")
-		                test();
-		             }
-		          }
-		       });
-		}
-		
-		function test(){  
-               $("#community").load(window.location.href + " #community");
-         	}
-		
-		
-	});
+	function removeReply(r_num){
+			console.log("선택됨")
+			console.log(r_num)
+			event.preventDefault();
+			var result = confirm("정말 삭제하시겠습니까?") 
+			if(result == true){
+				
+				var sendData = {'r_num' : r_num};
+				
+			      $.ajax({
+			          url :[[@{'/reply/removeReply'}]],
+			          type :'POST',
+			          data : sendData,
+			          success : function(data){
+			             if(data) {
+			            	$('input[value=' + r_num + ']').closest("tr").remove();
+			                alert("댓글이 삭제되었습니다.");
+			             }
+			          }
+			       });
+			}
+	}
+	
+	
 
    //펀딩버튼
    function handleForm() {

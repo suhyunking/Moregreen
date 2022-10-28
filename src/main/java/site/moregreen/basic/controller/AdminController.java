@@ -1,6 +1,9 @@
 package site.moregreen.basic.controller;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,7 +90,7 @@ public class AdminController {
 	@GetMapping("/fundingList")
 	public String fundingList(Model model, Criteria cri, HttpSession session) {
 
-		List<FundingDto> list = fundingService.retriveFundingList(cri);
+		List<FundingDto> list = fundingService.retriveAdminFundingList(cri);
 		int total = fundingService.retrieveTotal(cri);
 		PageVo pageVO = new PageVo(cri, total);
 		
@@ -192,9 +195,16 @@ public class AdminController {
 	
 
 	@PostMapping("/fundingAccept")
-	public String fundingAccept(@RequestParam(value="f_num", required=false) int f_num, RedirectAttributes RA) {
+	public String fundingAccept(@RequestParam(value="f_num", required=false) int f_num, 
+								@RequestParam(value="f_acceptor", required=false) String f_acceptor, 
+								RedirectAttributes RA) {
 		
-		int result = fundingService.fundingAccept(f_num);
+		Date now = Calendar.getInstance().getTime();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String f_confirmdate = formatter.format(now);
+		
+		FundingDto dto = FundingDto.builder().f_num(f_num).f_acceptor(f_acceptor).f_confirmdate(f_confirmdate).build();
+		int result = fundingService.fundingAccept(dto);
 		//메시지처리(리다이렉트 시 1회성 메시지를 보내는 방법)
 		if(result == 1) {
 			RA.addFlashAttribute("msg", "정상 수정 되었습니다");
@@ -206,9 +216,16 @@ public class AdminController {
 	}
 	
 	@PostMapping("/fundingReject")
-	public String fundingReject(@RequestParam(value="f_num", required=false) int f_num, RedirectAttributes RA) {
+	public String fundingReject(@RequestParam(value="f_num", required=false) int f_num, 
+								@RequestParam(value="f_acceptor", required=false) String f_acceptor, 
+								RedirectAttributes RA) {
 		
-		int result = fundingService.fundingReject(f_num);
+		Date now = Calendar.getInstance().getTime();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String f_confirmdate = formatter.format(now);
+		
+		FundingDto dto = FundingDto.builder().f_num(f_num).f_acceptor(f_acceptor).f_confirmdate(f_confirmdate).build();
+		int result = fundingService.fundingReject(dto);
 		//메시지처리(리다이렉트 시 1회성 메시지를 보내는 방법)
 		if(result == 1) {
 			RA.addFlashAttribute("msg", "정상 수정 되었습니다");

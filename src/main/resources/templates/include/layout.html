@@ -20,8 +20,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon.png">
-<link rel="icon" type="image/png" href="img/moregreen.png">
+<link rel="apple-touch-icon" sizes="76x76" th:href="@{img/apple-icon.png}">
+<link rel="icon" type="image/png" th:href="@{img/moregreen.png}">
 <title>Moregreen admin</title>
 
 <!--     Fonts and icons     -->
@@ -29,16 +29,13 @@
 
 <!-- Material Icons -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-<link id="pagestyle" href="../css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<link id="pagestyle" th:href="@{/css/material-dashboard.css}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" />
 <!-- Nucleo Icons -->
-<link href="../css/nucleo-icons.css" rel="stylesheet" />
-<link href="../css/nucleo-svg.css" rel="stylesheet" />
-<link href="../css/main.css" rel="stylesheet" />
-<link href="../css/main1.css" rel="stylesheet" />
-<link href="../build/css/custom.min.css" rel="stylesheet">
-<link href="../build/css/docs.css" rel="stylesheet">
-
+<link th:href="@{/css/nucleo-icons.css}" rel="stylesheet" />
+<link th:href="@{/css/nucleo-svg.css}" rel="stylesheet" />
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<link th:href="@{/css/main1.css}" rel="stylesheet" />
 
 <!-- Font Awesome Icons -->
 <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
@@ -57,7 +54,6 @@
 		
 </script>
 <style>
-
 .dropbtn {
   background-color: #04AA6D;
   color: white;
@@ -92,7 +88,6 @@
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
-
 </style>
 
 	</head>
@@ -155,8 +150,8 @@
 						            <div class="card-header" >
 						              <span class="mb-2">프로젝트 개설 알람</span>
 						            </div>
-						            <div class="card-body p-0 pb-0">
-						              <th:block th:each="alarmDto : ${alarmList}">
+						            <div class="card-body p-0 pb-0" id="test1">
+						              <th:block th:each="alarmDto : ${alarmList}" >
 							              <div class="alert alert-primary alert-dismissible text-white" role="alert" style="padding-right:0rem;">
 							                <input type="hidden" name="a_num" th:value="${alarmDto.a_num}">
 						                	<a th:onclick="|deleteAlarm('${alarmDto.a_num}')|" th:href="@{/admin/fundingConfirm(f_num=${alarmDto.funding_f_num})}">[[${alarmDto.a_message}]]</a>
@@ -185,7 +180,6 @@
 
 <!--   Core JS Files   -->
 <script src="../js/core/popper.min.js"></script>
-<script src="../js/core/bootstrap.min1.js"></script>
 <script src="../js/core/bootstrap.min.js"></script>
 <script src="../js/plugins/perfect-scrollbar.min.js"></script>
 <script src="../js/plugins/smooth-scrollbar.min.js"></script>
@@ -206,40 +200,64 @@ function connectWs(){
 
 	sock.onopen = function() {
         console.log('myHandler와의 커넥션이 열렸습니다.');
-  };
+  	};
 
- sock.onmessage = function(event) {
-	 	var data = event.data;
-	 	location.reload();
-	   	/* $.ajax({
-			url : '/mentor/member/countAlarm',
-			type : 'POST',
-			dataType: 'text',
-			success : function(data) {
-				if(data == '0'){
-				}else{
-					$('#alarmCountSpan').addClass('bell-badge-danger bell-badge')
-					$('#alarmCountSpan').text(data);
+	 sock.onmessage = function(event) {
+		 	var data = event.data;
+		 	var funding_f_num = data.slice(-17,-15);
+		 	$("#test1").prepend("<div class='alert alert-primary alert-dismissible text-white' role='alert' style='padding-right:0rem;'>" + 
+		 						"<a onclick='deleteAlarmByFNum(" + funding_f_num +")' href='/admin/fundingConfirm?f_num=" + funding_f_num + "'>" + data + "</a></div>");
+		   	/* $.ajax({
+				url : '/mentor/member/countAlarm',
+				type : 'POST',
+				dataType: 'text',
+				success : function(data) {
+					if(data == '0'){
+					}else{
+						$('#alarmCountSpan').addClass('bell-badge-danger bell-badge')
+						$('#alarmCountSpan').text(data);
+					}
+				},
+				error : function(err){
+					alert('err');
 				}
-			},
-			error : function(err){
-				alert('err');
-			}
-	   	});
+		   	}); */
+	
+	       
+	 };
 
-       
- };
-
- sock.onclose = function() {
-   	console.log('connect close');
-   	/* setTimeout(function(){conntectWs();} , 1000); */
- };
-
- sock.onerror = function (err) {
-	 console.log('Errors : ' , err);
- };
+	 sock.onclose = function() {
+	   	console.log('커넥션 종료');
+	   	setTimeout(function(){conntectWs();} , 1000);
+	 };
+	
+	 sock.onerror = function (err) {
+		 console.log('Errors : ' , err);
+	 };
 
 }
+
+function deleteAlarmByFNum(funding_f_num) {
+	
+	var data = {
+		"funding_f_num" : funding_f_num
+	};
+	
+	$.ajax({
+		url : [[@{'/alarm/removeAlarmByFNum'}]],
+		type : 'POST',
+		data : JSON.stringify(data),
+ 		contentType: "application/json; charset=utf-8",
+ 		dataType : 'text',
+		success : function(data) {
+				console.log("삭제 완료");				
+		},
+		error : function(err){
+			alert('err');
+		}
+   	});
+}
+
 var a_num = null;
 function deleteAlarm(a_num) {
 	console.log(a_num);
@@ -277,5 +295,4 @@ function deleteAlarm(a_num) {
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="../js/material-dashboard.min.js?v=3.0.4"></script>
 </html>

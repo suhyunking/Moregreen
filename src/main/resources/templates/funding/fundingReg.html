@@ -129,21 +129,17 @@
 							<span id="priceCheckMsg"></span>
 							<div class="input-group mb-3">
 								<label class="input-group-text" for="inputGroupFile02">대표 사진</label> 
-								<input type="file" class="form-control" id="mainFile1" name="mainFile">
-								<input type="file" class="form-control" id="mainFile2" name="mainFile">
-								<input type="file" class="form-control" id="mainFile3" name="mainFile">
+								<input multiple="multiple" type="file" class="form-control" id="mainFile" name="mainFile" accept=".png, .jpg, .jpeg, .gif">
 							</div>
 							<span id="mainFileCheckMsg"></span>
 							<div class="input-group mb-3">
 								<label class="input-group-text" for="inputGroupFile03">내용 사진</label> 
-								<input type="file" class="form-control" id="contentFile1" name="contentFile">
-								<input type="file" class="form-control" id="contentFile2" name="contentFile">
-								<input type="file" class="form-control" id="contentFile3" name="contentFile">
+								<input multiple="multiple" type="file" class="form-control" id="contentFile" name="contentFile" accept=".png, .jpg, .jpeg, .gif">
 							</div> 
 							<span id="contentFileCheckMsg"></span>
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon1">사업자 등록번호</span>
-								<input type="text" maxlength="10" class="form-control" id="bizno" placeholder="사업자 등록번호 작성" name="f_bnum" th:value="${dto != null ? dto.f_bnum : '' }">
+								<input type="text" maxlength="10" class="form-control" id="bizno" placeholder="사업자 등록번호 작성" name="f_bnum" th:value="${dto != null ? dto.f_bnum : '' }" accept=".png, .jpg, .jpeg">
 							</div>
 							<span id="bNumCheckMsg"></span>
 							<div class="input-group mb-3">
@@ -187,8 +183,6 @@
 	</body>
 </th:block>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/super-build/ckeditor.js"></script>
-  
-
 <script th:inline="javascript">
 
 $(document).on("keyup", "#bizno", function() { 
@@ -251,79 +245,30 @@ $(".save").on("click", function() {
 	
 	
 	//대표사진 유효성 검사
-	if($("#mainFile1").val().trim().length == 0){
+	if($("#mainFile").val().trim().length == 0){
 	 mainFileCheckMsg.style.color="red";
 	 mainFileCheckMsg.innerHTML="대표 사진 3장 모두 등록해주세요";
 	 return false;
-	} else if($("#mainFile1").val().trim().length != 0){
-		 var ext = $('#mainFile1').val().split('.').pop().toLowerCase();
+	} else if($("#mainFile").val().trim().length != 0){
+		 var ext = $('#mainFile').val().split('.').pop().toLowerCase();
 	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
 	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
 	  	 return false;
 	     }
 	}
-	
-	if($("#mainFile2").val().trim().length == 0){
-	 mainFileCheckMsg.style.color="red";
-	 mainFileCheckMsg.innerHTML="대표 사진 3장 모두 등록해주세요";
-	 return false;
-	} else if($("#mainFile2").val().trim().length != 0){
-		 var ext = $('#mainFile2').val().split('.').pop().toLowerCase();
-	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
-	  	 return false;
-	     }
-	}
-	
-	if($("#mainFile3").val().trim().length == 0){
-	 mainFileCheckMsg.style.color="red";
-	 mainFileCheckMsg.innerHTML="대표 사진 3장 모두 등록해주세요";
-	 return false;
-	} else if($("#mainFile3").val().trim().length != 0){
-		 var ext = $('#mainFile3').val().split('.').pop().toLowerCase();
-	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
-	  	 return false;
-	     }
-	}
-	
 	
 	//내용사진 유효성 검사
-	if($("#contentFile1").val().trim().length == 0){
+	if($("#contentFile").val().trim().length == 0){
 	 contentFileCheckMsg.style.color="red";
 	 contentFileCheckMsg.innerHTML="내용에 들어갈 사진을 3장 모두 등록해주세요";
 	 return false;
-	} else if($("#contentFile1").val().trim().length != 0){
-		 var ext = $('#contentFile1').val().split('.').pop().toLowerCase();
+	} else if($("#contentFile").val().trim().length != 0){
+		 var ext = $('#contentFile').val().split('.').pop().toLowerCase();
 	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
 	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
 	  	 return false;
 	     }
 	}
-	
-	if($("#contentFile2").val().trim().length == 0){
-	 contentFileCheckMsg.style.color="red";
-	 contentFileCheckMsg.innerHTML="내용에 들어갈 사진을 3장 모두 등록해주세요";
-	 return false;
-	} else if($("#contentFile2").val().trim().length != 0){
-		 var ext = $('#contentFile2').val().split('.').pop().toLowerCase();
-	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
-	  	 return false;
-	     }
-	}
-	
-	if($("#contentFile3").val().trim().length == 0){
-	 contentFileCheckMsg.style.color="red";
-	 contentFileCheckMsg.innerHTML="내용에 들어갈 사진을 3장 모두 등록해주세요";
-	 return false;
-	} else if($("#contentFile3").val().trim().length != 0){
-		 var ext = $('#contentFile3').val().split('.').pop().toLowerCase();
-	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
-	  	 return false;
-	     }
-	} 
 	
 	//사업자 번호 유효성 검사
 	var pBizno = $("#bizno").val();	//사업자번호
@@ -337,7 +282,7 @@ $(".save").on("click", function() {
 	 
 	} else if(pBizno.replaceAll("-","").length != 10 ){
 	 bNumCheckMsg.style.color="red";
-	 bNumCheckMsg.innerHTML="사업자 번호는 하이픈(-)을 포함한 12자리입니다.";
+	 bNumCheckMsg.innerHTML="사업자 번호는 총 10자리의 숫자입니다.";
 	 $("#bizno").focus();
 	 return false;
 	 

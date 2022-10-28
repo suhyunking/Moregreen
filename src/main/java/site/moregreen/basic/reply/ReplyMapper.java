@@ -14,6 +14,6 @@ public interface ReplyMapper {
 
 	public List<ReplyDto> selectReplyList(int f_num);		//댓글 목록 조회
 	
-	public void insertReply(ReplyDto dto);
+	public int insertReply(ReplyDto dto);
 	public void deleteReply(ReplyDto dto);
 }
