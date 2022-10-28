@@ -282,7 +282,7 @@ $(".save").on("click", function() {
 	 
 	} else if(pBizno.replaceAll("-","").length != 10 ){
 	 bNumCheckMsg.style.color="red";
-	 bNumCheckMsg.innerHTML="사업자 번호는 하이픈(-)을 포함한 12자리입니다.";
+	 bNumCheckMsg.innerHTML="사업자 번호는 총 10자리의 숫자입니다.";
 	 $("#bizno").focus();
 	 return false;
 	 

@@ -71,6 +71,9 @@
                            <a>모금된 금액</a>
                            <p class="money"><strong class="comma" style="font-size:30px; color:#5A9367" >[[${dto.f_totalmoney}]]</strong> 원 달성</p>
                            <a>펀딩률</a>
+                           <div class="progress">
+						     <div class="progress-bar bg-success" role="progressbar"  aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${dto.f_rate}" th:style="'width:'+ ${dto.f_rate}+'%;'"></div>
+						   </div>
                            <p style="font-size:30px; color:#5A9367"><strong >[[${dto.f_rate}]]</strong>%</p>
                            <a>마감일자</a>
                            <p><strong style="font-size:30px; color:#5A9367">[[${dto.f_enddate}]]</strong></p>
