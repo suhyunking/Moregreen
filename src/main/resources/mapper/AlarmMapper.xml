@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="site.moregreen.basic.alarm.AlarmMapper">
+  
+ <!--  <resultMap id="selectLikeListMap" type="LikeDto">
+	  <result property="l_num" column="l_num"/>
+	   <result property="m_num" column="member_m_num"/>
+	  <result property="f_num" column="funding_f_num"/>
+</resultMap> -->
+   
+  <insert id="saveAlarm" parameterType="AlarmDto">
+		insert into alarm (
+							a_message,
+							funding_f_num
+							)
+					values(
+							 #{a_message},
+							 #{funding_f_num}
+							 )
+  </insert>
+	
+  <select id="selectAlarmList" resultType="AlarmDto">
+
+	select a_num,
+		   a_message,
+		   funding_f_num
+	from alarm
+	order by a_num desc
+	limit 5
+
+  </select>
+  
+  <delete id="deleteAlarm" parameterType="AlarmDto">
+  
+  	delete from alarm
+  	where a_num = #{a_num}
+  	
+  </delete>
+  
+  <delete id="deleteAlarmByFNum" parameterType="AlarmDto">
+  
+  	delete from alarm
+  	where funding_f_num = #{funding_f_num}
+  	
+  </delete>
+	
+	
+  </mapper>

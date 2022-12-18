@@ -194,6 +194,22 @@ null
 null
 ); 
 
+ INSERT INTO member(m_id, m_pw, m_email, m_exit, m_exitdate) VALUES
+('admin', 
+'admin',
+'admin@naver.com',
+'N',
+null
+); 
+
+ INSERT INTO member(m_id, m_pw, m_email, m_exit, m_exitdate) VALUES
+('asdfasdf', 
+'asdf1234!',
+'asdf@naver.com',
+'N',
+null
+); 
+
 -- 4 ----------------------------------------------------------------------
 
 -- -----------------------------------------------------
@@ -217,9 +233,10 @@ CREATE TABLE IF NOT EXISTS `moregreen`.`funding` (
   `f_rate` DOUBLE NOT NULL NULL DEFAULT 0.0, #펀딩률
   `f_status` INT NOT NULL DEFAULT 1, #진행 상태
   `f_reward` VARCHAR(60) NOT NULL, #리워드 명칭
+  `f_likeCount` INT, #찜하기 개수
   `f_price` INT NOT NULL, #리워드 금액
   `f_bname` VARCHAR(60) NOT NULL, #상호명
-  `f_bnum` CHAR(10) NOT NULL, #사업자 번호
+  `f_bnum` CHAR(12) NOT NULL, #사업자 번호
   `f_regdate` DATE NOT NULL DEFAULT (current_date()), #신청 일자
   `member_m_num` INT NOT NULL,
   PRIMARY KEY (`f_num`),
@@ -542,7 +559,7 @@ INSERT INTO funding (f_title, f_content, f_days, f_enddate, f_target, f_totalmon
 '2022-09-11',
 500000,
 100000,
-20,
+100,
 4,
 '친환경 종의 의자와 테이블',
 20000,
@@ -692,7 +709,7 @@ CREATE TABLE IF NOT EXISTS `moregreen`.`likefunding` (
 CREATE TABLE IF NOT EXISTS `moregreen`.`delivery` (
   `d_num` INT NOT NULL AUTO_INCREMENT,
   `d_name` VARCHAR(60) NULL,
-  `d_phone` CHAR(11) NULL,
+  `d_phone` CHAR(13) NULL,
   `d_zipcode` CHAR(5) NULL,
   `d_addr` VARCHAR(60) NULL,
   `d_detailaddr` VARCHAR(60) NULL,
@@ -1195,133 +1212,6 @@ CREATE TABLE IF NOT EXISTS `moregreen`.`alarm` (
     REFERENCES `moregreen`.`funding` (`f_num`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
-);
- 
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.', #메시지 
-1 #펀딩번호
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-2
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-3
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-4
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-5
-);
-
--- 1 --------------------------------------------------
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.', #메시지 
-6 #펀딩번호
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-7
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-8
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-9
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-10
-);
-
--- 2 --------------------------------------------------
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.', #메시지 
-11 #펀딩번호
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-12
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-13
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-14
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-15
-);
-
--- 3 --------------------------------------------------
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.', #메시지 
-16 #펀딩번호
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-17
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-18
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-19
-);
-
- INSERT INTO alarm (a_message, funding_f_num) VALUES
-(
-'번 프로젝트 개설이 신청되었습니다.',
-20
 );
 
 -- 4 --------------------------------------------------
@@ -2428,3 +2318,18 @@ CREATE TABLE IF NOT EXISTS `moregreen`.`image` (
 );
 
 -- 20 -------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `moregreen`.`reply` (
+  `r_num` INT NOT NULL AUTO_INCREMENT,
+  `r_regdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `r_moddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `r_writer` VARCHAR(60) NOT NULL,
+  `r_content` VARCHAR(300) NOT NULL,
+  `funding_f_num` INT NOT NULL,
+  PRIMARY KEY (`r_num`),
+  CONSTRAINT `fk_funding`
+    FOREIGN KEY (`funding_f_num`)
+    REFERENCES `moregreen`.`funding` (`f_num`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);

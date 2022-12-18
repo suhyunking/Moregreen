@@ -1,25 +1,23 @@
-<!--test  -->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+<th:block th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }">
 
     <section id="wrap">
-
        <th:block th:each="dto : ${fundingList}">
              <section class="items-grid section custom-padding" style="padding-bottom: 0px;">
-				<div class="container">
-					<div class="row">
-						<div class="col-12">
-							<div class="section-title">
-								<h2 class="wow fadeInUp" data-wow-delay=".4s">[[${dto.f_title}]]</h2>
-								<p class="wow fadeInUp" data-wow-delay=".6s"> <i class="lni lni-map-marker"></i> [[${dto.f_bname}]]</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			  </section>
+            <div class="container">
+               <div class="row">
+                  <div class="col-12">
+                     <div class="section-title">
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">[[${dto.f_title}]]</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".6s"> <i class="lni lni-map-marker"></i> [[${dto.f_bname}]]</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+           </section>
           <section class="items-grid section" style="padding-top: 10px;">
-          
             <section class="item-details section" style="padding-top: 10px;">
             <form id="purchaseForm" name="purchaseForm" action="purchaseForm" method="post">
                <input type="hidden" name="p_amount" value="1" id="p_amount">
@@ -32,7 +30,7 @@
                   <div class="top-area">
                      <div class="row">
                         <div class="col-md-8 col-12">
-                           <div class="product-images" style="height: 480px; width: 750px;">
+                           <div class="product-images" style="max-width:100%; height:auto; width:100%;">
                               <main id="gallery">
                                  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
                                     <div class="carousel-indicators">
@@ -51,7 +49,7 @@
                                        <th:block th:each="file, i : ${dto.files}">
                                           <th:block th:if="${file.i_type == 1}">
                                              <div class="carousel-item" th:classappend="${i.first} ? 'active' : ''" >
-                                                <img th:src="'/upload/main_' + ${file.uuid} + '_' + ${file.filename}" alt="#" style="height:500px; width:100%;">                                             </div>
+                                                <img th:src="@{'/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="height:500px; width:100%; max-width:100%; height:auto;">                                             </div>
                                           </th:block>
                                        </th:block>
                                     </div>
@@ -68,38 +66,41 @@
                            </div>
                         </div>
                         <div class="col-md-4 col-12" style="padding: 20px; padding-left: 30px; width: 400px;">
+                        	<p style="font-size:30px; color:#5A9367"><strong >[[${dto.f_reward}]]</strong></p>
                            <div class="list-info">
-                           <hr />
                            <a>모금된 금액</a>
-                           <p class="money"><strong style="font-size:30px; color:#5A9367" >[[${dto.f_totalmoney}]]</strong> 원 달성</p>
+                           <p class="money"><strong class="comma" style="font-size:30px; color:#5A9367" >[[${dto.f_totalmoney}]]</strong> 원 달성</p>
                            <a>펀딩률</a>
+                           <div class="progress">
+						     <div class="progress-bar bg-success" role="progressbar"  aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${dto.f_rate}" th:style="'width:'+ ${dto.f_rate}+'%;'"></div>
+						   </div>
                            <p style="font-size:30px; color:#5A9367"><strong >[[${dto.f_rate}]]</strong>%</p>
                            <a>마감일자</a>
                            <p><strong style="font-size:30px; color:#5A9367">[[${dto.f_enddate}]]</strong></p>
                            <a>리워드 금액</a>
-                           <p><strong style="font-size:30px; color:#5A9367" id="price" th:text="${dto.f_price}"></strong>원</p>
+                           <p><strong class="comma" style="font-size:30px; color:#5A9367" id="price" th:text="${dto.f_price}"></strong>원</p>
                           <hr />
                            <a>펀딩할 금액</a>
-                           <p ><strong class="price" style="font-size:35px; color:#55967e" id="total" th:text="${dto.f_price}" ></strong> 원</p>
+                           <p class="price"><strong class="comma" style="font-size:35px; color:#55967e" id="total" th:text="${dto.f_price}" >ㄴ</strong> 원</p>
                            <p>수량
                               <span style="text-align:right">
-                             	 <button class="btn" type="button" onclick='count1("minus")' value='-' >-</button>
+                                 <button class="btn" type="button" onclick='count1("minus")' value='-' >-</button>
                                  <a data-value="" id="amount">1</a>
                                  <button class="btn" type="button" onclick='count1("plus")' value='+' >+</button>
                               </span> 
-                       	   </p>
+                             </p>
                            <form id="addFundingLike" name="addFundingLike" action="addFundingLike" method="post">
                               <div class="button">
                                  <div class="contact-info">
                                     <ul>
                                        <li>
-	                                        <button class="btn heart" type="button">
-	                                           <i class="lni lni-heart" id="heart"></i>
-	                                           <span th:if="${dto.l_count != null and dto.l_count != ''}">[[${dto.l_count}]]</span>
-	                                           <span th:unless="${dto.l_count != null and dto.l_count != ''}">0</span>
-	                                        </button>
-	                                        <a th:if="${dto.f_status == 3}" class="btn" onClick="handleForm()" >펀딩하기</a>
-	                                        <a th:unless="${dto.f_status == 3}" class="btn disabled" onClick="handleForm()">펀딩하기</a>
+	                                       <button class="btn heart" type="button">
+	                                          <i class="lni lni-heart" id="heart"></i>
+	                                          <span th:if="${dto.l_count != null and dto.l_count != ''}">[[${dto.l_count}]]</span>
+	                                          <span th:unless="${dto.l_count != null and dto.l_count != ''}">0</span>
+	                                       </button>
+	                                       <a th:if="${dto.f_status == 3}" class="btn" onClick="handleForm()" >펀딩하기</a>
+	                                       <a th:unless="${dto.f_status == 3}" class="btn disabled" onClick="handleForm()">펀딩하기</a>
                                        </li>
                                     </ul>
                                  </div>
@@ -111,35 +112,118 @@
                   </div>
                </div>
             </div>
-
-			
-					<div class="wow fadeInUp" data-wow-delay=".7s" id="item">
-               <div class="container" align="center">
-                  <div class="top-area" align="center">
-
-                     <div class="row">
-                         <div class="product-info" style="text-align: center">
-                            <main id="gallery">
-                               <div class="main-img" th:each="file : ${dto.files}">
-                               <th:block th:if="${file.i_type == 2}">
-                                  <img th:src="'/upload/content_' + ${file.uuid} + '_' + ${file.filename}" alt="#" >
-                               </div>
-                            </main>
-                         </div>
-                     </div>
-
-                     <div class="row" align="center" id="item">
-                        <div class = "item-details-blocks" align="center">
-                           <div class="single-block description" style="width: 1200px;" align="center">
-                              [[${dto.f_content}]]
-
-                           </div>
-                        </div>         
-                     </div>
-                  </div>
-               </div>
-            </div>
-            
+            <!-- <ul class="nav justify-content-center">
+			  <li class="nav-item">
+			    <a class="nav-link active" aria-current="page" href="#">스토리</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="#">커뮤니티</a>
+			  </li>
+			</ul> -->
+			<!-- 탭 메뉴 -->
+			<div class="container">
+				<div class="wow fadeInUp" data-wow-delay=".6s">
+			        <div class="top-area">
+						<ul class="nav nav-tabs" id="myTab" role="tablist" >
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="userinfo-tab" data-bs-toggle="tab"data-bs-target="#userinfo" 
+								type="button" role="tab" aria-controls="userinfo" aria-selected="true">소식</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="myreview-tab" data-bs-toggle="tab" data-bs-target="#myreview" 
+								type="button" role="tab" aria-controls="myreview" aria-selected="false">커뮤니티</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- 소식 탭 -->
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="userinfo" role="tabpanel" aria-labelledby="userinfo-tab">
+					<div class="wow fadeInUp" data-wow-delay=".6s">
+		               <div class="container">
+		                  <div class="top-area">
+		                     <div class="">
+		                           <div class="product-info">
+		                              <main id="gallery">
+		                                 <div class="main-img" th:each="file : ${dto.files}" style="text-align: center;">
+		                                 <th:block th:if="${file.i_type == 2}">
+		                                    <img th:src="@{'/upload/content_' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="max-width:100%; height:auto;">
+		                                 </div>
+		                              </main>
+		                           </div>
+		                        </div>
+		                     </div>
+		                     <div class="row">
+		                        <div class = "item-details-blocks">
+		                           <div class="single-block description" th:utext="${dto.f_content}">
+		                           </div>
+		                        </div>         
+		                     </div>
+		                  </div>
+		               </div>
+		            </div>
+				<!-- 커뮤니티 탭 -->
+				<div class="tab-pane fade" id="myreview" role="tabpanel" aria-labelledby="myreview-tab">
+					<div class="wow fadeInUp" data-wow-delay=".3s">
+		               <div class="container">
+		                  <div class="top-area">
+		                     <div class="row">
+		                        <div class="col-lg-6 col-md-12 col-12">
+		                           <div class="product-info">
+		                           </div>
+		                        </div>
+		                     </div>
+		                     <div class="row">
+		                        <div class = "item-details-blocks" id="community">
+		                        <h3>댓글</h3>
+		                        <hr>
+                                   <form name="replyForm" action="replyForm" method="post">
+                                       <input type="hidden" class="inputw290" name="funding_f_num" th:value="dto.f_num">
+                                       <input th:if="${session.member} == null" type="text" class="inputw290" disabled placeholder="로그인을 해주세요" style="margin-top:10px;">
+                                       <input th:unless="${session.member} == null" type="text" class="inputw290" name="r_writer" disabled th:placeholder="${session.member.m_id}" style="margin-top:10px;">
+                                       <textarea id="r_content" class="inputw99p" name="r_content" required style="max-width:100%; height:auto; width:950px; margin-top:10px;" placeholder="여러분의 의견을 남겨주세요" ></textarea>
+                                       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                           <button id="replySubmit" type="button" class="btn btn-outline-success">댓글등록</button>
+                                       </div>
+                                   </form>
+                                   <hr>
+		                           	  <table cellpadding="0" cellspacing="0" class="board_basic_view" width="100%;" id="replyArea">
+                                         <!-- 댓글영역 -->
+                                          <th:block th:each="reply : ${replyList}">
+	                                      		<tbody class="reply_area">
+	                                                <tr>
+	                                                    <th style="padding-right: 40px; align-items: center; width:30px;">[[${reply.r_writer}]]</th>
+	                                                    <td>
+	                                                        <div class="left">
+	                                                            <p>[[${reply.r_content}]]</p>
+	                                                        </div>
+	                                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+	                                                        <span>[[${reply.r_moddate}]]</span>
+	                                                        
+	                                                        <th:block th:if="${session.member != null and reply.r_writer.equals(session.member.m_id)}">
+		                                                        <input th:onclick="'javascript:removeReply(\'' + ${reply.r_num} + '\');'" type="button" class="btn btn-outline-danger" value="삭제">
+	                                                        </th:block>
+	                                                        <th:block th:unless="${session.member != null and reply.r_writer.equals(session.member.m_id)}">
+		                                                        <input type="button" class="btn btn-outline-danger" value="삭제" disabled>
+	                                                        </th:block>
+	                                                        
+	                                                        <input type="hidden" id="r_num" th:value="${reply.r_num}">
+	                                                        </div>
+	                                                         <hr>
+	                                                    </td>
+	                                                </tr>
+                                            	</tbody>
+                                            </th:block>
+                                            <!-- end댓글영역 -->
+                                        </table>
+		                           </div>
+		                        </div>         
+		                     </div>
+		                  </div>
+		               </div>
+		            </div>
+				</div>
             </section>
             <a href="#" class="scroll-top btn-hover"> 
                <i class="lni lni-chevron-up"></i>
@@ -148,19 +232,141 @@
       </th:block>
       </section>
 </th:block>
-
+<script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/super-build/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 
-   //검색버튼
+let key = "${param.key}";
+if(key === "userinfo"){
+	
+	$("#myreview-tab").removeClass("active");
+	$("#wishlist-tab").removeClass("active");
+	$("#userinfo-tab").addClass("active");
+	
+	$("#myreview").removeClass("show active");
+	$("#wishlist").removeClass("show active");
+	$("#userinfo").addClass("show active");
+	
+}else if(key === "myreview"){
+	
+	$("#wishlist-tab").removeClass("active");
+	$("#userinfo-tab").removeClass("active");
+	$("#myreview-tab").addClass("active");
+	
+	$("#userinfo").removeClass("show active");
+	$("#wishlist").removeClass("show active");
+	$("#myreview").addClass("show active");
+	
+}else if(key === "wishlist"){
+	
+	$("#userinfo-tab").removeClass("active");
+	$("#myreview-tab").removeClass("active");
+	$("#wishlist-tab").addClass("active");
+	
+	$("#myreview").removeClass("show active");
+	$("#userinfo").removeClass("show active");
+	$("#wishlist").addClass("show active");
+	
+}
+	//댓글 등록 버튼
+	$("#replySubmit").on("click", function(){
+		event.preventDefault();
+		
+		var session = [[${session.member}]];
+		
+		if(session == null){
+			alert("로그인 후 이용해주세요");
+	        location.href = [[@{'/member/memberLogin'}]];
+		} else {
+			
+			var r_num = 0;
+			var member = null;
+			var r_writer = null;
+			if(session != null){
+				member = [[${session.member}]];
+				r_writer = member.m_id;
+			}
+
+			//날짜 + 시간 구하기
+			var today = new Date();
+			
+			var year = today.getFullYear();
+			var month = ('0' + (today.getMonth() + 1)).slice(-2);
+			var day = ('0' + today.getDate()).slice(-2);
+
+			var dateString = year + '-' + month  + '-' + day;
+			
+			var hours = ('0' + today.getHours()).slice(-2); 
+			var minutes = ('0' + today.getMinutes()).slice(-2);
+			var seconds = ('0' + today.getSeconds()).slice(-2); 
+
+			var timeString = hours + ':' + minutes  + ':' + seconds;
+			var dateTime = dateString + ' ' + timeString;
+			
+			var r_content = $("#r_content").val();
+			var funding_f_num = $("#f_num").val();
+			
+			var sendData = {'r_writer' : r_writer, 'r_content' : r_content, 'funding_f_num' : funding_f_num };
+		      
+		      $.ajax({
+		          url :[[@{'/reply/replyForm'}]],
+		          type :'POST',
+		          data : sendData,
+		          async: false,
+		          success : function(data){
+		             if(data) {
+		                alert("댓글이 등록되었습니다.");
+		                $("#replyArea").prepend('<tbody class="reply_area"><tr><th style="padding-right: 40px; align-items: center; width:30px;">' + r_writer + '</th>' +
+		                						'<td class="reply_content">' + 
+		                						'<div class="left"><p>' + r_content + '</p></div>' +
+		                						'<div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
+		                						'<span>' + dateTime + '</span>' +
+		                						'<input onclick="removeReply(' + data + ')" type="button" class="btn btn-outline-danger" value="삭제">' +
+                                                '<input type="hidden" id="r_num" value="' + data + '">' +
+                                                '</div><hr></td></tr><tbody>');
+		             }
+		          }
+		       });
+		 }
+		
+	});
+	
+	var r_num = 0;
+	//댓글 삭제 버튼
+	function removeReply(r_num){
+			console.log("선택됨")
+			console.log(r_num)
+			event.preventDefault();
+			var result = confirm("정말 삭제하시겠습니까?") 
+			if(result == true){
+				
+				var sendData = {'r_num' : r_num};
+				
+			      $.ajax({
+			          url :[[@{'/reply/removeReply'}]],
+			          type :'POST',
+			          data : sendData,
+			          success : function(data){
+			             if(data) {
+			            	$('input[value=' + r_num + ']').closest("tr").remove();
+			                alert("댓글이 삭제되었습니다.");
+			             }
+			          }
+			       });
+			}
+	}
+	
+	
+
+   //펀딩버튼
    function handleForm() {
       //alert("alert");
       //폼을 서브밋
       event.preventDefault(); //a의 이동이벤트를 막는다.   
       var session = [[${session.member}]];
-      //console.log("세션"+ session);
       if(session == null){
          alert("로그인 후 이용해주세요");
-         
+         location.href = [[@{'/member/memberLogin'}]];
       } else{
          document.purchaseForm.submit();
       }
@@ -196,11 +402,17 @@
      let price = priceElement.innerText;
      let total = totalElement.innerText;
      
+     price = price.replace(",","");
+     
      // 더하기/빼기
      if(amount >= 1) {
         if(type == 'plus') {
            amount = parseInt(amount) + 1;
            total = parseInt(price) * parseInt(amount);
+           if(amount > 9){
+              alert("9개 이하로만 구매하실 수 있습니다.");
+              return false;
+           }
         }else if(amount >= 2 && type == 'minus')  {
            amount = parseInt(amount) - 1;
            total = parseInt(price) * parseInt(amount);
@@ -209,13 +421,43 @@
          }
      }
      
+     document.getElementById('total');    
      amountElement.innerText = amount;
-     totalElement.innerText = total;
+     totalElement.innerText = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
      amountElement.setAttribute('data-value', amount);
      document.getElementById('p_amount').value = amount;
      document.getElementById('p_total').value = total;
+     
    }
 
+
+  $(window).on('load', function(){
+      $('.comma').each(function(){
+          var txt = $(this).text();
+          $(this).html(txt.replace(/,/g,''));
+
+
+
+          var len = $(this).text().length;
+          for (i = 0; i < len; i ++){
+              $(this).eq(i).text(commaNum($(this).eq(i).text()));
+          }
+      });
+
+      function commaNum(num){
+          var len, point, str;
+          num = num + '';
+          point = num.length % 3
+          len = num.length;
+          str = num.substring(0, point);
+          while (point < len){
+              if (str != '') str += ',';
+              str += num.substring(point, point + 3);
+              point += 3;
+          }
+          return str;
+      }
+  
   // 찜하기
   $(document).ready(function () {
 
@@ -227,7 +469,7 @@
       var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val()};
       
       $.ajax({
-          url :'/like/checkFundingLike',
+          url :[[@{'/like/checkFundingLike'}]],
           type :'POST',
           data : sendData,
           success : function(data){
@@ -239,75 +481,65 @@
       
       $(".heart").on("click", function () {
 
-    	  var session = [[${session.member}]];
-    	  event.preventDefault();
-    	  
-    	  if(session == null){
-  			alert("로그인 후 이용해주세요");
-  			
-  		  } else {
-  			 var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val()};
-  		      
-  		      $.ajax({
-  		          url :'/like/checkFundingLike',
-  		          type :'POST',
-  		          data : sendData,
-  		          success : function(data){
-  		        	  if(data) {
-  		        		  heartval = heartval - 1;
-  		        		  $(".heart").prop('name', heartval);
-  		        		  $(".heart").find('span').html(heartval);
-  		        		  $('#heart').prop("class","lni lni-heart");
-  		    			  var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val()};
-  		                  
-  		                  $.ajax({
-  		                      url :'/like/deleteFundingLike',
-  		                      type :'POST',
-  		                      data : sendData
-  		                  });
-  		              }
-  		              else{
-  		            	  heartval = heartval + 1;
-  		        		  $(".heart").prop('name', heartval);
-  		        		  $('#heart').prop("class","lni lni-heart-filled");
-  		    	    	  $(".heart").find('span').html(heartval);
-  		        		  
-  		    	    	  var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val(), 'heart' : heartByClass.prop('name')};
-  		                  
-  		                  $.ajax({
-  		                      url :'/like/fundingLike',
-  		                      type :'POST',
-  		                      data : sendData
-  		                  });
-  		              }
-  		          }
-  		      });
-  		  }
-  	   })
-	})
-	
-	// 숫자 3자리 단위로 , 찍기
-	function numberWithCommas() {
 
-	  $("#money").val(x.replace(/\B(?=(\d{3})+(?!\d))/g, ",")); // 정규식을 이용해서 3자리 마다 , 추가 
-	}
-  
+         var session = [[${session.member}]];
+         event.preventDefault();
+         
+         if(session == null){
+           alert("로그인 후 이용해주세요");
 
-	
-	    $("#inputPhoneNum").on("blur", function(phoneNum){
-        var confirmMsg=document.getElementById('confirmMsg');
-        var check = /^(?=.*[0-9]).{11}$/; 
-        if(!check.test($("#inputPhoneNum").val())){      
-            confirmMsg.style.color="red";
-            confirmMsg.innerHTML="올바른 핸드폰 번호를 입력하세요";       
-        }
-	    
-	   });
-  
-  	
+           
 
+          } else {
+            var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val()};
+              
+              $.ajax({
+
+                  url :[[@{'/like/checkFundingLike'}]],
+
+                  type :'POST',
+                  data : sendData,
+                  success : function(data){
+                     if(data) {
+                        heartval = heartval - 1;
+                        $(".heart").prop('name', heartval);
+                        $(".heart").find('span').html(heartval);
+                        $('#heart').prop("class","lni lni-heart");
+                       var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val()};
+                          
+                          $.ajax({
+
+                              url :[[@{'/like/deleteFundingLike'}]],
+
+                              type :'POST',
+                              data : sendData
+                          });
+                      }
+                      else{
+                         heartval = heartval + 1;
+                        $(".heart").prop('name', heartval);
+                        $('#heart').prop("class","lni lni-heart-filled");
+                        $(".heart").find('span').html(heartval);
+                        
+                        var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val(), 'heart' : heartByClass.prop('name')};
+                          
+                          $.ajax({
+
+                              url :[[@{'/like/fundingLike'}]],
+
+                              type :'POST',
+                              data : sendData
+                          });
+                      }
+                  }
+              });
+          }
+        })
+   })
+  });
 
 
 </script>
+
 
 </html>

@@ -2,8 +2,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
 
-<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }" >
-
+<th:block th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }" >
 	<body>
 		<section id="wrap">
 			<!-- top -->
@@ -23,17 +22,12 @@
 			<section class="dashboard section">
 				<div class="container">
 					<div class="row">
-						<!-- 						<th:block
-							th:replace="~{./mypage/test :: setContent( ~{:: #wrap}  ) }"></th:block> -->
 						<div class="col-lg-3 col-md-12 col-12">
 							<div class="dashboard-sidebar">
 								<div class="user-image">
-
 									<h5>
 										[[${session.member.m_id}]] 
 									</h5>
-
-									
 								</div>
 								<div class="dashboard-menu">
 									<ul>
@@ -81,7 +75,7 @@
 												<div class="col-lg-5 col-md-5 col-12">
 													<div class="item-image">
 														<th:block  th:each="file : ${dto.files}">
-															<img th:src="'/upload/main_' + ${file.uuid} + '_' + ${file.filename}" alt="">
+															<img th:src="@{'/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="">
 														</th:block>
 														<div class="content">
 															<h3 class="title" >
@@ -121,7 +115,7 @@
 	</body>
 </th:block>
 
-<script type="text/javascript">
+<script th:inline="javascript">
 
 $(document).ready(function () {
 
@@ -136,7 +130,7 @@ $(document).ready(function () {
 		 var sendData = {'f_num' : fNumById.val(), 'm_num' : mNumById.val()};
 	      
 	      $.ajax({
-	          url :'/like/deleteFundingLike',
+	          url :[[@{'/like/deleteFundingLike'}]],
 	          type :'POST',
 	          data : sendData,
 	          success : function(data){

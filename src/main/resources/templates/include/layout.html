@@ -20,8 +20,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
-<link rel="icon" type="image/png" href="/img/moregreen.png">
+<link rel="apple-touch-icon" sizes="76x76" th:href="@{img/apple-icon.png}">
+<link rel="icon" type="image/png" th:href="@{img/moregreen.png}">
 <title>Moregreen admin</title>
 
 <!--     Fonts and icons     -->
@@ -29,14 +29,13 @@
 
 <!-- Material Icons -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-
-<!-- CSS Files -->
-<link id="pagestyle" href="/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
-
+<link id="pagestyle" th:href="@{/css/material-dashboard.css}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" />
 <!-- Nucleo Icons -->
-<link href="/css/nucleo-icons.css" rel="stylesheet" />
-<link href="/css/nucleo-svg.css" rel="stylesheet" />
-<link href="/css/main.css" rel="stylesheet" />
+<link th:href="@{/css/nucleo-icons.css}" rel="stylesheet" />
+<link th:href="@{/css/nucleo-svg.css}" rel="stylesheet" />
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<link th:href="@{/css/main1.css}" rel="stylesheet" />
 
 <!-- Font Awesome Icons -->
 <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
@@ -55,7 +54,6 @@
 		
 </script>
 <style>
-
 .dropbtn {
   background-color: #04AA6D;
   color: white;
@@ -90,7 +88,6 @@
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
-
 </style>
 
 	</head>
@@ -98,10 +95,9 @@
 			<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
 				  <div class="sidenav-header">
 					    <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-						<a class="navbar-brand m-0" th:href="@{/admin/adminportal}"> 
-							<img src="/img/logo/logo1.png" class="navbar-brand-/img h-100" alt="main_logo"> 
+						<a class="navbar-brand m-0" th:href="@{/admin/userList}"> 
+							<img src="../img/logo/logo3.png" class="navbar-brand-/img h-100" alt="main_logo"> 
 						</a>
-
 				  </div>
 		  		<hr class="horizontal light mt-0 mb-2">
 				  <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main" style=" height: calc(100vh - 150px);">
@@ -139,21 +135,152 @@
 						</ul>
   					</div>
 				</aside>
-
-			<!-- End Navbar -->
-		<main class="main-content border-radius-lg ">
+				<!-- End Navbar -->
+				<main class="main-content border-radius-lg ">
+				<div class="container-fluid py-4">
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+				<div>
+					<ul>
+						<li class="nav-item dropdown pe-4 d-flex align-items-center">
+							<a class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> 
+								<i class="fa fa-bell cursor-pointer"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end px-2 py-4 me-sm-n0" style="width:310px;" aria-labelledby="dropdownMenuButton">
+						        <div class="col-lg-8 col-md-10 mx-auto" style="width:290px;">
+						            <div class="card-header" >
+						              <span class="mb-2">프로젝트 개설 알람</span>
+						            </div>
+						            <div class="card-body p-0 pb-0" id="test1">
+						              <th:block th:each="alarmDto : ${alarmList}" >
+							              <div class="alert alert-primary alert-dismissible text-white" role="alert" style="padding-right:0rem;">
+							                <input type="hidden" name="a_num" th:value="${alarmDto.a_num}">
+						                	<a th:onclick="|deleteAlarm('${alarmDto.a_num}')|" th:href="@{/admin/fundingConfirm(f_num=${alarmDto.funding_f_num})}">[[${alarmDto.a_message}]]</a>
+						              	  </div>
+						              </th:block>
+						            </div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<i class="fa fa-user me-sm-1"></i>
+	                <span class="d-sm-inline d-none" th:if="${session.member!=null}">[[${session.member.m_id}]]</span>
+            	</div>
+            	<div>
+            		<a th:href="@{/admin/logout}" class="nav-link text-body font-weight-bold px-3">  
+	                <span class=" ">로그아웃</span>
+              		</a>
+            	</div>
+			</div>
+			</div>
 			<th:block th:replace="${section}"></th:block>
-
 		</main>
 	</body>
 
 <!--   Core JS Files   -->
-<script src="/js/core/popper.min.js"></script>
-<script src="/js/core/bootstrap.min.js"></script>
-<script src="/js/plugins/perfect-scrollbar.min.js"></script>
-<script src="/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="../js/core/popper.min.js"></script>
+<script src="../js/core/bootstrap.min.js"></script>
+<script src="../js/plugins/perfect-scrollbar.min.js"></script>
+<script src="../js/plugins/smooth-scrollbar.min.js"></script>
 
-<script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+<script th:inline="javascript">
+
+//전역변수 선언-모든 홈페이지에서 사용 할 수 있게 index에 저장
+var socket = null;
+
+$(document).ready(function (){
+	   connectWs();
+});
+
+function connectWs(){
+	sock = new SockJS([[@{'/myHandler'}]]);
+	socket = sock;
+
+	sock.onopen = function() {
+        console.log('myHandler와의 커넥션이 열렸습니다.');
+  	};
+
+	 sock.onmessage = function(event) {
+		 	var data = event.data;
+		 	var funding_f_num = data.slice(-17,-15);
+		 	$("#test1").prepend("<div class='alert alert-primary alert-dismissible text-white' role='alert' style='padding-right:0rem;'>" + 
+		 						"<a onclick='deleteAlarmByFNum(" + funding_f_num +")' href='/admin/fundingConfirm?f_num=" + funding_f_num + "'>" + data + "</a></div>");
+		   	/* $.ajax({
+				url : '/mentor/member/countAlarm',
+				type : 'POST',
+				dataType: 'text',
+				success : function(data) {
+					if(data == '0'){
+					}else{
+						$('#alarmCountSpan').addClass('bell-badge-danger bell-badge')
+						$('#alarmCountSpan').text(data);
+					}
+				},
+				error : function(err){
+					alert('err');
+				}
+		   	}); */
+	
+	       
+	 };
+
+	 sock.onclose = function() {
+	   	console.log('커넥션 종료');
+	   	setTimeout(function(){conntectWs();} , 1000);
+	 };
+	
+	 sock.onerror = function (err) {
+		 console.log('Errors : ' , err);
+	 };
+
+}
+
+function deleteAlarmByFNum(funding_f_num) {
+	
+	var data = {
+		"funding_f_num" : funding_f_num
+	};
+	
+	$.ajax({
+		url : [[@{'/alarm/removeAlarmByFNum'}]],
+		type : 'POST',
+		data : JSON.stringify(data),
+ 		contentType: "application/json; charset=utf-8",
+ 		dataType : 'text',
+		success : function(data) {
+				console.log("삭제 완료");				
+		},
+		error : function(err){
+			alert('err');
+		}
+   	});
+}
+
+var a_num = null;
+function deleteAlarm(a_num) {
+	console.log(a_num);
+	
+	var data = {
+		"a_num" : a_num
+	};
+	
+	$.ajax({
+		url : [[@{'/alarm/removeAlarm'}]],
+		type : 'POST',
+		data : JSON.stringify(data),
+ 		contentType: "application/json; charset=utf-8",
+ 		dataType : 'text',
+		success : function(data) {
+				console.log("삭제 완료");				
+		},
+		error : function(err){
+			alert('err');
+		}
+   	});
+}
+
 	var win = navigator.platform.indexOf('Win') > -1;
 	if (win && document.querySelector('#sidenav-scrollbar')) {
 		var options = {
@@ -168,5 +295,4 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="/js/material-dashboard.min.js?v=3.0.4"></script>
 </html>

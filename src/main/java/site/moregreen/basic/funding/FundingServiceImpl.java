@@ -14,6 +14,7 @@ import lombok.extern.java.Log;
 import site.moregreen.basic.command.DeliveryDto;
 import site.moregreen.basic.command.FundingDto;
 import site.moregreen.basic.command.UploadDto;
+import site.moregreen.basic.like.LikeMapper;
 import site.moregreen.basic.util.Criteria;
 
 @Log
@@ -23,6 +24,9 @@ public class FundingServiceImpl implements FundingService{
 
 	@Autowired
 	FundingMapper fundingMapper;
+	
+	@Autowired
+	LikeMapper likeMapper;
 	
 	@Value("${project.upload.path}")
 	private String uploadPath;
@@ -67,10 +71,8 @@ public class FundingServiceImpl implements FundingService{
 			long size = file.getSize();
 			//랜덤이름
 			String uuid = UUID.randomUUID().toString();
-			//upload 폴더 생성
-			String filepath = makeFolder();
 			//업로드경로
-			String saveName = uploadPath + "\\" + filepath + "\\main_" + uuid + "_" + filename;
+			String saveName = uploadPath + "/main_" + uuid + "_" + filename;
 			
 			try {
 				File saveFile = new File(saveName); 
@@ -103,10 +105,8 @@ public class FundingServiceImpl implements FundingService{
 			long size = file.getSize();
 			//랜덤이름
 			String uuid = UUID.randomUUID().toString();
-			//upload 폴더 생성
-			String filepath = makeFolder();
 			//업로드경로
-			String saveName = uploadPath +  "\\" + filepath + "\\content_" + uuid + "_" + filename;
+			String saveName = uploadPath + "/content_" + uuid + "_" + filename;
 			
 			try {
 				File saveFile = new File(saveName); 
@@ -140,10 +140,8 @@ public class FundingServiceImpl implements FundingService{
 					long size = file.getSize();
 					//랜덤이름
 					String uuid = UUID.randomUUID().toString();
-					//upload 폴더 생성
-					String filepath = makeFolder();
 					//업로드경로
-					String saveName = uploadPath + "\\" + filepath + "\\" + uuid + "_" + filename;
+					String saveName = uploadPath + "/" + uuid + "_" + filename;
 					//썸네일경로
 					//String thumbnailName = uploadPath + "\\" + filepath  + "\\thumb_" + uuid + "_" + filename;
 					
@@ -170,7 +168,7 @@ public class FundingServiceImpl implements FundingService{
 				}
 				
 		
-		return 0;
+		return f_num;
 	}
 
 	@Override
@@ -186,6 +184,11 @@ public class FundingServiceImpl implements FundingService{
 	@Override
 	public int retrieveApplyListTotal(Criteria cri) {
 		return fundingMapper.selectApplyListTotal(cri);
+	}
+	
+	@Override
+	public int likeTotal(Criteria cri) {
+		return likeMapper.likeTotal(cri);
 	}
 
 	// 펀딩 이미지 포함 상세 조회
@@ -208,18 +211,18 @@ public class FundingServiceImpl implements FundingService{
 	
 	@Override
 	@Transactional(rollbackFor = RuntimeException.class)
-	public int fundingAccept(int f_num) {
+	public int fundingAccept(FundingDto dto) {
 		
-		fundingMapper.fundingAccept(f_num);
+		fundingMapper.fundingAccept(dto);
 		
 		return 0;
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int fundingReject(int f_num) {
+	public int fundingReject(FundingDto dto) {
 
-		fundingMapper.fundingReject(f_num);
+		fundingMapper.fundingReject(dto);
 		
 		return 0;
 	}
@@ -251,6 +254,8 @@ public class FundingServiceImpl implements FundingService{
 		
 		return listForCancel;
 	}
+
+	
 
 
 

@@ -27,14 +27,16 @@ public interface FundingService {
 	// 총 게시글 수 조회
 	public int retrieveTotal(Criteria cri);
 	public int retrieveApplyListTotal(Criteria cri);
+	public int likeTotal(Criteria cri);
 	
 	public DeliveryDto retrieveDelivery(int m_num);
 
 	// 펀딩 상세조회
 	public List<FundingDto> retrieveFundingDetail(int f_num);
 
-	public int fundingAccept(int f_num);
-	public int fundingReject(int f_num);
+	// 펀딩 승인&반려
+	public int fundingAccept(FundingDto dto);
+	public int fundingReject(FundingDto dto);
 	
 	public List<FundingDto> retrieveRetiredFundingListForCancel();
 }

@@ -11,8 +11,12 @@ import site.moregreen.basic.util.Criteria;
   //찜목록 리스트 조회
 	public List<FundingDto> retrieveFuningLikeList(Criteria cri);
 	
-	//전체 게시글 수 조회
+	//찜하기 개수 조회
 	public int retrieveTotal(Criteria cri);
+	//개설한 프로젝트 개수 조회
+	public int retrieveMyProjectTotal(Criteria cri);
+	//구매한 펀딩 개수 조회
+	public int retrievePurchaseTotal(Criteria cri);
   
 	public List<PurchaseDto> retrieveMyPurchaseList(Criteria cri);
   

@@ -14,7 +14,7 @@
 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{./include/layout :: setContent( ~{:: .container-fluid}  ) }">
+<th:block th:replace="~{/include/layout :: setContent( ~{:: .container-fluid}  ) }">
     
 <style>
 
@@ -34,169 +34,163 @@
 
 </style>
     
-<div class="container-fluid py-4">
-	<div class="d-lg-flex">
-		<div>
-			<h5 class="mb-0">펀딩 수정</h5>
-			<p class="text-sm mb-0">펀딩 명칭과 내용만 수정 가능합니다.</p>
-		</div>
-	</div>
-	</br>
+    
+   <div class="container-fluid py-4">
+
+  	 <div class="container">
+   
+
 		<form action="modifyFunding" method="post" th:each="dto : ${fundingList}">
-			<div class="row" style="display: flex;">
-				<div class="col-25">
-					<label for="f_num">번호</label>
+			<div class="col-md-12 mb-lg-0 mb-4">
+                 <div class="card mt-4 mb-2">
+                   <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+
+                       <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                           <h2 class="text-white text-capitalize ps-3">펀딩 수정</h2>
+                       </div>
+                   </div>
+			  <div class="full_collum collum">
+                            <ul>
+                                <li class="collum_tit">
+                                    <span class="showtoggle minus"></span>
+                                    <ul>
+                                        <li>
+                                            <table cellpadding="0" cellspacing="0" class="board_basic_view" width="100%;">
+                                                <tr>
+                                                    <th>번호</th>
+                                                    <td colspan="5">
+                                                        <input id="f_num" name="f_num" type="text" th:value="${dto.f_num}" readonly>
+                                                      
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>펀딩 명칭</th>
+                                                    <td colspan="5">
+                                                       <input id="f_title" name="f_title"  type="text" class="inputw99p" th:value="${dto.f_title}">
+                                                    </td>
+                                                </tr>
+                                                  <tr>
+                                                    <th>펀딩 기간</th>
+                                                    <td colspan="5">
+                                                        <input  type="text" id="f_days" name="f_days" th:value="${dto.f_days}" readonly>
+                                                    </td>
+                                                </tr>
+                                                  <tr>
+                                                    <th>마감일자</th>
+                                                    <td colspan="5">
+                                                        <input type="text" id="f_enddate" name="f_enddate" th:value="${dto.f_enddate}" readonly>
+                                                    </td>
+                                                </tr>
+                                                  <tr>
+                                                    <th>펀딩률</th>
+                                                    <td colspan="5">
+                                                        <input type="text" id="f_rate" th:value="${dto.f_rate} +'%'" readonly>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>신청자ID</th>
+                                                    <td>
+                                                       <input type="text"  id="m_id" th:value="${dto.m_id}" readonly>
+                                                       <span class="valid"></span>
+                                                    </td>
+                                                </tr>
+                                                  <tr>
+                                                    <th>상호명</th>
+                                                    <td colspan="10">
+                                                        <input type="text" class="inputw99p" id="f_bname" th:value="${dto.f_bname}" readonly>
+                                                    </td>
+                                                </tr>
+                                                  <tr>
+                                                    <th>목표 금액</th>
+                                                    <td colspan="5">
+                                                        <input type="text" id="f_target" th:value="${dto.f_target} + '원'" readonly>
+                                                    </td>
+                                                </tr>
+                                                  <tr>
+                                                    <th>현재 금액</th>
+                                                    <td colspan="5">
+                                                        <input type="text" id="f_totalmoney" th:value="${dto.f_totalmoney} + '원'" readonly>
+                                                    </td>
+                                                </tr>
+                                                  <tr>
+                                                    <th>리워드 명칭</th>
+                                                    <td colspan="5">
+                                                        <input type="text" id="f_reward" th:value="${dto.f_reward}" readonly>
+                                                    </td>
+                                                </tr>
+                                                  <tr>
+                                                    <th>리워드 금액</th>
+                                                    <td colspan="5">
+                                                        <input type="text" id="f_price" th:value="${dto.f_price} + '원'" readonly>
+                                                    </td>
+                                                </tr>
+                                        		<tr>
+                                                    <th>사업자 등록번호</th>
+                                                    <td colspan="10">
+                                                        <input type="text" class="inputw99p" id="f_bnum" th:value="${dto.f_bnum}" readonly>
+                                                    </td>
+                                                </tr>
+                                                <tr> 
+                                                    <th>사업자 등록증</th>
+                                                    <td colspan="3">
+                                                        <div class="filebox preview-image">
+                                                          <th:block th:each="file : ${dto.files}" >
+											                  <th:block th:if="${file.i_type == 0}">
+											                     <img th:src="@{'/upload/' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="height:500px">
+											                  </th:block>
+					              						  </th:block>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr> 
+                                                    <th>대표사진</th>
+                                                    <td colspan="3">
+                                                        <div class="filebox preview-image">
+                                                          <th:block th:each="file : ${dto.files}">
+											                  <th:block th:if="${file.i_type == 1}">
+											                     <img th:src="@{'/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="#">
+											                  </th:block>
+										                 </th:block>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr> 
+                                                    <th>내용사진</th>
+                                                    <td colspan="3">
+                                                       <div class="filebox preview-image">
+                                                         <th:block th:each="file : ${dto.files}">
+											                  <th:block th:if="${file.i_type == 2}">
+											                     <img th:src="@{'/upload/content_' + ${file.uuid} + '_' + ${file.filename}}" alt="#">
+											                  </th:block>
+											             </th:block>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>내용</th>
+                                                    <td colspan="5">
+											            <div class="col-75" style="overflow: auto; height: 300px;">
+											               <textarea name="f_content" id="editor">[[${dto.f_content}]]</textarea>
+											              
+											            </div>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </table>
+                                            <div class="btn_area">
+		                                         <div class="row">
+			                                       <button type="submit" class="btn btn-success" style="width: auto; margin: auto;">수정하기</button>
+			                                    </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                  		</div>
+                  	</div>
 				</div>
-				<div class="col-75">
-					<input id="f_num" name="f_num" type="text" th:value="${dto.f_num}" readonly></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_title">펀딩 명칭</label>
-				</div>
-				<div class="col-75">
-					<input id="f_title" name="f_title" th:value="${dto.f_title}"></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_days">펀딩 기간</label>
-				</div>
-				<div class="col-75">
-	       			<select id="f_days" name="f_days" onFocus="this.initialSelect = this.selectedIndex;" onChange="this.selectedIndex = this.initialSelect;" style="color: #a3a0a0;" disabled>
-			          	<option value="30">30일</option>
-			          	<option value="60">60일</option>
-			          	<option value="90">90일</option>
-		        	</select>
-		        </div>
-		    </div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_rate">펀딩률</label>
-				</div>
-				<div class="col-75">
-					<input id="f_rate" th:value="${dto.f_rate}" readonly></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="m_id">신청자 아이디</label>
-				</div>	
-				<div class="col-75">
-					<input id="m_id" th:value="${dto.m_id}" readonly></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_bname">상호명</label>
-				</div>
-				<div class="col-75">
-					<input id="f_bname" th:value="${dto.f_bname}" readonly></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_target">목표 금액</label>
-				</div>
-				<div class="col-75">
-					<input id="f_target" th:value="${dto.f_target}" readonly></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_totalmoney">현재 금액</label>
-				</div>
-				<div class="col-75">
-					<input id="f_totalmoney" th:value="${dto.f_totalmoney}" readonly></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_reward">리워드 명칭</label>
-				</div>
-				<div class="col-75">
-					<input id="f_reward" th:value="${dto.f_reward}" readonly></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_price">리워드 금액</label>
-				</div>
-				<div class="col-75">
-					<input id="f_price" th:value="${dto.f_price}" readonly></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label for="f_bnum">사업자 등록번호</label>
-				</div>
-				<div class="col-75">
-					<input id="f_bnum" th:value="${dto.f_bnum}" readonly></input>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label>사업자 등록증</label>
-				</div>
-				<div class="col-75">
-					<th:block th:each="file : ${dto.files}">
-						<th:block th:if="${file.i_type == 0}">
-							<img th:src="'/upload/' + ${file.uuid} + '_' + ${file.filename}" alt="#">
-						</th:block>
-					</th:block>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label>대표 사진</label>
-				</div>
-				<div class="col-75">
-					<th:block th:each="file : ${dto.files}">
-						<th:block th:if="${file.i_type == 1}">
-							<img th:src="'/upload/main_' + ${file.uuid} + '_' + ${file.filename}" alt="#">
-						</th:block>
-					</th:block>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-25">
-					<label>내용 사진</label>
-				</div>
-				<div class="col-75">
-					<th:block th:each="file : ${dto.files}">
-						<th:block th:if="${file.i_type == 2}">
-							<img th:src="'/upload/content_' + ${file.uuid} + '_' + ${file.filename}" alt="#">
-						</th:block>
-					</th:block>
-				</div>
-			</div>
-			<div class="col-25">
-				<label for="f_content">내용</label>
-			</div>
-			<div id="container">
-	            <textarea name="f_content" id="editor">[[${dto.f_content}]]
-	            </textarea>
-	        </div>
-			<br>
-			
-			<div class="row">
-				<button type="submit" class="btn btn-success" style="width: auto; margin: auto;">수정하기</button>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </th:block>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/super-build/ckeditor.js"></script>
@@ -334,6 +328,7 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
         'MathType'
     ]
 });
+
 
 </script>
 

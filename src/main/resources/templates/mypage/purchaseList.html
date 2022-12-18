@@ -1,7 +1,7 @@
 <!-- 펀딩 구매 내역 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+<th:block th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }">
 	<body>
 		<section id="wrap">
 			<section class="items-grid section custom-padding">
@@ -45,53 +45,64 @@
 								<div class="main-content">
 									<div class="dashboard-block mt-0">
 										<h3 class="block-title" align="center">펀딩 구매 내역</h3>
-										<div class="invoice-items default-list-style">
-											<div class="default-list-title">
-												<div class="row align-items-center">
-													<div class="col-lg-4 col-md-4 col-12">
-														<p style="text-align:center">펀딩명</p>
-													</div>
-													<div class="col-lg-2 col-md-2 col-12">
-														<p style="text-align:center">상호명</p>
-													</div>
-													<div class="col-lg-2 col-md-2 col-12">
-														<p style="text-align:center">펀딩 진행 여부</p>
-													</div>
-													<div class="col-lg-2 col-md-2 col-12">
-														<p style="text-align:center">펀딩참여일</p>
-													</div>
-													<div class="col-lg-2 col-md-2 col-12">
-														<p style="text-align:center">결제 상태</p>
-													</div>
+										<div class="my-items" style="padding: 10px;">
+										<div class="item-list-title">
+											<div class="row align-items-center">
+												<div class="col-lg-4 col-md-5 col-12">
+													<p style="text-align:center">펀딩명</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p style="text-align:center">상호명</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p style="text-align:center">펀딩 진행 여부</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p style="text-align:center">펀딩 일시</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p style="text-align:center">결제 상태</p>
 												</div>
 											</div>
-											<div class="single-list">
-												<th:block th:each="dto : ${list}">
-													<div class="row align-items-center">
-														<div class="col-lg-4 col-md-4 col-12">
-															<p><a th:href="@{/mypage/purchaseDetail(m_num=${session.member.m_num},p_num=${dto.p_num})}">[[${dto.f_title}]] </a></p>
-														</div>
-														<div class="col-lg-2 col-md-2 col-12">
-															<p style="text-align:center">[[${dto.f_bname}]]</p>
-														</div>
-														<div class="col-lg-2 col-md-2 col-12" align="center">
-															<span th:if="${dto.f_status} == 3" class="text-sm"><span class="badge text-bg-warning">진행중</span></span>
-															<span th:if="${dto.f_status} == 4" class="text-sm"><span class="badge text-bg-success bg-gradient">성공</span></span>
-															<span th:if="${dto.f_status} == 5" class="text-sm"><span class="badge text-bg-danger">실패</span></span>		
-														</div>
-														<div class="col-lg-2 col-md-2 col-12" align="center">
-															<div>
-																<span th:text="${#dates.format(dto.p_date, 'yyyy-MM-dd HH:mm')}">[[${dto.p_date}]]</span>
-															</div>
-														</div>
-														<div class="col-lg-2 col-md-2 col-12" align="center">
-															<span th:if="${dto.p_payment} == 1" class="text-sm"><span class="badge text-bg-success bg-gradient">결제완료</span></span>
-															<span th:if="${dto.p_payment} == 2" class="text-sm"><span class="badge text-bg-danger">환불완료</span></span>		
+										</div>
+										<div class="single-item-list" >
+										<th:block th:each="dto : ${list}">
+											<div class="row align-items-center">
+												<div class="col-lg-4 col-md-5 col-12">
+													<div class="item-image">
+														<th:block  th:each="file : ${dto.files}">
+															<img th:src="@{'/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="">
+														</th:block>
+														<div class="content">
+															<h3 class="title" >
+																<a th:href="@{/mypage/purchaseDetail(m_num=${session.member.m_num},p_num=${dto.p_num})}">[[${dto.f_title}]]</a>
+															</h3>
 														</div>
 													</div>
-													<br>
-												</th:block>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p style="text-align:center">[[${dto.f_bname}]]</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12" align="center">
+													<span th:if="${dto.f_status} == 3" class="text-sm"><span class="badge text-bg-warning">진행중</span></span>
+													<span th:if="${dto.f_status} == 4" class="text-sm"><span class="badge text-bg-success bg-gradient">성공</span></span>
+													<span th:if="${dto.f_status} == 5" class="text-sm"><span class="badge text-bg-danger">실패</span></span>		
+												</div>
+												<div class="col-lg-2 col-md-2 col-12" align="center">
+													<div>
+														<span th:text="${#dates.format(dto.p_date, 'yyyy-MM-dd HH:mm')}">[[${dto.p_date}]]</span>
+													</div>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12" align="center">
+													<span th:if="${dto.p_payment} == 1" class="text-sm"><span class="badge text-bg-success bg-gradient">결제완료</span></span>
+													<span th:if="${dto.p_payment} == 2" class="text-sm"><span class="badge text-bg-danger">환불완료</span></span>		
+												</div>
+
 											</div>
+											<br>
+											<br>
+										</th:block>
+										</div>
 											<th:block th:replace="~{/include/page :: purchaseList('purchaseList', ${pageVO}) }"></th:block>
 										</div>
 									</div>
@@ -99,6 +110,7 @@
 							</div>
 						</div>
 					</div>
+					
 				</section>
 			</section>
 		</section>

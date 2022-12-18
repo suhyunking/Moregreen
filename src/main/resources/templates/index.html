@@ -1,12 +1,151 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-<th:block
-	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  class="no-js" lang="zxx">
+<th:block th:fragment="setContent( section )">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<title>MOREGREEN</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/png" href="../img/moregreen.ico">
+<!-- Place favicon.ico in the root directory -->
 
-<body>
+<style>
+
+.text-bg-success {
+  color: #fff !important;
+  background-color: RGBA(76, 175, 80, var(--bs-bg-opacity, 1)) !important;
+}
+
+
+.text-bg-warning {
+  color: #000 !important;
+  background-color: RGBA(251, 140, 0, var(--bs-bg-opacity, 1)) !important;
+}
+
+.text-bg-danger {
+  color: #fff !important;
+  background-color: RGBA(244, 67, 53, var(--bs-bg-opacity, 1)) !important;
+}
+
+.myvideo {
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+	}
+
+</style>
+<!-- Web Font -->
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+	rel="stylesheet">
+<link href="css/nucleo-icons.css" rel="stylesheet" />
+<link href="css/nucleo-svg.css" rel="stylesheet" />
+<link href="css/main.css" rel="stylesheet" />	
+<link rel="apple-touch-icon" sizes="76x76" href="../img/apple-icon.png">
+<link rel="icon" type="image/png" href="../img/moregreen.png">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+<!-- ========================= CSS here ========================= -->
+<link rel="stylesheet" href="css/bootstrap.min1.css" />
+<link rel="stylesheet" href="css/LineIcons.2.0.css" />
+<link rel="stylesheet" href="css/animate.css" />
+<link rel="stylesheet" href="css/tiny-slider.css" />
+<link rel="stylesheet" href="css/glightbox.min.css" />
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/bootstrap.min1.css" />
+<link rel="stylesheet" href="css/animate1.css" />
+<link rel="stylesheet" href="css/tiny-slider1.css" />
+<link rel="stylesheet" href="css/glightbox.min1.css" />
+<link rel="stylesheet" href="css/main1.css" /> 
+</head>
+	
+	<body>
+		<!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+		<!-- Preloader -->
+		<div class="preloader">
+			<div class="preloader-inner">
+				<div class="preloader-icon">
+					<span></span> <span></span>
+				</div>
+			</div>
+		</div>
+		<!-- /End Preloader -->
+		<!-- Start Header Area -->
+		<header class="header navbar-area">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-12">
+						<div class="nav-inner">
+							<nav class="navbar navbar-expand-lg">
+								<a class="navbar-brand" th:href="@{/index}"> <img
+									src="img/logo/logo1.png" alt="Logo">
+								</a>
+								<button class="navbar-toggler mobile-menu-btn" type="button"
+									data-bs-toggle="collapse"
+									data-bs-target="#navbarSupportedContent"
+									aria-controls="navbarSupportedContent" aria-expanded="false"
+									aria-label="Toggle navigation">
+									<span class="toggler-icon"></span> <span class="toggler-icon"></span>
+									<span class="toggler-icon"></span>
+								</button>
+								<div class="collapse navbar-collapse sub-menu-bar"
+									id="navbarSupportedContent">
+									<ul id="nav" class="navbar-nav ms-auto">
+									<li class="nav-item">
+                                        <a th:href="@{/index}" class="nav-link active bg-gradient-primary" aria-label="Toggle navigation">홈</a>
+                                    </li>
+                                    	<li class="nav-item">
+                                        <a  th:href="@{/funding/fundingList}" aria-label="Toggle navigation">펀딩</a>
+                                    </li>
+										<li class="nav-item"><a th:href="@{/pages/faq}" aria-label="Toggle navigation">FAQ</a>
+										</li>
+									</ul>
+								</div>
+								<!-- navbar collapse -->
+								<div class="login-button">
+									<ul>
+										<li><a th:if="${session.member==null}" th:href="@{/member/memberLogin}" >
+										<i class="lni lni-enter"></i> 로그인</a></li>
+										<li><a th:if="${session.member==null}" th:href="@{/member/memberReg}">
+										<i class="lni lni-user"></i> 회원가입</a></li>
+									</ul>
+								</div>
+								<div class="collapse navbar-collapse sub-menu-bar"
+									id="navbarSupportedContent" th:if="${session.member!=null}">
+									<ul id="nav" class="navbar-nav ms-auto">
+										<li class="button header-button">
+											<div class="dropdown">
+													<button class="btn btn-secondary dropdown-toggle"
+													type="button" data-bs-toggle="dropdown"
+													aria-expanded="false" th:if="${session.member!=null}" >[[${session.member.m_id}]]</button>
+												<ul class="dropdown-menu">
+													<li><a class="dropdown-item" th:href="@{/mypage/purchaseList}">내 정보</a></li>																					
+													<li><a class="dropdown-item" th:href="@{/funding/fundingReg}">펀딩개설하기</a></li>
+													<li><a class="dropdown-item" th:href="@{/member/logout}">로그아웃</a></li>
+												</ul>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</nav>
+							<!-- navbar -->
+						</div>
+					</div>
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</header>
+		<!-- End Header Area -->
 	<section id="wrap">
 	<!-- 빋드 test -->
-
     <!-- Start Hero Area -->
     <section class="hero-area">
         <div class="container">
@@ -14,118 +153,50 @@
                 <div class="col-lg-10 offset-lg-1 col-md-12 col-12">
                     <div class="hero-text text-center">
                         <div>
-                         
                         </div>
-                        <!-- Start Hero Text -->
-                        
-                        <div class="section-heading button">
+                        <!-- Start Hero Text -->                       
+                        <div class="section-heading button" style="text-shadow:2px 2px 2px #426C0D;">
                         	<h2 class="wow fadeInUp" >사람들을 More 세상을 Green</h2>
-                            <p class="wow fadeInUp" data-wow-delay=".5s">welcome to More Green</p>
+
+                            <h4 class="wow fadeInUp" data-wow-delay=".5s" style="color: #fff">welcome to More Green</h4><br>
+
                             <a class="btn" th:href="@{/funding/fundingList}">펀딩바로가기</a>
                         </div>                       
                     </div>
                 </div>
             </div>
         </div>
-     
     </section>
-    
            <section class="about-us section">
             <div class="container">
                <div class="row align-items-center justify-content-center">
                   <div class="col-lg-6 col-md-12 col-12">
                      <div class="content-left wow fadeInLeft" data-wow-delay=".3s">
-                        
-                        
-                        <video width="640" height="360" autoplay loop muted>
-                           <source src="/img/about/MoreGreen.mp4" type="video/mp4">
-                        <!-- <img src="/img/about/MoreGreen-001.png" alt="#">
-                        <a class="glightbox video"><i class="lni lni-play"></i></a> --></video>
+	                    <video class="myvideo" width="640" height="360" autoplay loop muted >
+                        	<source src="img/about/MoreGreen.mp4" type="video/mp4">
+						</video>
                      </div>
                   </div>
-
-
-                  <!--                   <div class="col-lg-6 col-md-12 col-12">
-                     <div class="content-left wow fadeInLeft" data-wow-delay=".3s">
-                        
-                        <video src="/img/about/MoreGreen.mp4"></video>
-                        <img src="/img/about/MoreGreen-001.png" alt="#">
-                     </div>
-                  </div> 
-                                    <video width="640" height="360" controls>
-                     <source src="/img/about/MoreGreen.mp4" type="video/mp4">
-                  </video>-->
-
-
-
-
-
-
                   <div class="col-lg-6 col-md-12 col-12">
-
                      <div class="content-right wow fadeInRight" data-wow-delay=".5s">
-
                         <span class="sub-heading">About</span>
                         <h2>프로젝트 목적</h2>
                         <p>친환경적인 상품과 계획을 가지고  군중(Crowd)을 통해 소규모 후원을 받거나 인터넷과 같은 플랫폼을 통해 다수의 개인들 로부터 자금(Funding)을 모아서 누구나 쉽게 친환경이란 카테고리를 접하여 많은 친환경활동, 참여, 발전을 위한 친환경 크라우드펀딩 .</p>
                         <h3>개발 과정</h3>
                         <p>경기도 미래 기술학교에서 주최하는 클라우드 기반 JAVA 개발자 양성과정에서 파이널 프로젝트로 제작됨.</p>
-
                      </div>
                   </div>
                </div>
             </div>
          </section>
-
-         <section class="our-achievement section">
-            <div class="container">
-               <div class="row">
-                  <div class="col-lg-3 col-md-3 col-12">
-                     <div class="single-achievement wow fadeInUp" data-wow-delay=".2s">
-                        <h3 class="counter">
-                           <span id="secondo1" class="countup" cup-end="1250">1250</span>+
-                        </h3>
-                        <p>Today</p>
-                     </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-12">
-                     <div class="single-achievement wow fadeInUp" data-wow-delay=".4s">
-                        <h3 class="counter">
-                           <span id="secondo2" class="countup" cup-end="350">350</span>+
-                        </h3>
-                        <p>Yesterday</p>
-                     </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-12">
-                     <div class="single-achievement wow fadeInUp" data-wow-delay=".6s">
-                        <h3 class="counter">
-                           <span id="secondo3" class="countup" cup-end="2500">2500</span>+
-                        </h3>
-                        <p>Total</p>
-                     </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-12">
-                     <div class="single-achievement wow fadeInUp" data-wow-delay=".6s">
-                        <h3 class="counter">
-                           <span id="secondo3" class="countup" cup-end="250">250</span>+
-                        </h3>
-                        <p>Member</p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </section>
-
-
-
-
+         
          <!-- Start Why Choose Area -->
-         <section class="why-choose section">
+         <section class="why-choose section" >
             <div class="container">
                <div class="row">
                   <div class="col-12">
                      <div class="section-title">
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Why Choose Us</h2>
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Skills</h2>
                         <p class="wow fadeInUp" data-wow-delay=".6s">There are many
                            variations of passages of Lorem Ipsum available, but the
                            majority have suffered alteration in some form.</p>
@@ -138,61 +209,55 @@
                         <div class="row">
                            <div class="col-lg-4 col-md-6 col-12">
                               <!-- Start Single List -->
-                              <div class="single-list wow fadeInUp" data-wow-delay=".2s">
-                                 <i class="lni lni-book"></i>
-                                 <h4>Fully Documented</h4>
-                                 <p>Buy and sell everything from used cars to mobile
-                                    phones and computer or search for property.</p>
-                              </div>
-                              <!-- Start Single List -->
-                           </div>
-                           <div class="col-lg-4 col-md-6 col-12">
-                              <!-- Start Single List -->
-                              <div class="single-list wow fadeInUp" data-wow-delay=".4s">
+                              <div class="single-list wow fadeInUp" data-wow-delay=".2s" style="height:330px">
                                  <i class="lni lni-leaf"></i>
-                                 <h4>Clean & Modern Design</h4>
-                                 <p>Buy and sell everything from used cars to mobile
-                                    phones and computer or search for property.</p>
+                                 <h4>Spring Boot</h4>
+                                 <p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".</p>
                               </div>
                               <!-- Start Single List -->
                            </div>
                            <div class="col-lg-4 col-md-6 col-12">
                               <!-- Start Single List -->
-                              <div class="single-list wow fadeInUp" data-wow-delay=".6s">
+                              <div class="single-list wow fadeInUp" data-wow-delay=".4s" style="height:330px">
+                                 <i class="lni lni-docker"></i>
+                                 <h4>Docker</h4>
+                                 <p>Docker takes away repetitive, mundane configuration tasks and is used throughout the development lifecycle for fast, easy and portable application development </p>
+                              </div>
+                              <!-- Start Single List -->
+                           </div>
+                           <div class="col-lg-4 col-md-6 col-12">
+                              <!-- Start Single List -->
+                              <div class="single-list wow fadeInUp" data-wow-delay=".6s" style="height:330px">
                                  <i class="lni lni-cog"></i>
-                                 <h4>Completely Customizable</h4>
-                                 <p>Buy and sell everything from used cars to mobile
-                                    phones and computer or search for property.</p>
+                                 <h4>Tomcat</h4>
+                                 <p>The Apache Tomcat® software is an open source implementation of the Jakarta Servlet, Jakarta Server Pages, Jakarta Expression Language, Jakarta WebSocket, Jakarta Annotations and Jakarta Authentication specifications.</p>
                               </div>
                               <!-- Start Single List -->
                            </div>
                            <div class="col-lg-4 col-md-6 col-12">
                               <!-- Start Single List -->
-                              <div class="single-list wow fadeInUp" data-wow-delay=".2s">
-                                 <i class="lni lni-pointer-up"></i>
-                                 <h4>User Friendly</h4>
-                                 <p>Buy and sell everything from used cars to mobile
-                                    phones and computer or search for property.</p>
+                              <div class="single-list wow fadeInUp" data-wow-delay=".2s" style="height:330px">
+                                 <i class="lni lni-database"></i>
+                                 <h4>MYSQL</h4>
+                                 <p>MySQL is the world's most popular open source database. Whether you are a fast growing web property, technology ISV or large enterprise, MySQL can cost-effectively help you deliver high performance, scalable database applications.</p>
                               </div>
                               <!-- Start Single List -->
                            </div>
                            <div class="col-lg-4 col-md-6 col-12">
                               <!-- Start Single List -->
-                              <div class="single-list wow fadeInUp" data-wow-delay=".4s">
-                                 <i class="lni lni-layout"></i>
-                                 <h4>Awesome Layout</h4>
-                                 <p>Buy and sell everything from used cars to mobile
-                                    phones and computer or search for property.</p>
+                              <div class="single-list wow fadeInUp" data-wow-delay=".4s" style="height:330px">
+                                 <i class="lni lni-bootstrap"></i>
+                                 <h4>Bootstrap</h4>
+                                 <p>Powerful, extensible, and feature-packed frontend toolkit. Build and customize with Sass, utilize prebuilt grid system and components, and bring projects to life with powerful JavaScript plugins.</p>
                               </div>
                               <!-- Start Single List -->
                            </div>
                            <div class="col-lg-4 col-md-6 col-12">
                               <!-- Start Single List -->
-                              <div class="single-list wow fadeInUp" data-wow-delay=".6s">
-                                 <i class="lni lni-laptop-phone"></i>
-                                 <h4>Fully Responsive</h4>
-                                 <p>Buy and sell everything from used cars to mobile
-                                    phones and computer or search for property.</p>
+                              <div class="single-list wow fadeInUp" data-wow-delay=".6s" style="height:330px">
+                                 <i class="lni lni-github"></i>
+                                 <h4>Git</h4>
+                                 <p>Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.</p>
                               </div>
                               <!-- Start Single List -->
                            </div>
@@ -204,39 +269,103 @@
          </section>
          <!-- /End Why Choose Area -->
 
-         <section class="testimonials section">
+         <section class="testimonials section" style="background-color: #4f953b">
             <div class="container">
                <div class="row">
                   <div class="col-12">
                      <div class="section-title align-center gray-bg">
                         <h2 class="wow fadeInUp" data-wow-delay=".4s">프로젝트 후기</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many
-                           variations of passages of Lorem Ipsum available, but the
-                           majority have suffered alteration in some form.</p>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">2022/04/11 ~ 2022/10/11 경기도
+                        미래기술학교 JAVA 클라우드과정</p>
+                        
                      </div>
                   </div>
                </div>
                <div class="row testimonial-slider">
                   <div class="col-lg-4 col-md-6 col-12">
-
                      <div class="single-testimonial">
                         <div class="quote-icon">
                            <i class="lni lni-quotation"></i>
                         </div>
                         <div class="author">
-                           <img src="/img/about/member05.png" alt="#">
+                           <img src="img/about/member05.png" alt="#">
                            <h4 class="name">
-                              이수남<span class="deg">Founder & CEO</span>
+                              이수남<span class="deg">Funding 담당</span>
                            </h4>
                         </div>
-                        <div class="text">
-                           <p>"It’s amazing how much easier it has been to meet new
-                              people and create instantconnections. I have the exact same
-                              personality, the only thing that has changed is my mindset and
-                              a few behaviors."</p>
+                        <div class="text" style="height:250px">
+                           <p>"I am Sunam Lee"</p>
                         </div>
                      </div>
-
+                  </div>
+                  <div class="col-lg-4 col-md-6 col-12">
+                     <div class="single-testimonial">
+                        <div class="quote-icon">
+                           <i class="lni lni-quotation"></i>
+                        </div>
+                        <div class="author">
+                           <img src="img/about/member04.png" alt="#">
+                           <h4 class="name">
+                              박다희<span class="deg">Funding 담당</span>
+                           </h4>
+                        </div>
+                        <div class="text" style="height:250px">
+                           <p>"좋은 프로그램을 통해 좋은 조원들을 만나 마지막 프로젝트를 함께할 수 있어서 좋았습니다. 
+								6개월동안의 과정에서 많은 것들을 배워가면서 성장할 수 있었고 프로젝트를 통해 팀원들과의 협력과 의사소통의 중요성을 알 수 있었습니다.
+								조장으로서 부족함에도 항상 존중해주어서 자신감을 가질 수 있었고 실력뿐만 아니라 같이 만들어가는 값진 경험을 할 수 있어 좋았습니다."</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6 col-12">
+                     <div class="single-testimonial">
+                        <div class="quote-icon">
+                           <i class="lni lni-quotation"></i>
+                        </div>
+                        <div class="author">
+                           <img src="img/about/member03.png" alt="#">
+                           <h4 class="name">
+                              김수현<span class="deg">Funding 담당</span>
+                           </h4>
+                        </div>
+                        <div class="text" style="height:250px">
+                           <p>"이번 프로젝트를 통해 빠르게 성장할 수 있는 기회가 되었고 많은 시간을 투자하고 최선을 다하면 가능함을 알게 되었다. 또한 하나의 기능을 구현하기 위해서는 다양한 코드와 방법이 존재하다는 점에서 코딩의 매력을 다시 한 번 느끼게 되었다. 
+								6개월 동안 다양한 사람들 및 팀원들과 의사소통을 하면서 명확한 의사 전달 및 전달 확인의 중요성과 빠른 갈등 해결 및 피드백 제공 등의 필요성을 알게 되었다. 또한 배울 점이 많은 팀원들을 만나 프로젝트를 하게 되어 의미 있는 시간이었다."</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6 col-12">
+                     <div class="single-testimonial">
+                        <div class="quote-icon">
+                           <i class="lni lni-quotation"></i>
+                        </div>
+                        <div class="author">
+                           <img src="img/about/member02.png" alt="#">
+                           <h4 class="name">
+                              최정석<span class="deg">Member 담당</span>
+                           </h4>
+                        </div>
+                        <div class="text" style="height:250px">
+                           <p>"6개월동안 경기도미래기술학교에서 교육과정을 통해서 총 3차 프로젝트 기간동안 기존에 알고있던 것 외에도 새로운 것들을 많이 배워가면서 제 스스로의 경험들을 많이 쌓을 수 있었습니다. 코로나로 인해 비대면으로 학교생활을 한 후에 대면으로 하는 팀 프로젝트 또한 처음이라서 많이 서툴렀었던 것 같은데 좋은 팀원들을 만나서 무사히 진행할 수 있었습니다. 경기도미래기술학교에서 많은 경험들과 지식을 얻게 되어서 의미있었습니다."</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6 col-12">
+                     <div class="single-testimonial">
+                        <div class="quote-icon">
+                           <i class="lni lni-quotation"></i>
+                        </div>
+                        <div class="author">
+                           <img src="img/about/member01.png" alt="#">
+                           <h4 class="name">
+                              조경민<span class="deg">Member 담당</span>
+                           </h4>
+                        </div>
+                        <div class="text" style="height:250px">
+                           <p>6개월 동안 배운 것으로 프로젝트를 완성할 수 있어서 뿌듯합니다. 이번 프로젝트로 기능 구현에 앞 서 팀워크와 의사소통의 중요성에대해서 알게되었습니다.
+                           		저의 부족한 부분을 채워준 팀원들에게도 감사의 마음을 표시하고 싶습니다. 이 프로젝트가 앞으로 있을 새로운 도전에 기반이 될 의미있는 시간이었다고 생각합니다.
+                           </p>
+                        </div>
+                     </div>
                   </div>
                   <div class="col-lg-4 col-md-6 col-12">
 
@@ -245,221 +374,113 @@
                            <i class="lni lni-quotation"></i>
                         </div>
                         <div class="author">
-                           <img src="/img/about/member04.png" alt="#">
+                           <img src="img/moregreen.png" alt="#">
                            <h4 class="name">
-                              박다희<span class="deg">Web Developer</span>
+                              MoreGreen<span class="deg">프로젝트 총평</span>
                            </h4>
                         </div>
-                        <div class="text">
+                        <div class="text" style="height:250px">
                            <p>"It’s amazing how much easier it has been to meet new
                               people and create instant connections. I have the exact same
                               personality, the only thing that has changed is my mindset and
                               a few behaviors."</p>
                         </div>
                      </div>
-
                   </div>
-                  <div class="col-lg-4 col-md-6 col-12">
-
-                     <div class="single-testimonial">
-                        <div class="quote-icon">
-                           <i class="lni lni-quotation"></i>
-                        </div>
-                        <div class="author">
-                           <img src="/img/about/member03.png" alt="#">
-                           <h4 class="name">
-                              김수현<span class="deg">Ui/Ux Designer</span>
-                           </h4>
-                        </div>
-                        <div class="text">
-                           <p>"It’s amazing how much easier it has been to meet new
-                              people and create instant connections. I have the exact same
-                              personality, the only thing that has changed is my mindset and
-                              a few behaviors."</p>
-                        </div>
-                     </div>
-
-                  </div>
-                  <div class="col-lg-4 col-md-6 col-12">
-
-                     <div class="single-testimonial">
-                        <div class="quote-icon">
-                           <i class="lni lni-quotation"></i>
-                        </div>
-                        <div class="author">
-                           <img src="/img/about/member02.png" alt="#">
-                           <h4 class="name">
-                              최정석<span class="deg">Web Developer</span>
-                           </h4>
-                        </div>
-                        <div class="text">
-                           <p>"It’s amazing how much easier it has been to meet new
-                              people and create instant connections. I have the exact same
-                              personality, the only thing that has changed is my mindset and
-                              a few behaviors."</p>
-                        </div>
-                     </div>
-
-                  </div>
-                  <div class="col-lg-4 col-md-6 col-12">
-
-                     <div class="single-testimonial">
-                        <div class="quote-icon">
-                           <i class="lni lni-quotation"></i>
-                        </div>
-                        <div class="author">
-                           <img src="/img/about/member01.png" alt="#">
-                           <h4 class="name">
-                              조경민<span class="deg">Web Developer</span>
-                           </h4>
-                        </div>
-                        <div class="text">
-                           <p>"It’s amazing how much easier it has been to meet new
-                              people and create instant connections. I have the exact same
-                              personality, the only thing that has changed is my mindset and
-                              a few behaviors."</p>
-                        </div>
-                     </div>
-
-                  </div>
+                                    
                </div>
             </div>
-
          </section>
-
-
-
-
-         <div class="latest-news-area section">
-            <div class="container">
-               <div class="row">
-                  <div class="col-12">
-                     <div class="section-title">
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">latest news</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many
-                           variations of passages of Lorem Ipsum available, but the
-                           majority have suffered alteration in some form.</p>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-lg-4 col-md-6 col-12">
-
-                     <div class="single-news wow fadeInUp" data-wow-delay=".3s">
-                        <div class="image">
-                           <a href="blog-single-sidebar.html"><img class="thumb"
-                              src="/img/blog/blog1.jpg" alt="#"></a>
-                        </div>
-                        <div class="content-body">
-                           <h4 class="title">
-                              <a href="blog-single-sidebar.html">10 Things Successful
-                                 Mompreneurs Do Different</a>
-                           </h4>
-                           <p>Lorem ipsum dolor sit amet, consectetur adipisicing
-                              elit. Quis soluta libero molestiae, id reiciendis ipsum.</p>
-                           <div class="meta-details">
-                              <ul>
-                                 <li><a href="javascript:void(0)">Jan 24,2023</a></li>
-                                 <li><a href="javascript:void(0)">Technology</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-
-                  </div>
-                  <div class="col-lg-4 col-md-6 col-12">
-
-                     <div class="single-news wow fadeInUp" data-wow-delay=".5s">
-                        <div class="image">
-                           <a href="blog-single-sidebar.html"><img class="thumb"
-                              src="/img/blog/blog2.jpg" alt="#"></a>
-                        </div>
-                        <div class="content-body">
-                           <h4 class="title">
-                              <a href="blog-single-sidebar.html">A digital prescription
-                                 for the industry.</a>
-                           </h4>
-                           <p>Lorem ipsum dolor sit amet, consectetur adipisicing
-                              elit. Quis soluta libero molestiae, id reiciendis ipsum.</p>
-                           <div class="meta-details">
-                              <ul>
-                                 <li><a href="javascript:void(0)">Feb 20,2023</a></li>
-                                 <li><a href="javascript:void(0)">Magazine</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-
-                  </div>
-                  <div class="col-lg-4 col-md-6 col-12">
-
-                     <div class="single-news wow fadeInUp" data-wow-delay=".7s">
-                        <div class="image">
-                           <a href="blog-single-sidebar.html"><img class="thumb"
-                              src="/img/blog/blog3.jpg" alt="#"></a>
-                        </div>
-                        <div class="content-body">
-                           <h4 class="title">
-                              <a href="blog-single-sidebar.html">Strategic & commercial
-                                 approach with issues.</a>
-                           </h4>
-                           <p>Lorem ipsum dolor sit amet, consectetur adipisicing
-                              elit. Quis soluta libero molestiae, id reiciendis ipsum.</p>
-                           <div class="meta-details">
-                              <ul>
-                                 <li><a href="javascript:void(0)">Mar 15,2023</a></li>
-                                 <li><a href="javascript:void(0)">Technology</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-
-                  </div>
-               </div>
-            </div>
-         </div>
-
-         <!-- Start Newsletter Area -->
-         <div class="newsletter section">
-            <div class="container">
-               <div class="inner-content">
-                  <div class="row align-items-center">
-                     <div class="col-lg-6 col-md-6 col-12">
-                        <div class="title">
-                           <i class="lni lni-alarm"></i>
-                           <h2>Newsletter</h2>
-                           <p>We don't send spam so don't worry.</p>
-                        </div>
-                     </div>
-                     <div class="col-lg-6 col-md-6 col-12">
-                        <div class="form">
-                           <form action="#" method="get" target="_blank"
-                              class="newsletter-form">
-                              <input name="EMAIL" placeholder="Your email address"
-                                 type="email">
-                              <div class="button">
-                                 <button class="btn">
-                                    Subscribe<span class="dir-part"></span>
-                                 </button>
-                              </div>
-                           </form>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
     </section>
-       </body>
+       <footer class="footer">
+			<!-- Start Footer Top -->
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 col-md-6 col-12">
+							<!-- Single Widget -->
+							<div class="single-footer f-link">
+							<h3>Quick Links</h3>
+								<ul>
+									<li><a th:if="${session.member==null}" th:href="@{/member/memberLogin}">로그인</a></li>
+									<li><a th:if="${session.member==null}" th:href="@{/member/memberReg}">회원가입</a></li>
+									<li><a th:href="@{/pages/faq}">FAQ</a></li>
+								</ul>
+							</div>
+							<!-- End Single Widget -->
+						</div>
+						<div class="col-lg-3 col-md-6 col-12">
+						</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<!-- Single Widget -->
+							<div class="single-footer f-contact">
+								<h3>Contact</h3>
+								<ul>
+									<li>경기도 의정부시 범골로 137</li>
+									<li>Tel. 031-0000-0000 <br> Mail.
 
+
+										moregreen0921@gmail.com
+
+									</li>
+								</ul>
+							</div>
+							<!-- End Single Widget -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ End Footer Middle -->
+			<!-- Start Footer Bottom -->
+			<div class="footer-bottom">
+				<div class="container">
+					<div class="inner">
+						<div class="row">
+							<div class="col-12">
+								<div class="content">
+									<ul class="footer-bottom-links">
+										<li><a href="javascript:void(0)">ParkDaHee</a></li>
+										<li><a href="javascript:void(0)">ChoKyungMin</a></li>
+										<li><a href="javascript:void(0)">LeeSuNam</a></li>
+										<li><a href="javascript:void(0)">KimSuHyun</a></li>
+										<li><a href="javascript:void(0)">ChoiJeongSeok</a></li>
+									</ul>
+									<p class="copyright-text">
+										Designed and Developed by <a href="https://github.com/ciscons/moregreen1" rel="nofollow" target="_blank">MoreGreen</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Footer Middle -->
+		</footer>
+		<!--/ End Footer Area -->
+		<!-- ========================= scroll-top ========================= -->
+		<a href="#" class="scroll-top btn-hover"> <i
+			class="lni lni-chevron-up"></i>
+		</a>
+		<!-- ========================= JS here ========================= -->
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/wow.min.js"></script>
+	<script src="js/tiny-slider.js"></script>
+	<script src="js/glightbox.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script th:inline="javascript">
+	
+		$(document).ready(function(){
+			var menu = JSON.parse('[[${menu}]]'); //문자열
+			$(".navbar-nav li a").each(function(index, value){
+				
+				if($(value).attr('href') == menu) {
+					$(value).attr('class', 'nav-link active bg-gradient-primary');
+				}
+			});
+		});
+		
+	</script>
+	</body>
 </th:block>
 </html>

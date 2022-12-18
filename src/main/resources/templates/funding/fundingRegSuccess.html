@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
+   <th:block th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+      <section id="wrap">
+         <section class="items-grid section custom-padding">
+            <div class="container">
+               <div class="col-12">
+                  <div class="section-title">
+                     <h2 class="wow fadeInUp" data-wow-delay=".4s">프로젝트 개설 신청 완료</h2>
+                  </div>
+               </div>
+               <section class="item-details section">
+                  <div class="container">
+                     <div class="top-area">
+                        <div class="row">
+                           <div class="text-sm pb-30">
+                              <div class="wow fadeInUp" data-wow-delay=".7s">
+                                 <div class="row">
+                                    <div class="col-12">
+                                       <div class="card">
+                                          <div class="card-header pb-0">
+                                             <h5 class="mb-5" style="text-align:center;">프로젝트 개설 신청을 완료하였습니다.</h5>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="wow fadeInUp" data-wow-delay=".7s">
+                           <div class="col-12" align="center">
+                              <a type="submit" class="btn btn-success" th:href="@{/}">확인</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+         </section>
+      </section>
+   </th:block>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+<script th:inline="javascript">
+
+var socket = null;
+
+$(document).ready(function (){
+	   connectWs();
+});
+
+function connectWs(){
+	sock = new SockJS([[@{'/myHandler'}]]);
+   	//sock = new SockJS('/myHandler');
+   	socket = sock;
+   	
+   	sock.onopen = function() {
+        console.log('info: connection opened.');
+ 	};
+ 	
+ 	const f_num = [[${f_num}]];
+ 	const m_id = [[${session.member.m_id}]];
+ 	const a_message = m_id + "님이 " + f_num + "번 프로젝트를 개설했습니다.";
+
+ 	var AlarmData = {
+ 			"alarm_receiver" : 'admin',
+ 			"alarm_callerId" : m_id,
+ 			"myAlarm_title" : '프로젝트 개설 신청',
+ 			"a_message" : a_message,
+ 			"funding_f_num" : f_num
+ 	};
+
+ 	console.log(f_num);
+ 	console.log(a_message);
+ 	//프로젝트 개설 알림 DB저장
+ 	$.ajax({
+ 		type : 'post',
+ 		url : [[@{'/alarm/saveAlarm'}]],
+ 		data : JSON.stringify(AlarmData),
+ 		contentType: "application/json; charset=utf-8",
+ 		dataType : 'text',
+ 		success : function(data){
+ 			if(socket){
+ 				let socketMsg = "fundingRegist," + m_id +","+ f_num +","+ "admin";
+ 				console.log("msgmsg : " + socketMsg);
+ 				socket.send(socketMsg);
+ 			}
+
+ 		},
+ 		error : function(err){
+ 			console.log("에러입니다");
+ 		}
+ 	});
+ 	
+ 	sock.onclose = function() {
+      	console.log('connect close');
+      	/* setTimeout(function(){conntectWs();} , 1000); */
+    };
+
+    sock.onerror = function (err) {
+    	console.log('Errors : ' , err);
+    };
+
+}
+
+$(document).on("keyup", "#bizno", function() { 
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/([0-9]{3})([0-9]{2})([0-9]{5})$/,"$1-$2-$3").replace("--", "-") );
+});
+
+$("#fundingForm").on("blur", "input",  function(){
+	if($(this).val().trim().length != 0){
+		$(this).closest("div").next("span").html("");
+	}
+});
+
+
+</script>
+</html>

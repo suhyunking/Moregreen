@@ -14,7 +14,7 @@
 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{./include/layout :: setContent( ~{:: .container-fluid}  ) }">
+<th:block th:replace="~{include/layout :: setContent( ~{:: .container-fluid}  ) }">
 	<div class="container-fluid py-4">
 		<form name="purchaseForm" action="fundingOrderList" method="get">
 			<div class="d-sm-flex justify-content-between">
@@ -96,7 +96,7 @@
 						</table>
 					</div>
 					<div class="dataTable-bottom">
-						<th:block th:replace="~{/include/page :: fundingOrderList('fundingOrderList', ${pageVO}) }"></th:block>
+						<th:block th:replace="~{include/page :: fundingOrderList('fundingOrderList', ${pageVO}) }"></th:block>
 					</div>
 					</div>
 				</div>

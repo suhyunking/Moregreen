@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -20,18 +21,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Setter;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import site.moregreen.basic.command.DeliveryDto;
 import site.moregreen.basic.command.FundingDto;
 import site.moregreen.basic.command.PurchaseDto;
+import site.moregreen.basic.command.ReplyDto;
 import site.moregreen.basic.funding.FundingService;
 import site.moregreen.basic.kakaoPay.KakaoPayService;
 import site.moregreen.basic.like.LikeService;
 import site.moregreen.basic.purchase.PurchaseService;
+import site.moregreen.basic.reply.ReplyService;
 import site.moregreen.basic.util.Criteria;
 import site.moregreen.basic.util.PageVo;
 
-@Log
+@Slf4j
 @Controller
 @RequestMapping("/funding")
 public class FundingController {
@@ -50,6 +53,10 @@ public class FundingController {
 	@Autowired
 	@Qualifier("likeService")
 	LikeService likeService;
+	
+	@Autowired
+	@Qualifier("replyService")
+	ReplyService replyService;
 	
 	
 	@GetMapping("/fundingList")
@@ -79,6 +86,9 @@ public class FundingController {
 			heart = fundingDto.getL_count();
 		}
 		
+		List<ReplyDto> replyList = replyService.retrieveReplyList(f_num);
+		
+		model.addAttribute("replyList", replyList);
 		model.addAttribute("heart", heart);
 		
 		return "/funding/fundingDetail"; 
@@ -107,7 +117,8 @@ public class FundingController {
 	public String fundingForm(@Valid FundingDto dto, Errors errors, Model model,
 						  	  @RequestParam("file") List<MultipartFile> files,
 						  	@RequestParam("mainFile") List<MultipartFile> mainFiles,
-						  	@RequestParam("contentFile") List<MultipartFile> contentFiles) {
+						  	@RequestParam("contentFile") List<MultipartFile> contentFiles,
+						  	HttpServletRequest request) {
 		
 		
 		if(errors.hasErrors()) {
@@ -154,8 +165,14 @@ public class FundingController {
 		}
 		
 		int result = fundingService.addFunding(dto, files, mainFiles, contentFiles);
-		return "redirect:/funding/fundingList";
-
+		
+		if(result != 0) {
+	        request.setAttribute("f_num", result);
+	        log.debug("====================" + request.getAttribute("f_num"));
+			return "forward:/funding/fundingRegSuccess";
+		}else {
+			return "forward:/funding/fundingRegFail";
+		}
 	}
 
 	@GetMapping("fundingPurchase")
@@ -169,7 +186,7 @@ public class FundingController {
 		
 		Map<String, Object> hashMap = kakaopayService.kakaoPayInfo(pg_token);
 		int result = purchaseService.addPurchase(hashMap);
-		System.out.println("=============================" + result);
+		System.out.println("============result=================" + result);
 		
 		model.addAttribute("info", hashMap.get("kakaoPayApprovalVO"));
 		
@@ -178,7 +195,7 @@ public class FundingController {
 	
 	@GetMapping("fundingPurchaseCancel")
 	public String fundingPurchaseCancel() {
-		return "funding/fundingPurchaseCancel";
+		return "/funding/fundingPurchaseCancel";
 	}
 	
 	@GetMapping("fundingPurchaseFail")
@@ -190,6 +207,21 @@ public class FundingController {
 	public String fundingRefund() {
 		return "funding/fundingRefund";
 	}
+	
+	@PostMapping("fundingRegSuccess")
+	public String fundingRegSuccess(HttpServletRequest request,
+									Model model) {
+		int f_num = (int) request.getAttribute("f_num");
+		System.out.println("============f_num=================" + f_num);
+		model.addAttribute("f_num", f_num);
+		return "/funding/fundingRegSuccess";
+	}
+	
+	@GetMapping("fundingRegFail")
+	public String fundingRegFail() {
+		return "/funding/fundingRegFail";
+	}
+	
 	
 //	@GetMapping("fundingOrderList")
 //	public String fundingOrderList(Model model, 

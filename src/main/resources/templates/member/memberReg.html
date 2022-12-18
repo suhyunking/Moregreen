@@ -1,128 +1,147 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymleaf.org">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="/img/moregreen.ico">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/apple-icon.png}">
+<link rel="icon" type="image/png" href="../img/moregreen.ico">
+
   <title>
     회원가입
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
-  <link href="/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="/css/nucleo-svg.css" rel="stylesheet" />
+  <link th:href="@{/css/nucleo-icons.css}" rel="stylesheet" />
+  <link th:href="@{/css/nucleo-svg.css}" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
-  <link id="pagestyle" href="/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+  <link id="pagestyle" th:href="@{/css/material-dashboard.css?v=3.0.4}" rel="stylesheet" />
   <style>
-  	.olmessagef{color:red;}
-  	.olmessaget{color:blue;}
+     .olmessagef{color:red;}
+     .olmessaget{color:blue;}
   </style>
-<script src="/js/jquery-3.6.0.js"></script>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script>
-	$(document).ready(function(){
-		$("#overlappedID").click(function(){
-			var id_rule =  /^[a-z0-9]{8,20}/;
-			
-			if(!id_rule.test($("#m_id").val())){
-				alert("아이디를 형식에 맞게 입력해주세요. 소문자+숫자 8자 이상");
-				$("m_id").focus();
-				return false;
-				}
-			
-			const m_id= $("#m_id").val();
-			if(m_id==null|| m_id==""){
-				alert("아이디를 입력해주세요")
-			} else{
-			$("#join").attr("type","button");
-			$.ajax({
-				type:"get",
-				async: false,
-				url: "/member/idCheck",
-				data: {m_id:m_id},
-				success: function(data){
-					if(data==1){
-						$("#olmessage").text("이미 사용중인 ID입니다.");
-						$("#olmessage").addClass("olmessagef");
-						$("#olmessage").removeClass("olmessaget");
-					} else{
-						$("#olmessage").text("사용 가능한 ID입니다.");
-						$("#olmessage").addClass("olmessaget");
-						$("#olmessage").removeClass("olmessagef");
-						$("#join").attr("type", "submit");
-					}
-				}
-			})}
-			
-		});
-		
-		 $(".pwConfirm").keyup(function(){
-			
-			
-	        var password=document.getElementById('m_pw');
-	        var passwordConfirm=document.getElementById('m_pw_confirm');
-	        var confirmMsg=document.getElementById('confirmMsg');
-	        var correctColor="blue";
-	        var wrongColor="red";
-	        if(password.value==passwordConfirm.value){
-	            confirmMsg.style.color=correctColor;
-	            confirmMsg.innerHTML="비밀번호 일치"
-	            	$("#join").attr("type", "submit");
-	        } else{
-	            confirmMsg.style.color=wrongColor;
-	            confirmMsg.innerHTML="비밀번호 불일치";
-	            $("#join").attr("type", "button");
-	        }
-	        
+<script src="../js/jquery-3.6.0.js"></script>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+   
+   $(document).ready(function(){
+      $("#joinForm").on("click",function(){
+         event.preventDefault();
+      if($("#m_id").val().length == 0 || $("#m_pw").val().length == 0 || $("#m_email").val().length == 0){
+            alert("회원가입 양식을 올바르게 입력해주세요.");
+            return
+      } else if ($("#agree1").is(":checked")==false||$("#agree2").is(":checked")==false) {
+          alert('이용 약관에 동의하지 않았습니다.');    
+      } else{
+    	  $("#form1").submit();
+           
+      }
+      
+       
+      
+      });
+      $("#overlappedID").click(function(){
+         var id_rule =  /^[a-z0-9]{8,20}/;
+         if(!id_rule.test($("#m_id").val().trim())){
+            alert("아이디를 형식에 맞게 입력해주세요. 소문자+숫자 8자 이상");
+            $("m_id").focus();
+            return false;
+            }
+         
+         const m_id= $("#m_id").val().trim();
+         if(m_id==null|| m_id==""){
+            alert("아이디를 입력해주세요")
+         } else {
+         $("#joinForm").attr("type","button");
+         $.ajax({
+            type:"get",
+            async: false,
+            url: [[@{'/member/idCheck'}]],
+            data: {m_id:m_id},
+            success: function(data){
+               if(data==1){
+                  $("#olmessage").text("이미 사용중인 ID입니다.");
+                  $("#olmessage").addClass("olmessagef");
+                  $("#olmessage").removeClass("olmessaget");
+               } else{
+                  $("#olmessage").text("사용 가능한 ID입니다.");
+                  $("#olmessage").addClass("olmessaget");
+                  $("#olmessage").removeClass("olmessagef");
+                  $("#joinForm").attr("type", "submit");
+               }
+            }
+         })
+         }
+         
+      });
+      
+       $(".pwConfirm").keyup(function(){
+         
+         
+           var password=document.getElementById('m_pw');
+           var passwordConfirm=document.getElementById('m_pw_confirm');
+           var confirmMsg=document.getElementById('confirmMsg');
+           var correctColor="blue";
+           var wrongColor="red";
+           if(password.value==passwordConfirm.value){
+               confirmMsg.style.color=correctColor;
+               confirmMsg.innerHTML="비밀번호 일치"
+                  $("#joinForm").attr("type", "submit");
+           } else{
+               confirmMsg.style.color=wrongColor;
+               confirmMsg.innerHTML="비밀번호 불일치";
+               $("#joinForm").attr("type", "button");
+           }
+           
 
-	        });
-		  
-		
-		 $(".overlappedEmail").blur(function(){
-				const m_email= $("#m_email").val();
-				if(m_email==null|| m_email==""){
-					//alert("이메일을 입력해주세요")
-				} else{
-				$("#join").attr("type","button");
-				$.ajax({
-					type:"get",
-					async: false,
-					url: "/member/emailCheck",
-					data: {m_email:m_email},
-					success: function(data){
-						if(data==1){
-							$("#olmessage1").text("이미 사용중인 이메일입니다.");
-							$("#olmessage1").addClass("olmessagef");
-							$("#olmessage1").removeClass("olmessaget");
-						} else{
-							$("#olmessage1").text("사용 가능한 이메일입니다.");
-							$("#olmessage1").addClass("olmessaget");
-							$("#olmessage1").removeClass("olmessagef");
-							$("#join").attr("type", "submit");
-						}
-					}
-				})
-				}
-			});
-		 
-		 $("#m_pw").focusout(function(){
-	          var pwcheck = /^(?=.*[0-9])(?=.*[a-zA-Z!@#$%^&*]).{8,20}$/;
-	          var confirmMsg1=document.getElementById('confirmMsg1');
-	              if(!pwcheck.test($("#m_pw").val())){
-	            	  confirmMsg1.style.color="red";
-	                 confirmMsg1.innerHTML="영문, 숫자, (특수문자)로 8자이상으로 입력."
-	                 } else{
-	     	            confirmMsg1.innerHTML="";
-	    	         }
-	       })
-	})
-	
+           });
+        
+      
+       $(".overlappedEmail").blur(function(){
+            const m_email= $("#m_email").val().trim();
+            if(m_email==null|| m_email==""){
+               //alert("이메일을 입력해주세요")
+            } else{
+            $("#joinForm").attr("type","button");
+            $.ajax({
+               type:"get",
+               async: false,
+               url: [[@{'/member/emailCheck'}]],
+               data: {m_email:m_email},
+               success: function(data){
+                  if(data==1){
+                     $("#olmessage1").text("이미 사용중인 이메일입니다.");
+                     $("#olmessage1").addClass("olmessagef");
+                     $("#olmessage1").removeClass("olmessaget");
+                  } else{
+                     $("#olmessage1").text("사용 가능한 이메일입니다.");
+                     $("#olmessage1").addClass("olmessaget");
+                     $("#olmessage1").removeClass("olmessagef");
+                     $("#joinForm").attr("type", "submit");
+                  }
+               }
+            })
+            }
+         });
+        
+       
+       $("#m_pw").focusout(function(){
+             var pwcheck = /^(?=.*[0-9])(?=.*[a-zA-Z!@#$%^&*]).{8,20}$/;
+             var confirmMsg1=document.getElementById('confirmMsg1');
+                 if(!pwcheck.test($("#m_pw").val())){
+                    confirmMsg1.style.color="red";
+                    confirmMsg1.innerHTML="영문, 숫자, (특수문자)로 8자이상으로 입력."
+                    } else{
+                       confirmMsg1.innerHTML="";
+                   }
+          })
+   })
+   
+   
 </script>
 </head>
 
@@ -130,7 +149,6 @@
   <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
       <div class="col-12">
-        
       </div>
     </div>
   </div>
@@ -139,80 +157,136 @@
       <span class="mask opacity-6"></span>
       <div class="container my-auto">
       <div style="text-align: center;">
-      	<a  th:href="@{/index}">
-			<img src="/img/logo/logo1.png" alt="Logo">      	
-      	</a>
+         <a  th:href="@{/index}">
+         <img th:src="@{/img/logo/logo1.png}" alt="Logo">         
+         </a>
       </div>
         <div class="row">
-          <div class="col-lg-4 col-md-8 col-12 mx-auto">
+          <div class="col-lg-4 col-md-8 col-12 mx-auto" style=width:650px>
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary border-radius-lg py-3 pe-1">
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">회원가입</h4>
-                
                 </div>
               </div>
               <div class="card-body">
-                <form th:action="@{/member/MemberReg}" method="post" >
+                <form th:action="@{/member/MemberReg}" method="post" id="form1">
                     <div class="input-group input-group-outline mb-3">
-
                         <input type="text" id=m_id name=m_id class="form-control"
                             placeholder="아이디" >
-                        <span th:style="${'color: red;'}" th:text="${valid_m_id}"></span>	
+                        <span th:style="${'color: red;'}" th:text="${valid_m_id}"></span>   
                     </div>
                     <div class="">
                     <button type="button" class="btn btn-lg bg-gradient-primary" id="overlappedID">중복확인</button>
                     <span id="olmessage"></span>
                     </div>
-                    
-        
                     <div class="input-group input-group-outline mb-3">
                         <input type="password" id=m_pw name=m_pw placeholder="비밀번호" 
                             class="form-control" >
                             </div>
                         <span id="confirmMsg1"></span>    
                         <span th:style="${'color: red;'}" th:text="${valid_m_pw}"></span>
-                    
                     <div class="input-group input-group-outline mb-3">
                         <input type="password" id=m_pw_confirm name=m_pw_confirm placeholder="비밀번호 확인"
                             class="form-control pwConfirm"> 
                         </div>
                             <span id="confirmMsg"></span>
-                    
-                    
                     <div class="input-group input-group-outline mb-3">
                         <input type="email" name=m_email
                             placeholder="example@xxxx.com" class="form-control overlappedEmail" id="m_email">
                         </div>
                         <span th:style="${'color: red;'}" th:text="${valid_m_email}"></span>
-                    	<span id="olmessage1"></span>
-                    
+                       <span id="olmessage1"></span>
+                       
+                       </form>
+                       <p></p>
+                       
+                       <label for="agree_all"> <input type="checkbox" name="agree_all" id="agree_all"> <span>모두 동의합니다</span>
+               </label> 
+               <textarea readonly="readonly" rows="5" cols="66">
+제 1 조 (목적)
+
+이 약관은 모어그린이 제공하는 모어그린 및 모어그린 관련 제반 서비스의 이용과 관련하여 회사와 회원과의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
 
 
+제 2 조 (정의)
 
+이 약관에서 사용하는 용어의 정의는 다음과 같습니다.
+①"서비스"라 함은 구현되는 단말기(PC, TV, 휴대형단말기 등의 각종 유무선 장치를 포함)와 상관없이 "회원"이 이용할 수 있는 모어그린 및 모어그린 관련 제반 서비스를 의미합니다.
+②"회원"이라 함은 회사의 "서비스"에 접속하여 이 약관에 따라 "회사"와 이용계약을 체결하고 "회사"가 제공하는 "서비스"를 이용하는 고객을 말합니다.
+③"아이디(ID)"라 함은 "회원"의 식별과 "서비스" 이용을 위하여 "회원"이 정하고 "회사"가 승인하는 문자와 숫자의 조합을 의미합니다.
+④"비밀번호"라 함은 "회원"이 부여 받은 "아이디와 일치되는 "회원"임을 확인하고 비밀보호를 위해 "회원" 자신이 정한 문자 또는 숫자의 조합을 의미합니다.
+⑤"유료서비스"라 함은 "회사"가 유료로 제공하는 각종 온라인디지털콘텐츠(각종 정보콘텐츠, VOD, 아이템 기타 유료콘텐츠를 포함) 및 제반 서비스를 의미합니다.
+⑥"포인트"라 함은 서비스의 효율적 이용을 위해 회사가 임의로 책정 또는 지급, 조정할 수 있는 재산적 가치가 없는 "서비스" 상의 가상 데이터를 의미합니다.
+⑦"게시물"이라 함은 "회원"이 "서비스"를 이용함에 있어 "서비스상"에 게시한 부호ㆍ문자ㆍ음성ㆍ음향ㆍ화상ㆍ동영상 등의 정보 형태의 글, 사진, 동영상 및 각종 파일과 링크 등을 의미합니다. 
+   </textarea>
+               <label for="agree"> <input  type="checkbox" name="agree" id="agree1" value="1"> 
+               <span>이용약관 동의<strong>(필수)</strong></span>
+               </label>
+               <textarea readonly="readonly" rows="5" cols="66">
+
+정보통신망법 규정에 따라 모어그린에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및 이용기간을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.
+
+
+1. 수집하는 개인정보
+
+이용자는 회원가입을 하지 않아도 펀딩 보기 등의 모어그린 서비스를 이용할 수 있습니다. 이용자가 구입 등과 같이 개인화 혹은 회원제 서비스를 이용하기 위해 회원가입을 할 경우, 모어그린는 서비스 이용을 위해 필요한 최소한의 개인정보를 수집합니다.
+ 
+   </textarea> 
+               
+               <label for="agree"> <input type="checkbox" name="agree" id="agree2" value="2"> 
+               <span>개인정보 수집, 이용 동의<strong>(필수)</strong></span>
+               </label> 
+               <textarea readonly="readonly" rows="5" cols="66">
+
+위치정보 이용약관에 동의하시면, 위치를 활용한 광고 정보 수신 등을 포함하는 모어그린 위치기반 서비스를 이용할 수 있습니다.
+
+
+제 1 조 (목적)
+이 약관은 모어그린이 제공하는 위치정보사업 또는 위치기반서비스사업과 관련하여 회사와 개인위치정보주체와의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
+
+
+제 2 조 (약관 외 준칙)
+이 약관에 명시되지 않은 사항은 위치정보의 보호 및 이용 등에 관한 법률, 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 전기통신기본법, 전기통신사업법 등 관계법령과 회사의 이용약관 및 개인정보취급방침, 회사가 별도로 정한 지침 등에 의합니다.
+
+
+제 3 조 (서비스 내용 및 요금)
+①회사는 직접 위치정보를 수집하거나 위치정보사업자인 이동통신사로부터 위치정보를 전달받아 아래와 같은 위치기반서비스를 제공합니다. 1.Geo Tagging 서비스: 게시글 등록 시점의 개인위치정보주체의 위치정보를 게시글과 함께 저장합니다.
+2.위치정보를 활용한 검색결과 제공 서비스: 정보 검색을 요청하거나 개인위치정보주체 또는 이동성 있는 기기의 위치정보를 제공 시 본 위치정보를 이용한 검색결과 및 주변결과(맛집, 주변업체, 교통수단 등)를 제시합니다.
+3.위치정보를 활용한 친구찾기 및 친구맺기: 현재 위치를 활용하여 친구를 찾아주거나 친구를 추천하여 줍니다.
+4.연락처 교환하기: 위치정보를 활용하여 친구와 연락처를 교환할 수 있습니다.
+5.현재 위치를 활용한 광고정보 제공 서비스: 광고정보 제공 요청 시 개인위치정보주체의 현 위치를 이용하여 광고소재를 제시합니다.
+6. 이용자 보호 및 부정 이용 방지: 개인위치정보주체 또는 이동성 있는 기기의 위치를 이용하여 권한없는 자의 비정상적인 서비스 이용 시도 등을 차단합니다.
+ </textarea>
+               <label for="agree"> <input type="checkbox" name="agree" id="agree3" value="3"> 
+               <span>개인정보 이용 동의<strong>(필수)</strong></span>
+               </label> 
+               
+               <label for="agree"> <input type="checkbox" name="agree" value="4"> 
+               <span>이벤트, 혜택정보 수신동의<strong class="select_disable">(선택)</strong></span>
+               </label>
                     <div class="text-center">
-                        <button type="button"
-                            class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0" id="join">가입하기</button>
+                        <button type="button" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0" id="joinForm">가입하기</button>
                     </div>
-                </form>
+                    
+                
             </div>
             <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                <p class="mb-2 text-sm mx-auto">
-                    이미 계정이 있으신가요? <a th:href="@{/member/memberLogin}" class="text-primary text-gradient font-weight-bold">로그인</a>
+                <p class="mb-2 text-sm mx-auto"> 이미 계정이 있으신가요? 
+                   <a th:href="@{/member/memberLogin}" class="text-primary text-gradient font-weight-bold">로그인</a>
                 </p>
             </div>
             </div>
           </div>
         </div>
       </div>
-      
     </div>
   </main>
   <!--   Core JS Files   -->
-  <script src="/js/core/popper.min.js"></script>
-  <script src="/js/core/bootstrap.min.js"></script>
-  <script src="/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="/js/plugins/smooth-scrollbar.min.js"></script>
+  <script th:src="@{/js/core/popper.min.js}"></script>
+  <script th:src="@{/js/core/bootstrap.min.js}"></script>
+  <script th:src="@{/js/plugins/perfect-scrollbar.min.js}"></script>
+  <script th:src="@{/js/plugins/smooth-scrollbar.min.js}"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -221,11 +295,19 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+    const agreeChkAll = document.querySelector('input[name=agree_all]');
+    agreeChkAll.addEventListener('change', (e) => {
+    let agreeChk = document.querySelectorAll('input[name=agree]');
+    for(let i = 0; i < agreeChk.length; i++){
+      agreeChk[i].checked = e.target.checked;
+    }
+    
+});
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="/js/material-dashboard.min.js?v=3.0.4"></script>
+  <script th:src="@{/js/material-dashboard.min.js?v=3.0.4}"></script>
 </body>
 
 </html>

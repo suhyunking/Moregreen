@@ -1,13 +1,8 @@
 <!-- 펀딩 구매 내역 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-
-<th:block
-	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
-
-
+<th:block th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }">
 	<body>
-
 		<section id="wrap">
 			<section class="items-grid section custom-padding">
 				<div class="wow fadeInUp" data-wow-delay=".6s">
@@ -22,18 +17,12 @@
 	               </div>
 					</div>
 				</div>
-
 			<section class="dashboard section">
 				<div class="container">
 					<div class="row">
-						<!-- 						<th:block
-							th:replace="~{./mypage/test :: setContent( ~{:: #wrap}  ) }"></th:block> -->
-
 						<div class="col-lg-3 col-md-12 col-12">
-
 							<div class="dashboard-sidebar">
 								<div class="user-image">
-									
 									<h5>
 										[[${session.member.m_id}]] 
 									</h5>
@@ -46,18 +35,16 @@
 												class="lni lni-pencil-alt"></i> 내가 만든 프로젝트</a></li>
 										<li><a href="fundingLikeList"><i
 												class="lni lni-heart"></i> 찜목록</a></li>
-										<li><a href="changePw"><i class="lni lni-envelope"></i>
+										<li><a class="active" href="changePw"><i class="lni lni-envelope"></i>
 												PW변경</a></li>
 										<li><a href="deleteMember"><i class="lni lni-trash"></i>
 												회원 탈퇴</a></li>
-
 									</ul>
 									<div class="button">
 										<a class="btn" th:href="@{/member/logout}">Logout</a>
 									</div>
 								</div>
 							</div>
-
 						</div>
 						<div class="col-lg-9 col-md-12 col-12">
 							<div class="main-content">
@@ -65,46 +52,40 @@
 									<h3 class="block-title" align="center">비밀번호 변경</h3>
 									<form id="changePwForm" name="changePwForm"
 										th:action="@{/mypage/changePwForm}" method="post">
-
-
 										<div class="card-body">
 											<input type="hidden" name="m_id" th:value="${session.member.m_id}">
 											<input type="text" name="m_id"
 												th:value="${session.member.m_id}" class="form-control" disabled/>
 										<span></span>
-										
 											<input type="password" id=m_pw name=m_pw placeholder="변경할 비밀번호"
 												class="form-control"> <span
 												th:style="${'color: red;'}" th:text="${valid_m_pw}"></span>
-										
-										
 											<input type="password" id=m_pw_confirm name=m_pw_confirm
 												placeholder="변경할 비밀번호 확인" class="form-control pwConfirm">
-
 											<span id="confirmMsg"></span>
 										</div>
 										<div class="button" align="center">
-									<a class="btn" id="checkpw">변경하기</a>
+											<a class="btn" id="checkpw">변경하기</a>
+										</div>
+									</form>
 								</div>
-
-								
-								</form>
 							</div>
 						</div>
 					</div>
 				</div>
-				</div>
-				
 				</section>
 			</section>
 		</section>
 	</body>
-
 </th:block>
-<script src="/js/jquery-3.6.0.js"></script>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script>
+<script src="@{/js/jquery-3.6.0.js}"></script>
+<script src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:inline="javascript">
 	$(document).ready(function() {
+		$(".btn").on('click', function(){
+			event.preventDefault()
+	    	alert("비밀번호가 변경되었습니다.");
+		});
 		$("#changePwForm").keyup(function() {
 			var password = document.getElementById('m_pw');
 			var passwordConfirm = document.getElementById('m_pw_confirm');
@@ -126,8 +107,6 @@
 			}
 
 		});
-		
-
 		
 	});
 </script>

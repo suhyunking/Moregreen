@@ -43,6 +43,16 @@ import site.moregreen.basic.util.Criteria;
 	public PurchaseDto retrieveMyPurchaseDetail(PurchaseDto dto) {
 		return myPageMapper.selectMyPurchaseDetail(dto);
 	}
+
+	@Override
+	public int retrieveMyProjectTotal(Criteria cri) {
+		return myPageMapper.selectMyProjectTotal(cri);
+	}
+
+	@Override
+	public int retrievePurchaseTotal(Criteria cri) {
+		return myPageMapper.selectPurchaseTotal(cri);
+	}
   	
   	
 	

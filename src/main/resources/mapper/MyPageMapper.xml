@@ -79,7 +79,8 @@
 		inner join funding f 
 		on l.funding_f_num = f.f_num
 		where l.member_m_num = #{m_num}
-		order by l.l_num desc		
+		order by l.l_num desc
+		limit #{pageStart}, #{amount}		
 		
 	</select>
 		
@@ -87,6 +88,22 @@
 
 		select count(*) as total
 		from likefunding
+		where member_m_num = #{m_num}
+	    
+	</select>
+	
+	<select id="selectPurchaseTotal" parameterType="site.moregreen.basic.util.Criteria" resultType="int">
+
+		select count(*) as total
+		from purchase
+		where member_m_num = #{m_num}
+	    
+	</select>
+	
+	<select id="selectMyProjectTotal" parameterType="site.moregreen.basic.util.Criteria" resultType="int">
+
+		select count(*) as total
+		from funding
 		where member_m_num = #{m_num}
 	    
 	</select>
@@ -99,12 +116,24 @@
 			   f.f_status,
 			   p.p_num,
 			   p.p_date,
-			   p.p_payment
-		from purchase p 
+			   p.p_payment,
+			   i.i_num as i_num,
+			   i.i_name as filename,
+			   i.i_uuid as uuid
+		from (select *
+			  from image
+			  where (funding_f_num, i_num) in (select r.*
+											   from (select funding_f_num, min(i_num) as i_num
+													 from image
+													 where i_type = 1
+													 group by funding_f_num) as r) )as i
+		inner join purchase p 
+		on p.funding_f_num = i.funding_f_num
 		left outer join funding f
 		on p.funding_f_num = f.f_num
 		where p.member_m_num = #{m_num} 
 		order by p.p_num desc
+		limit #{pageStart}, #{amount}
 	
 	</select>
 	
@@ -148,10 +177,22 @@
 				f.f_bname,
 				f.f_rate,
 				f.f_regdate,
-				f.f_status
-		from funding f
-		where f.f_status in (1,2,3,4,5) and f.member_m_num = #{m_num}
+				f.f_status,
+				i.i_num as i_num,
+			    i.i_name as filename,
+			    i.i_uuid as uuid
+		from (select *
+			  from image
+			  where (funding_f_num, i_num) in (select r.*
+											   from (select funding_f_num, min(i_num) as i_num
+													 from image
+													 where i_type = 1
+													 group by funding_f_num) as r) )as i
+		inner join funding f 
+		on f.f_num = i.funding_f_num 
+		where f.member_m_num = #{m_num}
 	  	order by f.f_num desc
+	  	limit #{pageStart}, #{amount}
 	
 	</select>	
 	

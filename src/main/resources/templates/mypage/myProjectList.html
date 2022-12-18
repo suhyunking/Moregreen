@@ -1,118 +1,141 @@
-
-
 <!-- 펀딩 구매 내역 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+<th:block
+	th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }">
 	<body>
 		<section id="wrap">
 			<section class="items-grid section custom-padding">
 				<div class="wow fadeInUp" data-wow-delay=".6s">
 					<div class="container">
 						<div class="row">
-	                  <div class="col-12">
-	                     <div class="section-title">
-	                        <h2 class="wow fadeInUp" data-wow-delay=".4s">마이페이지</h2>
-	                        <p class="wow fadeInUp" data-wow-delay=".6s">내가 만든 프로젝트 조회</p>
-	                     </div>
-	                  </div>
-	               </div>
+							<div class="col-12">
+								<div class="section-title">
+									<h2 class="wow fadeInUp" data-wow-delay=".4s">마이페이지</h2>
+									<p class="wow fadeInUp" data-wow-delay=".6s">내가 만든 프로젝트 조회</p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			<section class="dashboard section">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-3 col-md-12 col-12">
-							<div class="dashboard-sidebar">
-								<div class="user-image">
-
-									<h5>
-										[[${session.member.m_id}]] 
-									</h5>
-
+				<section class="dashboard section">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-3 col-md-12 col-12">
+								<div class="dashboard-sidebar">
+									<div class="user-image">
+										<h5>[[${session.member.m_id}]]</h5>
+									</div>
+									<div class="dashboard-menu">
+										<ul>
+											<li><a href="purchaseList"><i
+													class="lni lni-dashboard"></i> 펀딩 구매 내역</a></li>
+											<li><a class="active" href="myProjectList"><i
+													class="lni lni-pencil-alt"></i> 내가 만든 프로젝트</a></li>
+											<li><a href="fundingLikeList"><i
+													class="lni lni-heart"></i> 찜목록</a></li>
+											<li><a href="changePw"><i class="lni lni-envelope"></i>
+													PW변경</a></li>
+											<li><a href="deleteMember"><i class="lni lni-trash"></i>
+													회원 탈퇴</a></li>
+										</ul>
+										<div class="button">
+											<a class="btn" href="javascript:void(0)"
+												th:href="@{/member/logout}">Logout</a>
+										</div>
+									</div>
 								</div>
-								<div class="dashboard-menu">
-									<ul>
-										<li><a href="purchaseList"><i class="lni lni-dashboard"></i> 펀딩 구매 내역</a></li>
-										<li><a class="active" href="myProjectList"><i class="lni lni-pencil-alt"></i> 내가 만든 프로젝트</a></li>
-										<li><a href="fundingLikeList"><i class="lni lni-heart"></i> 찜목록</a></li>
-										<li><a href="changePw"><i class="lni lni-envelope"></i> PW변경</a></li>
-										<li><a href="deleteMember"><i class="lni lni-trash"></i> 회원 탈퇴</a></li>
-									</ul>
-									<div class="button">
-										<a class="btn" href="javascript:void(0)" th:href="@{/member/logout}">Logout</a>
+							</div>
+							<div class="col-lg-9 col-md-12 col-12">
+								<div class="main-content">
+									<div class="dashboard-block mt-0">
+										<h3 class="block-title" align="center">내가 만든 프로젝트</h3>
+										<div class="my-items" style="padding: 10px;">
+											<div class="item-list-title">
+												<div class="row align-items-center">
+													<div class="col-lg-4 col-md-5 col-12">
+														<p style="text-align: center">프로젝트명</p>
+													</div>
+													<div class="col-lg-2 col-md-2 col-12">
+														<p style="text-align: center">상호명</p>
+													</div>
+													<div class="col-lg-2 col-md-2 col-12">
+														<p style="text-align: center">리워드 금액</p>
+													</div>
+													<div class="col-lg-1 col-md-2 col-12">
+														<p style="text-align: center">펀딩률</p>
+													</div>
+													<div class="col-lg-2 col-md-2 col-12">
+														<p style="text-align: center">신청일</p>
+													</div>
+													<div class="col-lg-1 col-md-2 col-12">
+														<p style="text-align: center">상태</p>
+													</div>
+
+												</div>
+											</div>
+											<div class="single-item-list">
+												<th:block th:each="dto : ${list}">
+													<div class="row align-items-center">
+														<div class="col-lg-4 col-md-5 col-12">
+															<div class="item-image">
+																<th:block th:each="file : ${dto.files}">
+																	<img
+																		th:src="@{'/upload/main_' + ${file.uuid} + '_' + ${file.filename}}"
+																		alt="">
+																</th:block>
+																<div class="content">
+																	<p>[[${dto.f_title}]]</p>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-2 col-md-2 col-12">
+															<p style="text-align: center">[[${dto.f_bname}]]</p>
+														</div>
+														<div class="col-lg-2 col-md-2 col-12">
+															<p style="text-align: center">[[${dto.f_price}]]원</p>
+														</div>
+														<div class="col-lg-1 col-md-2 col-12">
+															<p style="text-align: center">[[${dto.f_rate}]]%</p>
+														</div>
+														<div class="col-lg-2 col-md-2 col-12">
+															<p style="text-align: center">[[${dto.f_regdate}]]</p>
+														</div>
+														<div class="col-lg-1 col-md-2 col-12" align="center">
+															<span th:if="${dto.f_status} == 1" class="text-sm"><span
+																class="badge text-bg-warning">심사중</span></span> <span
+																th:if="${dto.f_status} == 2" class="text-sm"><span
+																class="badge text-bg-danger">반려</span></span> <span
+																th:if="${dto.f_status} == 3" class="text-sm"><span
+																class="badge text-bg-warning">진행중</span></span> <span
+																th:if="${dto.f_status} == 4" class="text-sm"><span
+																class="badge text-bg-success bg-gradient">성공</span></span> <span
+																th:if="${dto.f_status} == 5" class="text-sm"><span
+																class="badge text-bg-danger">실패</span></span>
+														</div>
+													</div>
+													<br>
+													<br>
+												</th:block>
+												</div>
+													<th:block th:replace="~{/include/page :: myProjectList('purchaseList', ${pageVO}) }"></th:block>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-9 col-md-12 col-12">
-							<!-- <form name="fundingForm" action="myProjectList" method="get"> -->
-								<div class="main-content">
-									<div class="dashboard-block mt-0">
-										<!-- <div class="d-sm-flex justify-content-between">
-											<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-												<select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" name="searchStatus" onchange="submit()">
-													<option th:value="null" th:selected="${pageVO.cri.searchStatus == '' }">전체</option>
-													<option th:value="3" th:selected="${pageVO.cri.searchStatus == '1' }">심사중</option>
-													<option th:value="3" th:selected="${pageVO.cri.searchStatus == '2' }">반려</option>
-													<option th:value="3" th:selected="${pageVO.cri.searchStatus == '3' }">진행중</option>
-													<option th:value="4" th:selected="${pageVO.cri.searchStatus == '4' }">성공</option>
-													<option th:value="5" th:selected="${pageVO.cri.searchStatus == '5' }">실패</option>
-												</select>
-											</div>
-										</div> -->
-										<h3 class="block-title" align="center">내가 만든 프로젝트</h3>
-										<div class="invoice-items default-list-style">
-											<div class="default-list-title">
-												<div class="row align-items-center">
-													<div class="col-lg-4 col-md-4 col-12">
-														<p style="text-align:center">프로젝트명</p>
-													</div>
-													<div class="col-lg-2 col-md-2 col-12">
-														<p style="text-align:center">상호명</p>
-													</div>
-													<div class="col-lg-2 col-md-2 col-12">
-														<p style="text-align:center">펀딩률</p></div>
-													<div class="col-lg-2 col-md-2 col-12">
-														<p style="text-align:center">신청일</p></div>
-													<div class="col-lg-2 col-md-2 col-12">
-														<p style="text-align:center">개설 신청 여부</p></div>
-												</div>
-											</div>
-											<div class="single-list">
-												<th:block th:each="dto : ${list}">
-													<div class="row align-items-center">
-														<div class="col-lg-4 col-md-4 col-12"><p th:href="@{/funding/fundingDetail(m_num=${session.member.m_num},p_num=${dto.f_num})}">[[${dto.f_title}]]<span>[[${dto.f_price}]]원</span></p></div>
-														<div class="col-lg-2 col-md-2 col-12" align="center"><p>[[${dto.f_bname}]]</p></div>
-														<div class="col-lg-2 col-md-2 col-12" align="center"><p>[[${dto.f_rate}]]%</p></div>
-														<div class="col-lg-2 col-md-2 col-12" align="center"><p>[[${dto.f_regdate}]]</p></div>
-														<div class="col-lg-2 col-md-2 col-12" align="center">
-															<span th:if="${dto.f_status} == 1" class="text-sm"><span class="badge text-bg-warning">심사중</span></span>
-															<span th:if="${dto.f_status} == 2" class="text-sm"><span class="badge text-bg-danger">반려</span></span>
-															<span th:if="${dto.f_status} == 3" class="text-sm"><span class="badge text-bg-warning">진행중</span></span>
-															<span th:if="${dto.f_status} == 4" class="text-sm"><span class="badge text-bg-success bg-gradient">성공</span></span>
-															<span th:if="${dto.f_status} == 5" class="text-sm"><span class="badge text-bg-danger">실패</span></span>
-														</div>
-													</div>
-												</th:block>
-											</div>
-											<th:block th:replace="~{/include/page :: myProjectList('myProjectList', ${pageVO}) }"></th:block>
-										</div>
-									</div>
-								</div>
-							<!-- </form> -->
-						</div>
 					</div>
-				</div>
+				</section>
 			</section>
-			</div>
-			</div>
-			</div>
 		</section>
-	  </section>
-	</body>
-	</div>
-	</div>
+</th:block>
+
+<th:block th:replace="~{/include/page :: myProjectList('myProjectList', ${pageVO}) }"></th:block>
+										
+							<!-- </form> -->
+
 </th:block>
 
 <script type="text/javascript">

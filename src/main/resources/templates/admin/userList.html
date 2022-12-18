@@ -1,30 +1,29 @@
 
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{./include/layout :: setContent( ~{:: .container-fluid}  ) }">
+<th:block th:replace="~{/include/layout :: setContent( ~{:: .container-fluid}  ) }">
 
     <div class="container-fluid py-4">
     <form name="userForm" action="userList" method="get">
       <div class="d-sm-flex justify-content-between">
-			
 			<div class="ms-md-auto pe-md-3">
 				<div class="input-group input-group-outline">
-					<label class="form-label"></label> 
-					<input type="text" name="searchId" th:value="${pageVO.cri.searchId}" class="form-control" placeholder="회원 검색" >
-				</div>	
-			</div>
-			<div>
+					<input type="text" name="searchId" th:value="${pageVO.cri.searchName}" class="form-control" placeholder="회원 검색" >
 				<a th:href="@{###}" class="btn btn-icon btn-outline-dark ms-2 export" onclick="handleForm()">검색</a>
-				
+				</div>	
 			</div>
 		</div>
       <div class="row">
         <div class="col-12">
           <div class="card">
+			<div class="card-header p-0 position-relative mt-n3 mx-10 z-index-2">
+                <div class="bg-gradient-primary  border-radius-lg py-3 pe-1">
+                  <h4 class="text-white font-weight-bolder text-center mt-1 mb-0" style="font-size: 20px">회원 관리</h4>
+                </div>
+           	 </div>
             <div class="card-header pb-0">
 				<div class="d-lg-flex">
 					<div>
-						<h5 class="mb-0">회원 관리</h5>
 						<p class="text-sm mb-0">모든 회원 목록을 관리할 수 있습니다.</p>
 					</div>
 				</div>
@@ -34,11 +33,11 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">회원 번호</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">아이디</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">이메일</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">탈퇴여부</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">탈퇴날짜</th>
+                    <th class="text-uppercase text-secondary text-s font-weight-bolder opacity-7">회원 번호</th>
+                      <th class="text-uppercase text-secondary text-s font-weight-bolder opacity-7">아이디</th>
+                      <th class="text-uppercase text-secondary text-s font-weight-bolder opacity-7 ps-2">이메일</th>
+                      <th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">탈퇴여부</th>
+                      <th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">탈퇴날짜</th>
                      
                     </tr>
                   </thead>
@@ -46,30 +45,31 @@
                     <tr th:each="list: ${list}">
                  
                     <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">[[${list.m_num}]]</span>
+                        <span class="text-secondary text-s font-weight-bold">[[${list.m_num}]]</span>
                       </td>
                     
                       <td>
                         
-                            <h6 class="mb-0 text-sm" th:href="@{###}" >[[${list.m_id}]]</h6>
+                            <h6 class="mb-0 text-s" th:href="@{###}" >[[${list.m_id}]]</h6>
                          
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">[[${list.m_email}]]</p>
+                        <p class="text-s font-weight-bold mb-0">[[${list.m_email}]]</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">[[${list.m_exit}]]</span>
+                        <span class="text-secondary text-s font-weight-bold">[[${list.m_exit}]]</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">[[${list.m_exitdate}]]</span>
+                        <span class="text-secondary text-s font-weight-bold">[[${list.m_exitdate}]]</span>
                       </td>
                        
                       
                     </tr>
                   </tbody>
                 </table>
-                <th:block th:replace="~{/include/page :: test3('userList', ${pageVO}) }"></th:block>
-                
+                <div class="dataTable-bottom">
+                <th:block th:replace="~{/include/page :: userList('userList', ${pageVO}) }"></th:block>
+                </div>
                 <!-- <div class="dataTable-bottom">					
 					<nav aria-label="Page navigation example">
 						<ul class="pagination">
@@ -95,7 +95,30 @@
       </form>  
      </div>
 </th:block>
-<script type="text/javascript">
+<script th:inline="javascript">
+
+var a_num = null;
+function deleteAlarm(a_num) {
+	console.log(a_num);
+	
+	var data = {
+		"a_num" : a_num
+	};
+	
+	$.ajax({
+		url : [[@{'/alarm/removeAlarm'}]],
+		type : 'POST',
+		data : JSON.stringify(data),
+ 		contentType: "application/json; charset=utf-8",
+ 		dataType : 'text',
+		success : function(data) {
+				console.log("삭제 완료");				
+		},
+		error : function(err){
+			alert('err');
+		}
+   	});
+}
 	//검색버튼
 	function handleForm() {
 		//폼을 서브밋

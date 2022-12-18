@@ -1,7 +1,7 @@
 <!-- 참여한 펀딩 상세 내역 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+<th:block th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }">
 	<body>
 		<section id="wrap">
 			<!-- top -->
@@ -56,7 +56,7 @@
 												    			</tr>
 												    			<tr>
 															      <th scope="col" align="left">펀딩 일시</th>
-															      <td scope="col" align="right">[[${dto.p_date}]]</td>
+															      <td scope="col" align="right" th:text="${#dates.format(dto.p_date, 'yyyy-MM-dd HH:mm')}">[[${dto.p_date}]]</td>
 															    </tr>
 															    <tr>
 															      <th scope="col" align="left">펀딩 마감일</th>
@@ -136,7 +136,7 @@
 					                             </div>
 					                             <div class="col-12">
 													<div class="form-group button mb-0" align="center">
-														<form action="/kakaoPayCancel" method="post">
+														<form th:action="@{/kakaoPayCancel}" method="post">
 															<input type="hidden" name="p_tid" th:value="${dto.p_tid}">
 															<input type="hidden" name="p_total" th:value="${dto.p_total}">
 															<input type="hidden" name="p_num" th:value="${dto.p_num}">

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="site.moregreen.basic.reply.ReplyMapper">
+  
+  <select id="selectReplyList" parameterType="int" resultType="ReplyDto">
+  
+  	select r_num,
+  		   r_regdate,
+  		   r_moddate,
+  		   r_writer,
+  		   r_content
+  	from reply
+  	where funding_f_num = #{f_num}
+  	order by r_num desc
+  
+  </select>
+  
+  <insert id="insertReply" parameterType="ReplyDto">
+  		<selectKey resultType="int" keyProperty="r_num" order="AFTER">
+ 			select max(r_num) as r_num
+			from reply
+ 		</selectKey>
+  	insert into reply (
+  						r_writer,
+  						r_content,
+  						funding_f_num 
+  					  ) 
+  					  values (
+  					  	#{r_writer},
+  					  	#{r_content},
+  					  	#{funding_f_num}
+  					  )
+  	
+  </insert>
+  
+  <delete id="deleteReply" parameterType="ReplyDto">
+    
+    delete from reply
+    where r_num = #{r_num}
+    
+  </delete>
+  
+  </mapper>

@@ -14,33 +14,36 @@
 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<script src="https://cdn.tailwindcss.com"></script>
-<th:block th:replace="~{./include/layout :: setContent( ~{:: .container-fluid}  ) }">
+<th:block th:replace="~{/include/layout :: setContent( ~{:: .container-fluid}  ) }">
 
 	<div class="container-fluid py-4">
 		<form name="fundingForm" action="fundingApplyList" method="get">
 			<div class="d-sm-flex justify-content-between">
 				<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-					<select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" name="searchStatus" onchange="submit()">
-					  <option th:value="null"  th:selected="${pageVO.cri.searchStatus == '' }">전체</option>
-					  <option th:value="1" th:selected="${pageVO.cri.searchStatus == '1' }">심사중</option>
-					  <option th:value="2" th:selected="${pageVO.cri.searchStatus == '2' }">반려</option>
-					</select>
+	                <div class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" >
+						<select class="form-select" name="searchStatus" onchange="submit()" style=" padding: 0rem 0.5rem 0.5rem; width: 94px; text-align: center;">
+						  <option th:value="null"  th:selected="${pageVO.cri.searchStatus == '' }" style="text-align:center;">전체</option>
+						  <option th:value="1" th:selected="${pageVO.cri.searchStatus == '1' }">심사중</option>
+						  <option th:value="2" th:selected="${pageVO.cri.searchStatus == '2' }">반려</option>
+						</select>
+					</div>
 				</div>
 				<div class="ms-md-auto pe-md-3">
-					<div class="input-group input-group-outline">
+					<div class="input-group input-group-outline" style="padding-top: 25px;">
 						<input type="text" name="searchName" th:value="${pageVO.cri.searchName}" class="form-control" placeholder="펀딩 명칭 검색">
+						<a href="#" class="btn btn-icon btn-outline-dark ms-2 export" onclick="handleForm()">검색</a>
 					</div>	
-				</div>
-				<div>
-					<a href="#" class="btn btn-icon btn-outline-dark ms-2 export" onclick="handleForm()">검색</a>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-12">
 					<div class="card">
+						<div class="card-header p-0 position-relative mt-n3 mx-10 z-index-2">
+			                <div class="bg-gradient-primary  border-radius-lg py-3 pe-1">
+			                  <h4 class="text-white font-weight-bolder text-center mt-1 mb-0" style="font-size: 20px">프로젝트 신청 내역</h4>
+			                </div>
+		             	 </div>
 						<div class="card-header pb-0">
-							<h5 class="mb-0">프로젝트 신청 내역</h5>
 							<p class="text-sm mb-0">모든 프로젝트 신청 목록을 관리할 수 있습니다.</p>
 						</div>
 						<div class="card-body px-0 pb-0"><!-- test -->
@@ -48,22 +51,22 @@
 								<table class="table align-middle" id="funding-list">
 									<thead class="thead-light">
 										<tr>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">번호</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">프로젝트 명칭</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">신청일</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">프로젝트 기간</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">상호명</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">신청자 아이디</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">진행 상태</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">프로젝트 번호</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">프로젝트 명칭</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">신청일</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">프로젝트 기간</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">상호명</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">신청자 아이디</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">진행 상태</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="dto : ${list}">
 											<td class="text-sm">[[${dto.f_num}]]</td><!--test -->
 											<td>
-												<div class="d-flex">
+												<div class="text-secondary text-s font-weight-bold">
 													<a title="상세보기(클릭)" th:href="@{/admin/fundingConfirm(f_num=${dto.f_num})}">
-														<h6 class="ms-3 my-auto">[[${dto.f_title}]]</h6>
+														<span class="text-secondary text-s font-weight-bold" >[[${dto.f_title}]]</span>
 													</a>
 												</div>
 											</td>
@@ -71,16 +74,15 @@
 											<td class="text-sm">[[${dto.f_days}]]일</td>
 											<td class="text-sm">[[${dto.f_bname}]]</td>
 											<td class="text-sm">[[${dto.m_id}]]</td>
-	
 											<td th:if="${dto.f_status} == 1" class="text-sm"><span class="badge text-bg-warning">심사중</span></td>
-											<td th:if="${dto.f_status} == 2" class="text-sm"><span class="badge text-bg-danger">반려</td>
+											<td th:if="${dto.f_status} == 2" class="text-sm"><span class="badge text-bg-danger">반려</span></td>
 	
 										</tr>
 									</tbody>
 								</table>
 							</div>
 							<div class="dataTable-bottom">
-								<th:block th:replace="~{/include/page :: test1('fundingListList', ${pageVO}) }"></th:block>
+								<th:block th:replace="~{/include/page :: adminFundingApplyList('fundingApplyList', ${pageVO}) }"></th:block>
 							</div>
 						</div>
 					</div>
@@ -89,13 +91,36 @@
 		</form>
 	</div>
 </th:block>
-
-<script type="text/javascript">
-	//검색버튼
-	function handleForm() {
-		//폼을 서브밋
-		event.preventDefault(); //a의 이동이벤트를 막는다.
-		document.fundingForm.submit();
-	}
+<script th:inline="javascript">
+	
+var a_num = null;
+function deleteAlarm(a_num) {
+	console.log(a_num);
+	
+	var data = {
+		"a_num" : a_num
+	};
+	
+	$.ajax({
+		url : [[@{'/alarm/removeAlarm'}]],
+		type : 'POST',
+		data : JSON.stringify(data),
+ 		contentType: "application/json; charset=utf-8",
+ 		dataType : 'text',
+		success : function(data) {
+				console.log("삭제 완료");				
+		},
+		error : function(err){
+			alert('err');
+		}
+   	});
+}
+	
+//검색버튼
+function handleForm() {
+	//폼을 서브밋
+	event.preventDefault(); //a의 이동이벤트를 막는다.
+	document.fundingForm.submit();
+}
 </script>
 </html>

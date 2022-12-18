@@ -11,7 +11,9 @@ import site.moregreen.basic.util.Criteria;
   
   public List<FundingDto> selectFuningLikeList(Criteria cri);
   
-  public int selectTotal(Criteria cri);
+  public int selectTotal(Criteria cri);							//찜하기 총 개수
+  public int selectPurchaseTotal(Criteria cri);					//구매한 펀딩 개수
+  public int selectMyProjectTotal(Criteria cri);				//개설한 프로젝트 개수
   
   //구매 목록 출력 
   public List<PurchaseDto> selectMyPurchaseList(Criteria cri);

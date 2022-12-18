@@ -87,6 +87,10 @@
     <select id="selectTotal" parameterType="site.moregreen.basic.util.Criteria" resultType="int">
 		select count(*) as total
 		from member
+		<if test="searchId != '' and searchId != null"> 
+	      where m_id like concat('%', #{searchId} ,'%')
+	     </if>
+   
 	</select>
 	
 	<select id="findPw" parameterType="String" resultType="int">

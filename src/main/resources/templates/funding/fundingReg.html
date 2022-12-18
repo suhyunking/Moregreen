@@ -19,7 +19,7 @@
 </style>
 
 <th:block
-	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+	th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }">
 	<body>
 		<section id="wrap">
 			<section class="items-grid section custom-padding">
@@ -32,9 +32,67 @@
 							</div>
 						</div>
 					</div>
-					<form name="fundingForm" id="fundingForm" action="fundingForm" method="post" enctype="multipart/form-data">
+					<form name="fundingForm" id="fundingForm" action="fundingForm" method="post" enctype="multipart/form-data" style="">
 						<input type="hidden" name="m_num" th:value="${session.member.m_num}">
-						<div class="container">
+
+							
+						<div class="container" style="max-width: 1190px;">
+							<hr>			
+							<p> <strong >사회 문제 및 환경문제를 해결하는 프로젝트, 창작자, 소셜 벤처의 상품, 가치가 있는 콘텐츠 연재 등 
+							사회 문제 예방 및 친환경 목적의 펀딩을 개설할 수 있습니다. <br>
+							프로젝트 개설 신청 등록 후 수정이 불가하오니 신중하게 작성 부탁 드립니다. <br>
+							아래의 내용을 작성하여 프로젝트를 신청해주시면,  모어그린 개설 기준에 따라 검토 후 15일 내에 회원가입 시 작성하신 이메일을 통해 연락 드리겠습니다.<br>
+							아래 요건을 모두 만족한 경우에도 유사한 건이나 오픈 예정이거나, 펀딩 개설일정이 모두 마감된 경우에는 개설이 불가할 수 있습니다.</strong></p>
+							<hr>
+							<!-- Button trigger modal -->
+							<div class="mb-3" align="right">
+							
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="text-align: right; color: #fff; background-color: #198754; border-color: #0d6efd00;">
+							  개설 기준 보기
+							</button>
+							</div>
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class = "modal-dialog modal-dialog-scrollable">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h1 class="modal-title fs-5" id="exampleModalLabel">펀딩 개설 기준</h1>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+									<p><strong>펀딩 개설 정책 기준</strong></p>
+									<hr>
+									<p>&nbsp;</p><p class="txt">
+									<span style="background-color:hsl(0, 0%, 100%);color:hsl(240, 75%, 60%);">
+									<em class="emp"><i>아래의 요건을 만족시키는 프로젝트에 한해 시의성과 형평성, 적합성 등을 고려해 개설여부를 결정합니다.&nbsp;</i></em></span></p>
+									<p class="txt"><span style="background-color:hsl(0, 0%, 100%);color:hsl(240, 75%, 60%);">
+									<em class="emp"><i> 아래 요건을 모두 만족한 경우에도 유사한 건이 오픈 예정이거나,&nbsp;</i></em></span></p>
+									<p class="txt"><span style="background-color:hsl(0, 0%, 100%);color:hsl(240, 75%, 60%);">
+									<em class="emp"><i>펀딩 개설 일정이 모두 마감된 경우에는 개설이 불가할 수 있습니다.</i></em></span>
+									<br><span style="background-color:hsl(0, 0%, 100%);color:hsl(240, 75%, 60%);">
+									<em class="emp"><i>심사에는 <strong>15일 </strong>정도 소요되니 이를 고려하여 신청 부탁드립니다.</i></em></span></p>
+									<p class="txt">&nbsp;</p><ul><li><strong class="tit">1. 목적</strong></li></ul>
+									<p class="txt">공익 및 대안·상생을 목적으로 하며, 모어그린 서비스의 방향에 부합해야 합니다.</p>
+									<ul><li class="txt">- 비영리단체나 사회적기업의 공익 프로젝트나 미디어의 공익 콘텐츠</li>
+									<li class="txt">- 소상공인, 소셜벤처, 창작자의 상품으로 그들의 자립을 도우며 사회의 다양성을 높이는 프로젝트</li>
+									<li class="txt">- 단순히 개인/단체의 영리만을 목적으로 하는 경우 개설이 불가합니다.</li><li class="txt">&nbsp;</li>
+									<li><strong class="tit">2. 내용</strong></li></ul>
+									<p class="txt">펀딩 목적이 부합된 콘텐츠로 타인의 저작권을 침해하지 않는 내용이어야 하며, 반드시 본인의 창작물이어야 합니다.</p>
+									<ul><li class="txt">- 타인의 명예를 손상시키거나 불이익을 주는 것, 공익을 저해하는 것, 정치적•종교적•성적으로 편향된 것,&nbsp;</li>
+									<li class="txt">법에 저촉되거나 사회 질서를 저해하는 내용이 있는 경우 공감펀딩 개설이 제한됩니다.</li>
+									<li class="txt">- 리워드 디자인이나 기능 등에 대한 검토가 불가하며, 생산에 대한 명확한 계획이 없는 경우 개설이 제한됩니다.</li>
+									<li class="txt">- 타 플랫폼에서 유사한 내용의 프로젝트를 동시에 진행하는 경우 개설이 제한됩니다.</li><li class="txt">&nbsp;</li>
+									<li><strong class="tit">3. 집행 및 리워드</strong></li>
+									<li class="txt">- 실제로 집행 가능한 펀딩만 개설할 수 있으며, 허위 사실이 발각될 경우 법적•도덕적 책임을 물을 수 있습니다.</li>
+									<li class="txt">- 이전에 개설한 펀딩의 후기가 미흡하거나 모금 금액의 집행•리워드 보상이 제대로 이루어지지 않은 경우, 추가 개설이 제한됩니다.&nbsp;</li>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							<!-- End Modal -->
 							<div class="input-group mb-3">
 								<span class="input-group-text" >프로젝트 명칭</span>
 								<input id="f_title" type="text" class="form-control" name="f_title" th:value="${dto != null ? dto.f_title : '' }" placeholder="프로젝트 명칭 작성">
@@ -71,25 +129,21 @@
 							<span id="priceCheckMsg"></span>
 							<div class="input-group mb-3">
 								<label class="input-group-text" for="inputGroupFile02">대표 사진</label> 
-								<input type="file" class="form-control" id="mainFile1" name="mainFile">
-								<input type="file" class="form-control" id="mainFile2" name="mainFile">
-								<input type="file" class="form-control" id="mainFile3" name="mainFile">
+								<input multiple="multiple" type="file" class="form-control" id="mainFile" name="mainFile" accept=".png, .jpg, .jpeg, .gif">
 							</div>
 							<span id="mainFileCheckMsg"></span>
 							<div class="input-group mb-3">
 								<label class="input-group-text" for="inputGroupFile03">내용 사진</label> 
-								<input type="file" class="form-control" id="contentFile1" name="contentFile">
-								<input type="file" class="form-control" id="contentFile2" name="contentFile">
-								<input type="file" class="form-control" id="contentFile3" name="contentFile">
+								<input multiple="multiple" type="file" class="form-control" id="contentFile" name="contentFile" accept=".png, .jpg, .jpeg, .gif">
 							</div> 
 							<span id="contentFileCheckMsg"></span>
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon1">사업자 등록번호</span>
-								<input type="text" maxlength="10" class="form-control" id="bizno" placeholder="사업자 등록번호 작성" name="f_bnum" th:value="${dto != null ? dto.f_bnum : '' }">
+								<input type="text" maxlength="10" class="form-control" id="bizno" placeholder="사업자 등록번호 작성" name="f_bnum" th:value="${dto != null ? dto.f_bnum : '' }" accept=".png, .jpg, .jpeg">
 							</div>
 							<span id="bNumCheckMsg"></span>
 							<div class="input-group mb-3">
-								<label class="input-+group-text" for="inputGroupFile01">사업자 등록증</label>
+								<label class="input-group-text" for="inputGroupFile01">사업자 등록증</label>
 								<input type="file" class="form-control" id="bFile" name="file" accept=".jpg, .png">
 							</div>
 							<span id="bFileCheckMsg"></span>
@@ -101,10 +155,26 @@
 									<option value=90>90</option>
 								</select>	
 							</div>
-						</div>
-						<div class="mb-3" align="right">
-							<button class="btn btn-primary" type="button" >
-							<div class="save">신청하기</div></button>
+
+
+							<div class="body">
+							<hr>
+							<h5>개인정보 수집 및 이용에 대한 동의</h5>
+							<hr>
+							<p><strong class="term_tit" style="-webkit-text-stroke-width:0px;color:rgb(34, 34, 34);display:block;font-family:NanumBarunGothic, 나눔바른고딕, quot;Nanum Barun Gothic&quot; sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:-0.32px;margin-top:0px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">개인정보 수집 항목</strong></p><p style="-webkit-text-stroke-width:0px;color:rgb(136, 136, 136);font-family:NanumBarunGothic, 나눔바른고딕, &quot;Nanum Barun Gothic&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:-0.32px;margin:0px;orphans:2;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">담당자 이메일</p><p><strong class="term_tit" style="-webkit-text-stroke-width:0px;color:rgb(34, 34, 34);display:block;font-family:NanumBarunGothic, 나눔바른고딕, &quot;Nanum Barun Gothic&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:-0.32px;margin-top:24px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">개인정보의 이용 목적</strong></p><p style="-webkit-text-stroke-width:0px;color:rgb(136, 136, 136);font-family:NanumBarunGothic, 나눔바른고딕, &quot;Nanum Barun Gothic&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:-0.32px;margin:0px;orphans:2;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">프로젝트 개설 및 진행을 위한 의사 소통</p><p><strong class="term_tit point" style="-webkit-text-stroke-width:0px;color:rgb(0, 171, 51);display:block;font-family:NanumBarunGothic, 나눔바른고딕, &quot;Nanum Barun Gothic&quot;, sans-serif;font-size:18px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:-0.32px;margin-top:24px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">개인정보 보유 기간</strong></p><p style="-webkit-text-stroke-width:0px;color:rgb(136, 136, 136);font-family:NanumBarunGothic, 나눔바른고딕, &quot;Nanum Barun Gothic&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:-0.32px;margin:0px;orphans:2;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"><strong class="highlight" style="color:rgb(0, 0, 0);font-size:18px;letter-spacing:-0.3px;line-height:24px;"><u>회원 탈퇴 시 파기</u></strong></p><p><strong class="term_tit" style="-webkit-text-stroke-width:0px;color:rgb(34, 34, 34);display:block;font-family:NanumBarunGothic, 나눔바른고딕, &quot;Nanum Barun Gothic&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:-0.32px;margin-top:24px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">개인정보 수집 및 이용에 거부할 권리</strong></p><p style="-webkit-text-stroke-width:0px;color:rgb(136, 136, 136);font-family:NanumBarunGothic, 나눔바른고딕, &quot;Nanum Barun Gothic&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:-0.32px;margin:0px;orphans:2;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">정보주체는 개인정보 수집 및 이용에 거부할 권리가 있으나, 프로젝트 개설을 위한 최소한의 개인정보 수집으로써 이를 거부하실 경우<br>모어그린 펀딩 프로젝트를 신청하실 수 없습니다.</p>
+							</div>
+							<hr>
+							    <div class="form-check">
+							      <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+							      <label class="form-check-label" for="invalidCheck">
+							      이용약관 동의<strong>(필수)</strong>
+							      </label>
+							      <span id="invalidCheckMsg"></span>
+							    </div>
+							<div class="mb-3" align="right">
+								<button class="btn btn-primary" type="button"  style="color: #fff; background-color: #4f953b; border-color: #4f953b;">
+								<div class="save">신청하기</div></button>
+							</div>
 						</div>
 					</form>
 				</div>
@@ -113,8 +183,7 @@
 	</body>
 </th:block>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/super-build/ckeditor.js"></script>
-  
-<script>
+<script th:inline="javascript">
 
 $(document).on("keyup", "#bizno", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/([0-9]{3})([0-9]{2})([0-9]{5})$/,"$1-$2-$3").replace("--", "-") );
@@ -125,7 +194,6 @@ $("#fundingForm").on("blur", "input",  function(){
 		$(this).closest("div").next("span").html("");
 	}
 });
-
 
 $(".save").on("click", function() {
 	
@@ -177,74 +245,25 @@ $(".save").on("click", function() {
 	
 	
 	//대표사진 유효성 검사
-	if($("#mainFile1").val().trim().length == 0){
+	if($("#mainFile").val().trim().length == 0){
 	 mainFileCheckMsg.style.color="red";
 	 mainFileCheckMsg.innerHTML="대표 사진 3장 모두 등록해주세요";
 	 return false;
-	} else if($("#mainFile1").val().trim().length != 0){
-		 var ext = $('#mainFile1').val().split('.').pop().toLowerCase();
+	} else if($("#mainFile").val().trim().length != 0){
+		 var ext = $('#mainFile').val().split('.').pop().toLowerCase();
 	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
 	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
 	  	 return false;
 	     }
 	}
-	
-	if($("#mainFile2").val().trim().length == 0){
-	 mainFileCheckMsg.style.color="red";
-	 mainFileCheckMsg.innerHTML="대표 사진 3장 모두 등록해주세요";
-	 return false;
-	} else if($("#mainFile2").val().trim().length != 0){
-		 var ext = $('#mainFile2').val().split('.').pop().toLowerCase();
-	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
-	  	 return false;
-	     }
-	}
-	
-	if($("#mainFile3").val().trim().length == 0){
-	 mainFileCheckMsg.style.color="red";
-	 mainFileCheckMsg.innerHTML="대표 사진 3장 모두 등록해주세요";
-	 return false;
-	} else if($("#mainFile3").val().trim().length != 0){
-		 var ext = $('#mainFile3').val().split('.').pop().toLowerCase();
-	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
-	  	 return false;
-	     }
-	}
-	
 	
 	//내용사진 유효성 검사
-	if($("#contentFile1").val().trim().length == 0){
+	if($("#contentFile").val().trim().length == 0){
 	 contentFileCheckMsg.style.color="red";
 	 contentFileCheckMsg.innerHTML="내용에 들어갈 사진을 3장 모두 등록해주세요";
 	 return false;
-	} else if($("#contentFile1").val().trim().length != 0){
-		 var ext = $('#contentFile1').val().split('.').pop().toLowerCase();
-	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
-	  	 return false;
-	     }
-	}
-	
-	if($("#contentFile2").val().trim().length == 0){
-	 contentFileCheckMsg.style.color="red";
-	 contentFileCheckMsg.innerHTML="내용에 들어갈 사진을 3장 모두 등록해주세요";
-	 return false;
-	} else if($("#contentFile2").val().trim().length != 0){
-		 var ext = $('#contentFile2').val().split('.').pop().toLowerCase();
-	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
-	  	 return false;
-	     }
-	}
-	
-	if($("#contentFile3").val().trim().length == 0){
-	 contentFileCheckMsg.style.color="red";
-	 contentFileCheckMsg.innerHTML="내용에 들어갈 사진을 3장 모두 등록해주세요";
-	 return false;
-	} else if($("#contentFile3").val().trim().length != 0){
-		 var ext = $('#contentFile3').val().split('.').pop().toLowerCase();
+	} else if($("#contentFile").val().trim().length != 0){
+		 var ext = $('#contentFile').val().split('.').pop().toLowerCase();
 	      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
 	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
 	  	 return false;
@@ -263,7 +282,7 @@ $(".save").on("click", function() {
 	 
 	} else if(pBizno.replaceAll("-","").length != 10 ){
 	 bNumCheckMsg.style.color="red";
-	 bNumCheckMsg.innerHTML="사업자 번호는 하이픈(-)을 포함한 12자리입니다.";
+	 bNumCheckMsg.innerHTML="사업자 번호는 총 10자리의 숫자입니다.";
 	 $("#bizno").focus();
 	 return false;
 	 
@@ -284,7 +303,16 @@ $(".save").on("click", function() {
 	  	 alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
 	  	 return false;
 	     }
-	} 
+	}
+    
+        if($("#invalidCheck").is(":checked") == false){
+       	invalidCheckMsg.style.color="red";
+       	invalidCheckMsg.innerHTML="거부하실 경우 신청이 불가능합니다.";
+    	 document.getElementById('invalidCheck').focus();
+            return false;
+        }
+    
+	
 	
     $("#fundingForm").submit();
 });
@@ -449,8 +477,6 @@ let editor;
  .catch( error => {
     	    console.error( error );
  });
-
- 
 
 </script>
 </html>

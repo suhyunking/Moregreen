@@ -37,5 +37,10 @@
 		where member_m_num= #{m_num} and funding_f_num = #{f_num}
 		
 	</select>
-  
+	
+	<select id="likeTotal" parameterType="LikeDto" resultType="int">
+		select count(*) as betterheart
+		from likefunding
+	</select>
+
   </mapper>

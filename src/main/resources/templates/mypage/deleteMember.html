@@ -1,38 +1,26 @@
 <!-- 펀딩 구매 내역 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
-
-<th:block
-	th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
-
-
+<th:block th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }">
 	<body>
-
 		<section id="wrap">
-
 			<section class="items-grid section custom-padding">
 				<div class="wow fadeInUp" data-wow-delay=".6s">
 					<div class="container">
 						<div class="row">
-	                  <div class="col-12">
-	                     <div class="section-title">
-	                        <h2 class="wow fadeInUp" data-wow-delay=".4s">마이페이지</h2>
-	                        <p class="wow fadeInUp" data-wow-delay=".6s">회원탈퇴</p>
-	                     </div>
-	                  </div>
-	               </div>
+		                  <div class="col-12">
+		                     <div class="section-title">
+		                        <h2 class="wow fadeInUp" data-wow-delay=".4s">마이페이지</h2>
+		                        <p class="wow fadeInUp" data-wow-delay=".6s">회원탈퇴</p>
+		                     </div>
+		                  </div>
+		               </div>
 					</div>
 				</div>
-
-
 			<section class="dashboard section">
 				<div class="container">
 					<div class="row">
-						<!-- 						<th:block
-							th:replace="~{./mypage/test :: setContent( ~{:: #wrap}  ) }"></th:block> -->
-
 						<div class="col-lg-3 col-md-12 col-12">
-
 							<div class="dashboard-sidebar">
 								<div class="user-image">
 									<h5>
@@ -49,45 +37,34 @@
 												class="lni lni-heart"></i> 찜목록</a></li>
 										<li><a href="changePw"><i class="lni lni-envelope"></i>
 												PW변경</a></li>
-										<li><a href="deleteMember"><i class="lni lni-trash"></i>
+										<li><a class="active" href="deleteMember"><i class="lni lni-trash"></i>
 												회원 탈퇴</a></li>
-
 									</ul>
 									<div class="button">
 										<a class="btn" th:href="@{/member/logout}">Logout</a>
 									</div>
 								</div>
 							</div>
-
 						</div>
-
-
-
-
-
 						<div class="col-lg-9 col-md-12 col-12">
 							<div class="main-content">
 								<div class="dashboard-block mt-0">
 									<h3 class="block-title" align="center">회원탈퇴</h3>
 									<div class="input-group input-group-outline mb-3">
-
 										<div class="card-body">
 											<form th:action="@{/mypage/deleteForm}" method="post"
 												role="form" class="text-start" id="deleteForm">
 												<div class="input-group input-group-outline my-3">
-
 													<input type="text" name=m_id placeholder="아이디"
 														class="form-control" id="idmsg">
 												</div>
 												<div class="input-group input-group-outline mb-3">
-
 													<input type="password" name="m_pw" placeholder="비밀번호"
 														class="form-control" id="pwmsg">
 												</div>
 												<div class="button" align="center">
-										<a class="btn" id="btn">탈퇴하기</a>
-									</div>
-
+													<a class="btn" id="btn">탈퇴하기</a>
+												</div>
 											</form>
 										</div>
 									</div>
@@ -101,13 +78,13 @@
 		</section>
 	</body>
 </th:block>
-<script src="/js/jquery-3.6.0.js"></script>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:inline="javascript">
    $(document).ready(function(){
 	   $("#btn").on("click",function(){
 		   
-	        
+	       	const result = confirm("정말 회원 탈퇴를 진행하시겠습니까?") 
 	        if($("#idmsg").val().length == 0 || $("#pwmsg").val().length == 0){
 	            alert("아이디와 비밀번호를 입력해주세요");
 	            $("#deleteform").attr("type", "button");
@@ -116,13 +93,15 @@
 	        	$("#deleteform").attr("type", "submit");
 	        	$("#deleteForm").submit();
 	        }
+	        
+	        if(result){
+	        	alert("탈퇴 처리되었습니다.");
+	        } else {
+	        	alert("탈퇴 취소되었습니다.");
+	        	location.reload();
+	        }
 	   });
    });
 </script>
 
 </html>
-
-
-
-
-

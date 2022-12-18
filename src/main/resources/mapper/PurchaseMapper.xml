@@ -79,12 +79,19 @@
 			   f.f_title,
 			   f.f_rate,
 			   f.f_status,
-			   m.m_id
+			   m.m_id,
+			   d.d_name,
+			   d.d_phone,
+			   d.d_zipcode,
+			   d.d_addr,
+			   d.d_detailaddr
 		from purchase p
 		inner join funding f
 		on p.funding_f_num = f.f_num
 		inner join member m 
 		on p.member_m_num = m.m_num
+		inner join delivery d
+		on p.delivery_d_num = d.d_num
 		where 1
 		<if test="searchStatus != '' and searchStatus != null"> 
 	    and p.p_payment = #{searchStatus} 

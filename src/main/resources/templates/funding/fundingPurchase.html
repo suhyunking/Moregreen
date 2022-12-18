@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<th:block th:replace="~{./include/mainLayout :: setContent( ~{:: #wrap}  ) }">
+<th:block th:replace="~{/include/mainLayout :: setContent( ~{:: #wrap}  ) }">
    <section id="wrap">
       <section class="items-grid section custom-padding">
          <div class="container">
@@ -11,11 +11,10 @@
                   <p class="wow fadeInUp" data-wow-delay=".6s">배송지를 입력해주시기바랍니다.</p>
                </div>
             </div>
-            <section class="item-details section"></section>
                <div class="container" >
                   <div class="top-area">
                      <div class="row" th:each="fundingDto : ${fundingList}">
-                     <form class="row g-3" action="/kakaoPay" method="post">
+                     <form class="row g-3" th:action="@{/kakaoPay}" method="post" id="purchaseForm">
                         <input type="hidden" name="f_num" th:value="${fundingDto.f_num}">
                         <input type="hidden" name="f_reward" th:value="${fundingDto.f_reward}">
                         <input type="hidden" name="f_target" th:value="${fundingDto.f_target}">
@@ -94,23 +93,40 @@
                            <div class="form-check">
                               <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
                               <label class="form-check-label" for="flexRadioDefault2">
-                                 <img src="/img/payment_icon_yellow_small.png" width="50px" height="23px" alt="">
+                                 <img src="../img/payment_icon_yellow_small.png" width="50px" height="23px" alt="">
                               </label>
                            </div>
                         </div>
-                        <div class="col-12" align="center">
-                           <button class="btn btn-success">결제하기</button>
-                        </div>
-                          </form>
+                        <div class="body">
+							<hr>
+							<h5>펀딩결제 이용안내</h5> 							
+							<hr>
+							<p>1. 귀하가 가맹점을 통해 신청하신 펀딩 후원금 결제(이하 "펀딩결제")는 카카오㈜에서 대행합니다.<br>
+							2. 귀하의 결제내역에는 본 펀딩결제 이용가맹점으로 카카오㈜가 표기됩니다.&nbsp;<br>
+							카카오㈜는 펀딩결제의 대행만을 수행하며, 귀하의 펀딩결제 신청, 해지, 조정 등 관련된 모든 업무는 해당 가맹점을 통해 진행하실 수 있습니다.<br>
+							3. 카카오㈜는 귀하의 본 펀딩결제 신청에 따라 발생하는 결제내역을 설정하신 알림 수단으로 통보해 드립니다.</p>
+							</div>
+							<hr>
+							    <div class="form-check">
+							      <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+								      <label class="form-check-label" for="invalidCheck">
+								      펀딩결제 이용안내 동의<strong>(필수)</strong>
+								      </label>
+							      <span id="invalidCheckMsg"></span>
+							    </div>
+	                        <div class="col-12" align="center">
+	                           <button class="btn btn-success">결제하기</button>
+	                        </div>
+							</form>
+						   </div>
                         </div>
                      </div>
                   </div>
-               </div>
             </section>
          </section>
    </th:block>
-    <script src="/js/jquery-3.6.0.js"></script>
-<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="../js/jquery-3.6.0.js"></script>
+<script src="../js/jquery-3.6.0.min.js"></script>
    
    <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -223,8 +239,17 @@
         	addressCheckMsg.innerHTML="주소를 입력하세요";
             document.getElementById('d_addr').focus();
             return false;
-        } 
-	
+        }
+        
+        if($("#invalidCheck").is(":checked") == false){
+           	invalidCheckMsg.style.color="red";
+           	invalidCheckMsg.innerHTML="거부하실 경우 신청이 불가능합니다.";
+        	 document.getElementById('invalidCheck').focus();
+                return false;
+            }
+        
+        $("#purchaseForm").submit();
+        
 	})
     
 </script>

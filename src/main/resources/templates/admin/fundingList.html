@@ -14,48 +14,12 @@
 -->
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- Bootstrap -->
-<link href="/css/_nav1.css" rel="stylesheet">
-<link href="/css/_navbar1.css" rel="stylesheet">
-<link href="/css/bootstrap1.css" rel="stylesheet">
-<link href="/css/bootstrap1.css" rel="stylesheet">
-<link href="/css/bootstrap1.css.map" rel="stylesheet">
-<!-- Custom Theme Style -->
-<link href="/css/custom1.min.css" rel="stylesheet">
-<link href="/css/custom1.css" rel="stylesheet">
 <th:block th:replace="~{/include/layout :: setContent( ~{:: .container-fluid}  ) }">
- 
 	<div class="container-fluid py-4"> 
-	<!-- top navigation -->
-		<div class="top_nav">
-			<div class="nav_menu">
-				<div class="nav toggle" >
-					<a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false" style="padding-right: 15px;" >
-						<i class="fa fa-envelope-o"></i>
-						<span class="badge bg-green">6</span>
-					</a>
-					<ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-						<li class="nav-item">
-							<a class="dropdown-item">
-								<span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-								<span>John Smith</span>
-								<span class="time">3 mins ago</span>
-								</span>
-								<span class="message">
-									Film festivals used to be do-or-die moments for movie makers. They were where...
-								</span>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-        <!-- /top navigation -->
 		<form name="fundingForm" action="fundingList" method="get">
 			<div class="d-sm-flex justify-content-between">
 				<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-					<select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" name="searchStatus" onchange="submit()">
+					<select class="form-select" name="searchStatus" onchange="submit()" style=" padding: 0rem 1.5rem 0.5rem; width: 94px; text-align: center;">
 					  <option th:value="null"  th:selected="${pageVO.cri.searchStatus == '' }">전체</option>
 					  <option th:value="3" th:selected="${pageVO.cri.searchStatus == '3' }">진행중</option>
 					  <option th:value="4" th:selected="${pageVO.cri.searchStatus == '4' }">성공</option>
@@ -65,19 +29,21 @@
 				<div class="ms-md-auto pe-md-3">
 					<div class="input-group input-group-outline">
 						<input type="text" name="searchName" th:value="${pageVO.cri.searchName}" class="form-control" placeholder="펀딩 명칭 검색">
+						<a th:href="@{###}" class="btn btn-icon btn-outline-dark ms-2 export" onclick="handleForm()">검색</a>
 					</div>	
-				</div>
-				<div>
-					<a href="#" class="btn btn-icon btn-outline-dark ms-2 export" onclick="handleForm()">검색</a>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-12">
 					<div class="card">
+						<div class="card-header p-0 position-relative mt-n3 mx-10 z-index-2">
+			                <div class="bg-gradient-primary  border-radius-lg py-3 pe-1">
+			                  <h4 class="text-white font-weight-bolder text-center mt-1 mb-0" style="font-size: 20px">펀딩 관리</h4>
+			                </div>
+		             	 </div>
 						<div class="card-header pb-0">
 							<div class="d-lg-flex">
 								<div>
-									<h5 class="mb-0">펀딩 관리</h5>
 									<p class="text-sm mb-0">모든 펀딩 목록을 관리할 수 있습니다.</p>
 								</div>
 							</div>
@@ -87,16 +53,18 @@
 								<table class="table align-middle" id="funding-list">
 									<thead class="thead-light">
 										<tr>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">번호</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">펀딩 명칭</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">등록일자</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">마감일자</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">리워드명</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">리워드 가격</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">목표 금액</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">모금된 금액</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">펀딩률</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">진행 상태</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">펀딩 번호</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">펀딩 명칭</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">등록일자</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">승인일자</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">승인자 아이디</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">마감일자</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">리워드명</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">리워드 가격</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">목표 금액</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">모금된 금액</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">펀딩률</th>
+											<th class="text-center text-uppercase text-secondary text-s font-weight-bolder opacity-7">진행 상태</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -105,11 +73,13 @@
 											<td>
 												<div class="">
 													<a title="상세보기(클릭)" th:href="@{/admin/fundingModify(f_num=${dto.f_num})}">
-														<h6 class="ms-3 my-auto">[[${dto.f_title}]]</h6>
+														<h6 class="text-secondary text-s font-weight-bold">[[${dto.f_title}]]</h6>
 													</a>
 												</div>
 											</td>
 											<td class="text-sm">[[${dto.f_regdate}]]</td>
+											<td class="text-sm">[[${dto.f_confirmdate}]]</td>
+											<td class="text-sm">[[${dto.f_acceptor}]]</td>
 											<td class="text-sm">[[${dto.f_enddate}]]</td>
 											<td class="text-sm">[[${dto.f_reward}]]</td>
 											<td class="text-sm">[[${dto.f_price}]]원</td>
@@ -124,7 +94,7 @@
 								</table>
 							</div>
 							<div class="dataTable-bottom">
-								<th:block th:replace="~{/include/page :: test('fundingList', ${pageVO}) }"></th:block>
+								<th:block th:replace="~{/include/page :: adminFundingList('fundingList', ${pageVO}) }"></th:block>
 							</div>
 						</div>
 					</div>
@@ -134,7 +104,30 @@
 	</div>
 </th:block>
 
-<script type="text/javascript">
+<script th:inline="javascript">
+	
+var a_num = null;
+function deleteAlarm(a_num) {
+	console.log(a_num);
+	
+	var data = {
+		"a_num" : a_num
+	};
+	
+	$.ajax({
+		url : [[@{'/alarm/removeAlarm'}]],
+		type : 'POST',
+		data : JSON.stringify(data),
+ 		contentType: "application/json; charset=utf-8",
+ 		dataType : 'text',
+		success : function(data) {
+				console.log("삭제 완료");				
+		},
+		error : function(err){
+			alert('err');
+		}
+   	});
+}
 	//검색버튼
 	function handleForm() {
 		//폼을 서브밋
