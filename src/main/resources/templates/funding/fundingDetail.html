@@ -54,7 +54,7 @@
                                        </th:block>
                                     </div>
                                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                                       <span class="carousel-control-prev-icon" aria-hidden="true"></span> 
+     	                               <span class="carousel-control-prev-icon" aria-hidden="true"></span> 
                                        <span class="visually-hidden">Previous</span>
                                     </button>
                                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
@@ -88,6 +88,9 @@
                                  <a data-value="" id="amount">1</a>
                                  <button class="btn" type="button" onclick='count1("plus")' value='+' >+</button>
                               </span> 
+                             </p>
+                             
+                             <p>
                              </p>
                            <form id="addFundingLike" name="addFundingLike" action="addFundingLike" method="post">
                               <div class="button">
@@ -149,6 +152,7 @@
 		                                 <div class="main-img" th:each="file : ${dto.files}" style="text-align: center;">
 		                                 <th:block th:if="${file.i_type == 2}">
 		                                    <img th:src="@{'/upload/content_' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="max-width:100%; height:auto;">
+		                                 <img th:src="'/upload/content_' + ${file.uuid} + '_' + ${file.filename}" alt="#" >
 		                                 </div>
 		                              </main>
 		                           </div>
