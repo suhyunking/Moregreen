@@ -182,7 +182,7 @@ public class AdminController {
 	public String userList(Model model, Criteria cri, HttpSession session) {
 		
 		  List<MemberDto> list= memberService.retrieveMemberList(cri); 
-		  int total=memberService.retrieveTotal(cri); 
+		  int total = memberService.retrieveTotal(cri);
 		  PageVo pageVO= new PageVo(cri,total); 
 		  List<AlarmDto> alarmList = alarmService.retrieveAlarmList();
 			

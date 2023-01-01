@@ -20,6 +20,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 				.excludePathPatterns("/funding/fundingDetail")
 				.excludePathPatterns("/admin/adminSignin")
 				.excludePathPatterns("/admin/adminForm")
+				.excludePathPatterns("/admin/fundingList")
 				.excludePathPatterns("/funding/fundingList");
 	}
 }
