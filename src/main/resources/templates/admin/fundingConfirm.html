@@ -175,7 +175,7 @@ input[type=submit] {
                                                         <div class="filebox preview-image">
                                                           <th:block th:each="file : ${dto.files}" >
 											                  <th:block th:if="${file.i_type == 0}">
-											                     <img th:src="@{'/upload/' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="height:500px">
+											                     <img th:src="@{'/img/upload/' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="height:500px">
 											                  </th:block>
 					              						  </th:block>
                                                         </div>
@@ -187,7 +187,7 @@ input[type=submit] {
                                                         <div class="filebox preview-image">
                                                           <th:block th:each="file : ${dto.files}">
 											                  <th:block th:if="${file.i_type == 1}">
-											                     <img th:src="@{'/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="#">
+											                     <img th:src="@{'/img/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="#">
 											                  </th:block>
 										                 </th:block>
                                                         </div>
@@ -199,7 +199,7 @@ input[type=submit] {
                                                        <div class="filebox preview-image">
                                                          <th:block th:each="file : ${dto.files}">
 											                  <th:block th:if="${file.i_type == 2}">
-											                     <img th:src="@{'/upload/content_' + ${file.uuid} + '_' + ${file.filename}}" alt="#">
+											                     <img th:src="@{'/img/upload/content_' + ${file.uuid} + '_' + ${file.filename}}" alt="#">
 											                  </th:block>
 											             </th:block>
                                                         </div>

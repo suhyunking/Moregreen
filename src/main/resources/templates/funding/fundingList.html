@@ -93,7 +93,7 @@
 											<span th:if="${dto.f_status} == 5" class="text-sm"><span class="badge text-bg-danger" style="padding: 1em 2em; font-size: 0.9em">펀딩 실패</span></span>					
 	                                	</div>
 		                                 <a class="thumbnail" th:href="@{/funding/fundingDetail(f_num=${dto.f_num})}" th:each="file : ${dto.files}">
-		                                 <img th:src="@{'/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="height: 300px;width: 430px;"></a>
+		                                 <img th:src="@{'/img/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="height: 300px;width: 430px;"></a>
 	                              	</div>
 	                              </div>
 	                              <div class="content">

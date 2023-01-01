@@ -49,7 +49,7 @@
                                        <th:block th:each="file, i : ${dto.files}">
                                           <th:block th:if="${file.i_type == 1}">
                                              <div class="carousel-item" th:classappend="${i.first} ? 'active' : ''" >
-                                                <img th:src="@{'/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="height:500px; width:100%; max-width:100%; height:auto;">                                             </div>
+                                                <img th:src="@{'/img/upload/main_' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="height:500px; width:100%; max-width:100%; height:auto;">                                             </div>
                                           </th:block>
                                        </th:block>
                                     </div>
@@ -151,8 +151,7 @@
 		                              <main id="gallery">
 		                                 <div class="main-img" th:each="file : ${dto.files}" style="text-align: center;">
 		                                 <th:block th:if="${file.i_type == 2}">
-		                                    <img th:src="@{'/upload/content_' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="max-width:100%; height:auto;">
-		                                 <img th:src="'/upload/content_' + ${file.uuid} + '_' + ${file.filename}" alt="#" >
+		                                    <img th:src="@{'/img/upload/content_' + ${file.uuid} + '_' + ${file.filename}}" alt="#" style="max-width:100%; height:auto;">
 		                                 </div>
 		                              </main>
 		                           </div>

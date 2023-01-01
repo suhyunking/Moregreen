@@ -34,8 +34,8 @@ public class FundingServiceImpl implements FundingService{
 	
 	//폴더생성함수
 	public String makeFolder() {
-		
-		String path = "upload";
+
+		String path = System.getProperty("user.dir") + "/src/main/resources/static/img/upload/";
 		File file = new File(uploadPath + "\\" + path);
 		if( file.exists() == false ) {
 			file.mkdirs(); //파일생성
