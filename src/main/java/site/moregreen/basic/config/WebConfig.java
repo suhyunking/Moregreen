@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
         		.addResourceHandler("/upload/**")
-        		.addResourceLocations("classpath:/upload/");
+        		.addResourceLocations("classpath:/static/img/upload/");
         
         //404 에러
         registry

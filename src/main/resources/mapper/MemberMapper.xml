@@ -80,7 +80,7 @@
      <if test="searchId != '' and searchId != null"> 
       where m_id like concat('%', #{searchId} ,'%')
      </if>
-    ORDER BY m_num ASC
+    ORDER BY m_num DESC
     LIMIT #{pageStart}, #{amount}
     </select>
     

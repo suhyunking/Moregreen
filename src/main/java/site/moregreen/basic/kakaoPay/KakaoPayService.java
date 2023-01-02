@@ -60,9 +60,9 @@ public class KakaoPayService {
         params.add("quantity", purchaseDto.getP_amount().toString());
         params.add("total_amount", purchaseDto.getP_total().toString());
         params.add("tax_free_amount", "0");
-        params.add("approval_url", "http://52.78.137.86:8080/moregreen/funding/fundingPurchaseResult");
-        params.add("cancel_url", "http://52.78.137.86:8080/moregreen/funding/fundingPurchaseCancel");
-        params.add("fail_url", "http://52.78.137.86:8080/moregreen/funding/fundingPurchaseFail");
+        params.add("approval_url", "http://localhost:8383/funding/fundingPurchaseResult");
+        params.add("cancel_url", "http://localhost:8383/funding/fundingPurchaseCancel");
+        params.add("fail_url", "http://localhost:8383/funding/fundingPurchaseFail");
  
          HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
  
