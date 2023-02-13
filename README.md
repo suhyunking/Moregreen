@@ -7,8 +7,7 @@
 #### 노션</br>
 > https://imminent-wishbone-9d3.notion.site/2-804cd51c5e8e473bbb53fdb5b1e6cb4f</br></br>
 
-#### 사이트 오류 수정 & 개선 & 고도화 작업 (10/24 ~)
-> https://imminent-wishbone-9d3.notion.site/fe92752e35c5403a8282a47589623e47?v=f1092b16cd0f4ae791e194a4a7e12b9a
+
 
 ## 1. 제작 기간 & 참여 인원
 - 2022년 8월 31일 ~ 10월 11일 (약 6주)
